@@ -18,30 +18,30 @@ cmp.setup({
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lua' },
-		{ name = 'nvim_lsp' },
+		{ name = 'nvim_lsp', keyword_length = 4 },
 		{ name = 'path' },
 		{ name = 'luasnip' },
-		{ name = 'buffer'},
+		{ name = 'buffer', keyword_length = 4 },
 	}),
 })
 
 cmp.setup.filetype('gitcommit', {
 	sources = cmp.config.sources({
 		{ name = 'cmp_git' },
-		{ name = 'buffer' },
+		{ name = 'buffer', keyword_length = 4 },
 	})
 })
 
 cmp.setup.cmdline({ '/', '?' }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
-		{ name = 'buffer' }
+		{ name = 'buffer', keyword_length = 4 }
 	},
 })
 cmp.setup.cmdline(':', {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
 		{ name = 'path' },
-		{ name = 'cmdline', keyword_length = 3 }
+		{ name = 'cmdline', keyword_length = 4 }
 	}),
 })
