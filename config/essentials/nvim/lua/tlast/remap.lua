@@ -14,8 +14,8 @@ vim.keymap.set("i", '"', '""<Left>')
 -- vim.keymap.set("i", "(", "()<Left>")
 -- vim.keymap.set("i", "[", "[]<Left>")
 -- vim.keymap.set("i", "{", "{}<Left>")
--- vim.keymap.set("i", "{<CR>", "{<CR>}<C-o>O")
--- vim.keymap.set("i", "{;<CR>", "{<CR>};<C-o>O")
+vim.keymap.set("i", "{<CR>", "{<CR>}<C-o>O")
+vim.keymap.set("i", "{;<CR>", "{<CR>};<C-o>O")
 
 -- buffers
 vim.keymap.set("n", "gb", "<cmd>buffers<CR>:buffer<Space>")
@@ -62,3 +62,10 @@ vim.keymap.set("n", "<C-h>", function ()
 	vim.opt.laststatus = opt and 2 or 0
 	vim.opt.signcolumn = opt and "yes" or "no"
 end)
+
+-- random
+vim.keymap.set("i", "<LocalLeader>r", "<cmd>r!echo -n $RANDOM<cr><esc>kJA")
+
+-- write
+vim.keymap.set("n", "<LocalLeader>w", "<cmd>write<CR>")
+vim.keymap.set("n", "<LocalLeader>W", "<cmd>write!<CR>")
