@@ -22,6 +22,7 @@ export XINITRC="$HOME/.config/x11/xinitrc"
 export GNUPGHOME="$HOME/.config/gnupg"
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 # export VIMINIT="source ~/.config/vim/vimrc"
+export NVM_DIR="$HOME/.config/nvm"
 
 export PASSWORD_STORE_CLIP_TIME=5
 export DISPLAY=:0
