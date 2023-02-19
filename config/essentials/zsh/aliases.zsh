@@ -1,6 +1,9 @@
 #!/bin/zsh
 # s/alias \([^-]\)/alias -g \1
 
+# Programs
+alias -g nb='newsboat'
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     # alias ls='ls -h --color --group-directories-first'
