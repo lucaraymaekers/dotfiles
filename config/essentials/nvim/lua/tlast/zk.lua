@@ -37,12 +37,6 @@ require('telekasten').setup({
 	template_handling = "smart",
 	new_note_location = "smart",
 	rename_update_links = true,
-	vaults = {
-		cs = {
-			home = home .. '/' .. 'cs',
-			template_new_note = home .. '/' .. 'templates/new_note.md',
-		},
-	},
 	media_previewer = "telescope-media-files",
 	follow_url_fallback = nil,
 })
