@@ -37,6 +37,7 @@ alias pacss='pacman -Ss'
 alias pacqs='pacman -Qs'
 alias pacql='pacman -Ql'
 alias dopacs='dopac -S'
+alias doprm='dopac -Rns'
 # 
 # 
 # -----------------------------------------------------------
