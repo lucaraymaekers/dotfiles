@@ -234,6 +234,7 @@ defaults = ewmh def {
         }
         `additionalKeysP`
         [ ("M-<Return>", spawn myTerminal)
+        , ("M-n", spawn (myTerminal ++ " -e nvim"))
         , ("M-<Backspace>", withFocused hide) -- N.B. this is an absurd thing to do
         , ("M-0", windows $ W.greedyView $ "hid") -- N.B. this is an absurd thing to do
         , ("M-u",       incScreenWindowSpacing (2))
