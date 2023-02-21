@@ -316,10 +316,6 @@ defaults = ewmh def {
         , ("M-a k" , spawn "virt-manager")
         , ("M-a m" , spawn "mumble")
         , ("M-a v" , spawn "virtualbox")
-        -- file managers
-        , ("M-f k", spawn ("kitty" ++ " -e ranger"))
-        , ("M-f d", spawn "dolphin")
-
 
         -- cycle keyboards
         -- dmenu
