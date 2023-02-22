@@ -3,6 +3,7 @@
 
 # Programs
 alias -g nb='newsboat'
+alias -g sr='surfraw'
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -81,13 +82,12 @@ alias -g pi='ping archlinux.org -c4'
 alias -g sba='source bin/activate'
 alias -g smc='systemctl'
 alias -g smcu='systemctl --user'
-alias -g sr='source ~/.zshrc && rehash'
+alias zsr='source ~/.zshrc && rehash'
 alias -g wf='doas wipefs -a'
 
 # quick config
 alias -g ez='$EDITOR ~/.zshrc'
 alias -g eza='$EDITOR ~/.config/zsh/aliases.zsh'
-alias -g ezv='$EDITOR ~/.config/zsh/variables.zsh'
 alias -g eto='$EDITOR ~/sync/TODO'
 
 alias -g ff='`fzffile`'
