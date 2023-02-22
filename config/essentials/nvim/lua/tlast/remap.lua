@@ -75,3 +75,6 @@ vim.keymap.set("n", "<Leader><M-s>", "<CMD>source<CR>")
 
 -- spelling
 vim.keymap.set("n", "<Leader><C-s>", "<CMD>setlocal spell!<CR>")
+
+-- open terminal (--working-directory is alacritty specific)
+vim.keymap.set("n", "<M-t>", "<CMD>silent !setsid $TERMINAL --working-directory $(dirname `realpath %`)<CR>")
