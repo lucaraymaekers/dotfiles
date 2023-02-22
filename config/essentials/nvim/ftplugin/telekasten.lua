@@ -1,5 +1,6 @@
 vim.keymap.set("i", "(", "()<Left>")
 vim.keymap.set("i", "[", "[]<Left>")
+vim.opt.spell = true
 
 -- syntax highlighting
 vim.cmd("hi tklink ctermfg=72 guifg=#81a1c1 cterm=bold,underline gui=bold,underline")
