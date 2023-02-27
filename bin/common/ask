@@ -1,12 +1,17 @@
-#!/usr/bin/env bash
-# Depends on passmenu
+#!/bin/sh
 if [ -z "$1" ]
 then
     echo -n ">"
     read prompt
+elif [ "$1" = "-1" ]
+then
+	shift
+	prompt=$1
+	test -z "$1" || exit 1
 else
     prompt="$@"
 fi
+
 
 API_KEY="$(pass tokens/openai-api)"
 
