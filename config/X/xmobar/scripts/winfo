@@ -45,9 +45,9 @@ GetCWD (){
 
   echo -n "${PROCESS}" \
     | sed \
-    -e "s;^zsh$;<fn=1></fn>&;g" \
-    -e "s;^htop$;<fn=1></fn> &;g" \
-    -e "s;^ranger$;<fn=1></fn> &;g"
+    -e "s;^zsh$;&;g" \
+    -e "s;^htop$; &;g" \
+    -e "s;^ranger$; &;g"
 }
 
 # Get title of window / name of process
