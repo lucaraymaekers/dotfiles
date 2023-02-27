@@ -76,9 +76,6 @@ color05 = "#81a1c1"
 color09 = "#4c566a"
 color17 = "#d03a3f"
 
-leftwp = "<box type=Bottom width=2 mb=2 color=" ++ colorfg ++ ">"
-rightwp = "</box>"
-
 -- Count of window in active workspace
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -189,16 +186,15 @@ myStartupHook = do
 main = do
     -- Setup xmobar as docks
     --
-    xmproc0 <- spawnPipe "xmobar $HOME/.config/xmobar/xmobarrc0.hs"
-    xmproc1 <- spawnPipe "xmobar $HOME/.config/xmobar/xmobarrc1.hs"
+    xmproc <- spawnPipe "xmobar $HOME/.config/xmobar/xmobarrc.hs"
 
     -- ewmh: Add fullscreen handling support
     xmonad $ docks . ewmh $ defaults {
         layoutHook = avoidStruts $ layoutHook defaults
         , logHook = dynamicLogWithPP $ filterOutWsPP ["hid"] $ xmobarPP { 
-             ppOutput = \x  -> hPutStrLn xmproc0 x
+             ppOutput = \x  -> hPutStrLn xmproc x
 
-            , ppCurrent = xmobarColor colorfg colorbg . wrap leftwp rightwp -- Visible but not current workspace
+            , ppCurrent = xmobarColor colorfg colorbg -- Visible but not current workspace
             , ppVisible = xmobarColor colorfg colorbg -- Hidden workspace
             , ppHidden = xmobarColor color01 colorbg -- Hidden workspaces (no windows)
             , ppHiddenNoWindows = xmobarColor color04 colorbg -- Title of active window
