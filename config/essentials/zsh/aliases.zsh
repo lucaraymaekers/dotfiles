@@ -29,7 +29,6 @@ alias ls='exa --icons --sort extension --group-directories-first'
 
 alias nv='nvim'
 alias -g vimp="vim -c 'PlugInstall'"
-alias yay='pikaur'
 alias dopac='doas pacman'
 alias orpac='pacman -Qtdq | dopac -Rns - 2> /dev/null || echo "No orphans."'
 alias pacup='dopac -Syu'
@@ -39,6 +38,15 @@ alias pacqs='pacman -Qs'
 alias pacql='pacman -Ql'
 alias dopacs='dopac -S'
 alias doprm='dopac -Rns'
+
+alias yay='pikaur'
+alias yayup='yay -Syu'
+alias yaysi='yay -Si'
+alias yayss='yay -Ss'
+alias yayqs='yay -Qs'
+alias yayql='yay -Ql'
+alias yays='yay -S'
+alias yayrm='yay -Rns'
 # 
 # 
 # -----------------------------------------------------------
