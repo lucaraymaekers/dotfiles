@@ -19,8 +19,9 @@ export PASSWORD_STORE_CLIP_TIME=5
 if [ ! $(pgrep Xorg) ] && [ "tty1" = "$(basename $(tty))" ]
 then
 	clear
-	eval `keychain --eval --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D`
-	eval `keychain --noask --eval --quiet --agents ssh`
+	eval `keychain --eval --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D 2>/dev/null`
+	eval `keychain --noask --eval --quiet --agents ssh 2>/dev/null`
+	clear
     startx 2&> /dev/null
     exit
 fi
