@@ -34,4 +34,5 @@ xcompmgr &
 feh --bg-scale ~/pics/wallpaper
 setxkbmap -option ctrl:nocaps
 xautolock -time 5 -locker slock &
+slstatus &
 exec dwm
