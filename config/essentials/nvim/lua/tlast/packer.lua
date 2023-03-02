@@ -12,14 +12,6 @@ return require('packer').startup(function(use)
 	-- colors
 	use('shaunsingh/nord.nvim')
 	use('folke/tokyonight.nvim')
-	use {
-		'glepnir/dashboard-nvim',
-		event = 'VimEnter',
-		config = {
-			theme = 'hyper',
-		},
-		requires = {'nvim-tree/nvim-web-devicons'}
-	}
 	use('norcalli/nvim-colorizer.lua')
 
 	use('airblade/vim-gitgutter')
