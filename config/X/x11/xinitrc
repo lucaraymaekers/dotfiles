@@ -36,4 +36,5 @@ setxkbmap -option ctrl:nocaps
 xautolock -time 5 -locker slock &
 redshift &
 slstatus &
+unclutter --timeout 3 --jitter 50 -b
 exec dwm
