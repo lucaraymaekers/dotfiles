@@ -64,8 +64,16 @@ vim.keymap.set("n", "<C-h>", function ()
 	vim.opt.signcolumn = opt and "yes" or "no"
 end)
 
--- random
+-- utils
 vim.keymap.set("i", "<LocalLeader>r", "<CMD>r!echo -n $RANDOM<CR><esc>kJA")
+-- ordered list
+vim.keymap.set("v", "<Leader>n", "I0. <esc>gvg<C-a>")
+vim.keymap.set("v", "<Leader>u", "<cmd>'<,'>s/^[0-9]\\+\\. //<cr><esc>")
+-- scripts
+vim.keymap.set("n", "<Leader>x", "<CMD>!chmod +x %<CR>", { silent = true})
+-- replace
+vim.keymap.set("n", "<Leader>rf", [[:%s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<Leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
 
 -- write
 vim.keymap.set("n", "<LocalLeader>w", "<CMD>write<CR>")
