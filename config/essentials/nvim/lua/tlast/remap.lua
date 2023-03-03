@@ -40,13 +40,6 @@ vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<Leader>y", "\"+y")
 vim.keymap.set("n", "<Leader>o", "<Plug>OSCYank")
 
--- scripts
-vim.keymap.set("n", "<Leader>x", "<CMD>!chmod +x %<CR>", { silent = true})
-
--- replace
-vim.keymap.set("n", "<Leader>rf", [[:%s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<Leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
-
 -- templates
 vim.keymap.set("n", "<Leader>rt", ":r " .. vim.fn.stdpath("config") .. "/templates/")
 
