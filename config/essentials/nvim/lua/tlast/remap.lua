@@ -82,7 +82,7 @@ vim.keymap.set("n", "<Leader><C-s>", "<CMD>setlocal spell!<CR>")
 -- open terminal in file's parent director
 -- this needs to be asynchrous
 vim.keymap.set("n", "<Return>", function ()
-    local cmd = "cd " .. vim.fn.expand("%:p:h") .. "; st"
+    local cmd = "cd " .. vim.fn.expand("%:p:h") .. "; setsid st"
     vim.fn.jobstart(cmd, {
         on_exit = function(job_id, exit_code, event_type)
             -- Do nothing here
