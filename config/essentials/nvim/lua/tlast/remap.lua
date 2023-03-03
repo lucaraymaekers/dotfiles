@@ -73,6 +73,9 @@ vim.keymap.set("n", "<LocalLeader>W", "<CMD>write!<CR>")
 vim.keymap.set("n", "<LocalLeader>e", "<CMD>edit<CR><CMD>set nohls<CR>")
 vim.keymap.set("n", "<Leader><M-s>", "<CMD>source<CR>")
 
+-- Packer
+vim.keymap.set("n", "<Leader>P", "<CMD>PackerSync<CR>")
+
 -- spelling
 vim.keymap.set("n", "<Leader><C-s>", "<CMD>setlocal spell!<CR>")
 
