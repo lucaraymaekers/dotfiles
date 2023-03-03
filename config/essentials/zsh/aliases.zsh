@@ -25,7 +25,7 @@ alias -g lst1='ls --tree -L1'
 alias -g lst2='ls --tree -L2'
 alias -g lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
-alias ls='exa --icons --sort extension --group-directories-first'
+alias ls='exa --sort extension --group-directories-first'
 
 alias nv='nvim'
 alias -g vimp="vim -c 'PlugInstall'"
@@ -37,6 +37,7 @@ alias pacs='pacman -Ss'
 alias pacqs='pacman -Qs'
 alias pacql='pacman -Ql'
 alias dopacs='dopac -S'
+alias dopacc='dopac -Sc'
 alias doprm='dopac -Rns'
 
 alias yay='pikaur'
@@ -92,6 +93,7 @@ alias -g smc='systemctl'
 alias -g smcu='systemctl --user'
 alias zsr='source ~/.zshrc && rehash'
 alias -g wf='doas wipefs -a'
+alias -g dmci="doas make clean install"
 
 # quick config
 alias -g ez='$EDITOR ~/.zshrc'
@@ -113,6 +115,7 @@ alias -s z80="$EDITOR"
 alias -s zip='unzip -l'
 alias -s tar='tar tf'
 
+alias cfg='git --git-dir=$HOME/src/dotfiles/.git --work-tree=$HOME/src/dotfiles'
 # oh-my-zsh git aliases
 alias g='git'
 alias ga='git add'
