@@ -28,7 +28,6 @@ vim.opt.encoding = "utf-8"
 
 vim.opt.smartindent = true
 vim.opt.scrolloff = 8
-vim.opt.textwidth = 74
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true

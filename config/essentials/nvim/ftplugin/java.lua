@@ -1,2 +1,2 @@
-vim.keymap.set("n", "<LocalLeader>t", "<cmd>s/\\(\\s*\\)\\(.*\\)/\\1System.out.println(\\2);<cr><cmd>setlocal nohls<cr>")
-vim.keymap.set("i", "<LocalLeader>t", "<cmd>s/\\(\\s*\\)\\(.*\\)/\\1System.out.println(\\2);<cr><cmd>setlocal nohls<cr><esc>A")
+vim.keymap.set({"n", "i"}, "<LocalLeader>t", "<cmd>s/\\(\\s*\\)\\(.*\\)/\\1System.out.println(\"\\2\");<cr>")
+vim.keymap.set({"n", "i"}, "<LocalLeader>i", "<cmd>s/\\(\\s*\\)\\(.*\\)/\\1System.out.print(\"\\2: \" + \\2);<cr>")
