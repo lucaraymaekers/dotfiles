@@ -1,5 +1,3 @@
-vim.keymap.set("i", "(", "()<Left>")
-vim.keymap.set("i", "[", "[]<Left>")
 vim.opt.spell = true
 
 -- syntax highlighting
@@ -9,3 +7,33 @@ vim.cmd("hi tkHighlight ctermbg=yellow ctermfg=red cterm=bold guibg=#ebcb8b guif
 vim.cmd("hi link CalNavi CalRuler")
 vim.cmd("hi tkTagSep ctermfg=gray guifg=gray")
 vim.cmd("hi tkTag ctermfg=175 guifg=#d3869B")
+
+vim.keymap.set("i", "(", "()<Left>")
+vim.keymap.set("i", "[", "[]<Left>")
+vim.keymap.set("n", "<leader>z", require('telekasten').panel)
+-- vim.keymap.set("n", "<leader>zC", vim.cmd("CalendarT"))
+vim.keymap.set("n", "<leader>zF", "<cmd>Telekasten find_friends<cr>")
+vim.keymap.set("n", "<leader>zN", "<cmd>Telekasten new_templated_note<cr>")
+vim.keymap.set("n", "<leader>zT", "<cmd>Telekasten goto_today<cr>")
+vim.keymap.set("n", "<leader>zW", "<cmd>Telekasten goto_thisweek<cr>")
+vim.keymap.set("n", "<leader>za", "<cmd>Telekasten show_tags<cr>")
+vim.keymap.set("n", "<leader>zb", "<cmd>Telekasten show_backlinks<cr>")
+vim.keymap.set("n", "<leader>zc", "<cmd>Telekasten show_calendar<cr>")
+vim.keymap.set("n", "<leader>zd", "<cmd>Telekasten find_daily_notes<cr>")
+vim.keymap.set("n", "<leader>zf", "<cmd>Telekasten find_notes<cr>")
+vim.keymap.set("n", "<leader>zg", "<cmd>Telekasten search_notes<cr>")
+vim.keymap.set("n", "<leader>zm", "<cmd>Telekasten browse_media<cr>")
+vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<cr>")
+vim.keymap.set("n", "<leader>zp", "<cmd>Telekasten preview_img<cr>")
+vim.keymap.set("n", "<leader>zr", "<cmd>Telekasten rename_note<cr>")
+vim.keymap.set("n", "<leader>zs", "<cmd>Telekasten switch_vault<cr>")
+vim.keymap.set("n", "<leader>zw", "<cmd>Telekasten find_weekly_notes<cr>")
+vim.keymap.set("n", "<leader>zy", "<cmd>Telekasten yank_notelink<cr>")
+vim.keymap.set("n", "<leader>#", "<cmd>Telekasten show_tags<cr>")
+
+vim.keymap.set("n", "<LocalLeader>z", "<cmd>Teleasten follow_link<cr>")
+vim.keymap.set({"n", "i"}, "<LocalLeader>i", "<cmd>Telekasten insert_link<cr>")
+vim.keymap.set({"n", "i"}, "<LocalLeader>I", "<cmd>Telekasten insert_img_link<cr>")
+vim.keymap.set({"n", "i"}, "<LocalLeader>t", "<cmd>Telekasten toggle_todo<cr>")
+
+vim.keymap.set("i", "<LocalLeader>l", "<esc>I![<esc>A]()<left><C-r>+<esc>")
