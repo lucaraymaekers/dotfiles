@@ -22,6 +22,6 @@ vim.keymap.set("n", "<LocalLeader>F", "<cmd>Telekasten find_friends<cr>")
 vim.keymap.set("n", "<LocalLeader>r", "<cmd>Telekasten rename_note<cr>")
 vim.keymap.set({"n", "i"}, "<LocalLeader>t", "<cmd>Telekasten toggle_todo<cr>")
 vim.keymap.set("n", "<LocalLeader>y", "<cmd>Telekasten yank_notelink<cr>")
-vim.keymap.set("n", "<LocalLeader>z", "<cmd>Teleasten follow_link<cr>")
+vim.keymap.set("n", "<LocalLeader>z", "<cmd>Telekasten follow_link<cr>")
 
 vim.keymap.set("i", "<LocalLeader>l", "<esc>I![<esc>A]()<left><C-r>+<esc>")
