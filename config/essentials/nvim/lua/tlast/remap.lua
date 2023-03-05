@@ -31,6 +31,7 @@ vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-o>", "<C-W>o")
 -- command line
 vim.keymap.set("c", "<M-b>", "<C-Left>")
 vim.keymap.set("c", "<M-f>", "<C-Right>")
+vim.keymap.set("c", "<M-d>", "<C-Right><C-w>")
 
 -- move visual selection up/down wards
 vim.keymap.set("v", "J",  "<CMD>m '>+1<CR>gv=gv")
