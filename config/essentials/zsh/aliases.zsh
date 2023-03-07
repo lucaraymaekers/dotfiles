@@ -2,9 +2,9 @@
 # s/alias \([^-]\)/alias -g \1
 
 # Programs
+alias nv='nvim'
 alias -g nb='newsboat'
 alias -g sr='surfraw'
-
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     # alias ls='ls -h --color --group-directories-first'
@@ -27,7 +27,6 @@ alias -g lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
 alias ls='exa --sort extension --group-directories-first'
 
-alias nv='nvim'
 alias -g vimp="vim -c 'PlugInstall'"
 alias dopac='doas pacman'
 alias orpac='pacman -Qtdq | dopac -Rns - 2> /dev/null || echo "No orphans."'
