@@ -5,6 +5,7 @@
 alias nv='nvim'
 alias -g nb='newsboat'
 alias -g sr='surfraw'
+alias -g cursus='firefox "$(find ~/docs/school | grep "Cursus/index.html" 2> /dev/null | sed "s;${HOME};~;" | dmenu -g 1 -l 10 -x -i)"'
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     # alias ls='ls -h --color --group-directories-first'
@@ -27,7 +28,6 @@ alias -g lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
 alias ls='exa --sort extension --group-directories-first'
 
-alias -g vimp="vim -c 'PlugInstall'"
 alias dopac='doas pacman'
 alias orpac='pacman -Qtdq | dopac -Rns - 2> /dev/null || echo "No orphans."'
 alias pacup='dopac -Syu'
@@ -52,6 +52,11 @@ alias yrm='yay -Rns'
 # -----------------------------------------------------------
 
 alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
+
+# vim
+alias scr='nvim +"setlocal buftype=nofile bufhidden=hide noswapfile filetype=txt" scratch'
+alias -g vimp="vim '+PlugInstall'"
+alias -g nvimp="nvim '+PackerSync'"
  
 alias -g xclipp='xclip -selection clipboard -r'
 alias -g xclipo='xclip -o -selection clipboard -r'
@@ -73,7 +78,7 @@ alias -g dloc='doas find / -type "d" 2> /dev/null | grep'
 alias lsblk='lsblk -o name,type,fsused,size,fstype,label,mountpoint'
 alias -g fif='find . -type "f" | grep'
 alias -g fid='find . -type "d" | grep'
-alias scr='nvim +"setlocal buftype=nofile bufhidden=hide noswapfile filetype=txt" scratch'
+alias -g sha 'ssh-add'
 alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
 alias whatsmyip='curl "ifconfig.me"'
 alias icognito='unset HISTFILE'
