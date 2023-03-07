@@ -4,6 +4,7 @@
 # Programs
 alias -g nb='newsboat'
 alias -g sr='surfraw'
+alias -g ccu='calcurse'
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
