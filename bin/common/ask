@@ -12,6 +12,7 @@ else
     prompt="$@"
 fi
 
+prompt="$(echo "$prompt" | tr "\n\t" ' ')"
 
 API_KEY="$(pass tokens/openai-api)"
 
