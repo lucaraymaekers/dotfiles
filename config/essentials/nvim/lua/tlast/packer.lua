@@ -3,10 +3,9 @@ return require('packer').startup(function(use)
 
 	-- files
 	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.0',
+		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
-	use('nvim-telescope/telescope-symbols.nvim')
 	use('theprimeagen/harpoon')
 
 	-- colors
