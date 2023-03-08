@@ -109,6 +109,7 @@ alias -g edw='$EDITOR ~/src/dwm/config.def.h'
 alias -g edm='$EDITOR ~/src/dmenu/config.def.h'
 alias -g est='$EDITOR ~/src/st/config.def.h'
 alias -g esl='$EDITOR ~/src/slock/config.def.h'
+alias -g cfdef='$EDITOR config.def.h'
 
 alias -g ff='`fzffile`'
 alias -g fd='`fzfdir`'
