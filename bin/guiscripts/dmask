@@ -4,7 +4,7 @@
 which dmenu Xdialog ask > /dev/null ||
 	exit 1
 
-prompt="$(echo -n | dmenu -p "prompt:" | tr '"' "'")"
+prompt="$(echo -n | dmenu -p "prompt:" | tr '"' "'" | tee -a /tmp/dmask_history)"
 
 test -z "$prompt" && exit 1
 answer="$(ask "$prompt" | tr '"' "'" | fold -w 80 -s)"
