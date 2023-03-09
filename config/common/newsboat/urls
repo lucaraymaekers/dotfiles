@@ -3,6 +3,7 @@ https://hackaday.com/blog/feed/
 https://thisweek.gnome.org/index.xml
 https://itsfoss.com/rss
 https://archlinux.org/feeds/news/
+https://www.hln.be/home/rss.xml
 "---VIDEOS---"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw
 https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg
@@ -28,3 +29,4 @@ https://github.com/hrsh7th/nvim-cmp/releases.atom
 https://github.com/L3MON4D3/LuaSnip/releases.atom
 https://github.com/alacritty/alacritty/releases.atom
 https://github.com/umlaeute/v4l2loopback/releases.atom
+https://github.com/MultiMC/Launcher/releases.atom
