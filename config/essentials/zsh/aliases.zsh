@@ -7,6 +7,8 @@ alias -g nb='newsboat'
 alias -g sr='surfraw'
 alias -g ccu='calcurse'
 
+alias arduino-cli='arduino-cli --config-file $XDG_CONFIG_HOME/arduino15/arduino-cli.yaml'
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     # alias ls='ls -h --color --group-directories-first'
