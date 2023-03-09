@@ -67,7 +67,10 @@ vim.keymap.set("n", "<Leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><L
 vim.keymap.set("n", "<LocalLeader>w", "<cmd>write<cr>")
 vim.keymap.set("n", "<LocalLeader>W", "<cmd>write!<cr>")
 vim.keymap.set("n", "<LocalLeader>e", "<cmd>edit<cr>")
-vim.keymap.set("n", "<Leader><M-s>", "<cmd>source<cr>")
+vim.keymap.set("n", "<LocalLeader>s", function ()
+	vim.cmd.source()
+	print("sourced.")
+end)
 
 -- Packer
 vim.keymap.set("n", "<Leader>P", "<cmd>PackerSync<cr>")
