@@ -41,9 +41,6 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 export PASSWORD_STORE_CLIP_TIME=5
 
-
-source "$ZDOTDIR"/zshrc
-
 # old
 # export RANGER_LOAD_DEFAULT_RC=FALSE
 # export VIMINIT="source ~/.config/vim/vimrc"
