@@ -111,10 +111,11 @@ alias -g edm='$EDITOR ~/src/dmenu/config.def.h'
 alias -g est='$EDITOR ~/src/st/config.def.h'
 alias -g esl='$EDITOR ~/src/slock/config.def.h'
 alias -g cfdef='$EDITOR config.def.h'
+alias -g cdo='$HOME/src/dotfiles'
 
-alias -g ff='`fzffile`'
-alias -g fd='`fzfdir`'
-alias -g fdf='`fzfdirfile`'
+alias -g ff='"`fzffile`"'
+alias -g fd='"`fzfdir`"'
+alias -g fdf='"`fzfdirfile`"'
 alias fzps='ps aux | tail +2 | fzf --bind \
 "1:execute(echo -n {} | awk '\''{print \$1}'\'' | xclip -sel c -r),\
 2:execute(echo -n {} | awk '\''{print \$2}'\'' | xclip -sel c -r),\
