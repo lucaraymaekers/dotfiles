@@ -27,7 +27,7 @@ local parse = require("luasnip.util.parser").parse_snippet
 -- keymaps
 vim.keymap.set({"i", "s"}, "<C-k>", "<Plug>luasnip-expand-or-jump", { noremap = true })
 vim.keymap.set({"i", "s"}, "<C-j>", "<Plug>luasnip-jump-prev", { noremap = true })
-vim.keymap.set({"i", "s"}, "<C-h>", "<Plug>luasnip-next-choice", { noremap = true })
+vim.keymap.set({"i", "s"}, "<C-l>", "<Plug>luasnip-next-choice", { noremap = true })
 vim.keymap.set("n", "<leader><leader>s", function()
 	ls.cleanup()
 	vim.cmd("source ~/.config/nvim/after/plugin/luasnip.lua")
@@ -115,12 +115,6 @@ ls.add_snippets("java", {
 	}}
 	]],
 	{ i(0) })),
-	-- System.out.print
-	s("sout", fmt(
-	[[
-	System.out.{}({});{}
-	]],
-	{ c(1, {t "println", t "print", t "printf"}), i(2), i(0)})),
 	-- constructor
 	s("class", fmt(
 	[[
@@ -129,12 +123,10 @@ ls.add_snippets("java", {
 	}}
 	]],
 	{ c(1, {t "public ", t "private ", t ""}), i(2), i(0)})),
-	-- print variable
-	s("pti", fmt(
-	[[
-	System.out.println("{} :" + {});{}
-	]],
-	{ i(1), rep(1), i(0) })),
+	-- print
+	parse("pt", "System.out.println($1);$0", {}),
+	parse("pti", "System.out.println(\"$1: \" + $1);$0", {}),
+	parse("abs", "Math.abs($1);$0", {}),
 	-- quick
 	s("pr", t "private "),
 	s("ob", fmt(
