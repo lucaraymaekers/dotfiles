@@ -27,7 +27,7 @@ local parse = require("luasnip.util.parser").parse_snippet
 -- keymaps
 vim.keymap.set({"i", "s"}, "<C-k>", "<Plug>luasnip-expand-or-jump", { noremap = true })
 vim.keymap.set({"i", "s"}, "<C-j>", "<Plug>luasnip-jump-prev", { noremap = true })
-vim.keymap.set({"i", "s"}, "<C-l>", "<Plug>luasnip-next-choice", { noremap = true })
+vim.keymap.set({"i", "s"}, "<C-h>", "<Plug>luasnip-next-choice", { noremap = true })
 vim.keymap.set("n", "<leader><leader>s", function()
 	ls.cleanup()
 	vim.cmd("source ~/.config/nvim/after/plugin/luasnip.lua")
@@ -49,10 +49,10 @@ ls.add_snippets("lua", {
 		[[
 		function {}({})
 			{}
-		end
+		end{}
 		]],
-    { i(1), i(2), i(3) }
-	), i(0)),
+    { i(1), i(2), i(3), i(0) })),
+	parse("sn", "s(\"$1\", fmt(\n[[\n$2\n]],\n{ $3 })),$0", {}),
 })
 
 ls.add_snippets("html", {
@@ -71,49 +71,80 @@ ls.add_snippets("java", {
 	-- function
 	s("fn", fmt(
 	[[
-	{}static {} {} ({}) {{
+	{}{} {} ({}) {{
 		{}
 	}}
 	]],
 	{
-		c(1, {t "", t "public ", t "private "}),
+		c(1, {t "public ", t "private ", t ""}),
 		i(2, "type"),
 		i(3, "f"),
 		i(4), i(0)
 	})),
+	-- constructor
+	s("cst", fmt(
+	[[
+	public {} ({}) {{
+		{}
+	}}{}
+	]],
+	{ i(1), i(2), i(3), i(0) })),
 	-- setter function
 	s("sfn", fmt(
 	[[
-	{}void set_{} ({}) {{
+	{}void set_{} ({} {}) {{
 		this.{} = {};
-	}}
+	}}{}
 	]],
-	{ c(1, {t "", t "public ", t "private "}),
-	i(2), rep(2), rep(2), rep(2) })),
+	{ c(1, {t "public ", t "private ", t ""}),
+	i(2), i(3), rep(2), rep(2), rep(2), i(0) })),
 	-- getter function
 	s("gfn", fmt(
 	[[
-	{}void get_{} () {{
+	{}{} get_{} () {{
 		return this.{};
-	}}
+	}}{}
 	]],
-	{ c(1, {t "", t "public ", t "private "}), i(2), rep(2) })),
+	{ c(1, {t "public ", t "private ", t ""}), i(2, "type"), i(3), rep(3), i(0)})),
 	s("psv", fmt(
 	[[
-	public class Main
-	{{
-		public static void main (String[] args)
-		{{
+	public class Main {{
+		public static void main (String[] args) {{
 			{}
 		}}
 	}}
 	]],
 	{ i(0) })),
-	s("pt", fmt(
+	-- System.out.print
+	s("sout", fmt(
 	[[
-	System.out.{}("{}");
+	System.out.{}({});{}
+	]],
+	{ c(1, {t "println", t "print", t "printf"}), i(2), i(0)})),
+	-- constructor
+	s("class", fmt(
+	[[
+	{}class {} {{
+		{}
+	}}
+	]],
+	{ c(1, {t "public ", t "private ", t ""}), i(2), i(0)})),
+	-- print variable
+	s("pti", fmt(
+	[[
+	System.out.println("{} :" + {});{}
+	]],
+	{ i(1), rep(1), i(0) })),
+	-- quick
+	s("pr", t "private "),
+	s("ob", fmt(
+	[[
+	{} {} = new {}({});
 	{}
 	]],
-	{ c(1, {t "print", t "println", t "printf"}), i(2), i(0) })),
+	{ i(1), i(2), rep(1), i(3), i(0) })),
 })
 
+ls.add_snippets("sh", {
+	parse("fn", "function $1 {\n\t$2\n}$0", {})
+})
