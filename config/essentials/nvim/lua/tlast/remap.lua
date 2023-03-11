@@ -51,7 +51,7 @@ vim.keymap.set("n", "<C-h>", function ()
 	vim.opt.showcmd = opt
 	vim.opt.laststatus = opt and 2 or 0
 	vim.opt.signcolumn = opt and "yes" or "no"
-end)
+end, { noremap = true })
 
 -- utils
 vim.keymap.set("i", "<LocalLeader>r", "<cmd>r!echo -n $RANDOM<cr><esc>kJA", { noremap = true })
@@ -71,7 +71,7 @@ vim.keymap.set("n", "<LocalLeader>e", "<cmd>edit<cr>", { noremap = true })
 vim.keymap.set("n", "<LocalLeader>s", function ()
 	vim.cmd.source()
 	print("sourced.")
-end)
+end, { noremap = true })
 
 -- Packer
 vim.keymap.set("n", "<Leader>P", "<cmd>PackerSync<cr>", { noremap = true })
@@ -85,7 +85,7 @@ vim.keymap.set("n", "<Return>", function ()
     local cmd = "cd " .. vim.fn.expand("%:p:h") .. "; setsid st"
 	-- asynchrous go brr
     vim.fn.jobstart(cmd, { on_exit = function(job_id, exit_code, event_type) end })
-end)
+end, { noremap = true })
 
 
 -- clear registers
@@ -98,4 +98,4 @@ vim.keymap.set("n", "<Leader>rc", function ()
 	for _, r in ipairs(regs) do
 	  vim.fn.setreg(r, {})
 	end
-end)
+end, { noremap = true })
