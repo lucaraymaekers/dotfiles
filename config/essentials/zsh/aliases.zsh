@@ -22,6 +22,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 alias -g l='ls -l'
+alias -g l1='ls -1'
 alias -g ll='ls -la'
 alias -g la='ls -aF'
 alias -g lst='ls --tree'
