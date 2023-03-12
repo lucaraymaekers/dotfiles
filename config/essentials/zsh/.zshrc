@@ -1,30 +1,10 @@
 #!/bin/zsh
 
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-
-export XINITRC="$HOME/.config/x11/xinitrc"
-export EDITOR="nvim"
-export VISUAL="nvim"
-export TERMINAL="st"
-export BROWSER="firefox"
-
-export CARGO_HOME=~/.config/cargo
-export GNUPGHOME="$HOME/.config/gnupg"
-export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
-export QT_QPA_PLATFORMTHEME="qt5ct"
-
-export _JAVA_AWT_WM_NONREPARENTING=1
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
-
-export PASSWORD_STORE_CLIP_TIME=5
-
 if [ ! $(pgrep Xorg) ] && [ "tty1" = "$(basename $(tty))" ]
 then
 	clear
-	eval "$(keychain --dir "$HOME/.config/keychain" --eval --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D 2> /dev/null)"
-	eval "$(keychain --dir "$HOME/.config/keychain" --noask --eval --quiet --agents ssh 2> /dev/null)"
+	eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D 2> /dev/null)"
+	eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --noask --eval --quiet --agents ssh 2> /dev/null)"
 	clear
     startx 2&> /dev/null
     exit
@@ -36,6 +16,7 @@ zle -N edit-command-line
 zstyle ':compinstall' filename '/home/aluc/.zshrc'
 zstyle ':completion:*' menu select
 autoload -Uz compinit
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 autoload -Uz surround
 zle -N delete-surround surround
 zle -N add-surround surround
@@ -116,18 +97,3 @@ setopt histreduceblanks
 setopt interactivecomments
 setopt notify
 setopt cdablevars
-
-# Variables
-HISTFILE=~/.config/zsh/histfile
-HISTSIZE=100000
-SAVEHIST=100000
-
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
-GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-ZOT="${HOME}/zot"
-
-# old
-# export RANGER_LOAD_DEFAULT_RC=FALSE
-# export VIMINIT="source ~/.config/vim/vimrc"
-# export NVM_DIR="$HOME/.config/nvm"
-# export fpath=($HOME/.config/zsh/completion/ $fpath)

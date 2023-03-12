@@ -1,6 +1,7 @@
 require("tlast.cmp.setup")
 
 require("tlast.cmp.arduino")
+require("tlast.cmp.bash")
 require("tlast.cmp.clangd")
 require("tlast.cmp.html")
 require("tlast.cmp.css")

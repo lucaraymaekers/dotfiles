@@ -1,38 +1,43 @@
-vim.opt.clipboard = "unnamed"
+local opt = vim.opt
 
-vim.opt.termguicolors = true
+opt.clipboard = "unnamed"
 
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.showmatch = true
-vim.opt.matchtime = 0
-vim.opt.showcmd = true
-vim.opt.cursorline = true
-vim.opt.ruler = true
+opt.termguicolors = true
 
-vim.opt.wildmenu = true
-vim.opt.incsearch = true
-vim.opt.hlsearch = false
+opt.number = true
+opt.relativenumber = true
+opt.showmatch = true
+opt.matchtime = 0
+opt.showcmd = true
+opt.cursorline = true
+opt.ruler = true
 
-vim.opt.mouse = ""
+opt.path:append("**")
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.backspace = "indent,eol,start"
+opt.wildmenu = true
+opt.incsearch = true
+opt.hlsearch = false
 
-vim.opt.signcolumn = "yes"
-vim.opt.updatetime = 100
-vim.opt.laststatus = 2
-vim.opt.history = 200
-vim.opt.encoding = "utf-8"
+opt.mouse = ""
 
-vim.opt.smartindent = true
-vim.opt.scrolloff = 8
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.backspace = "indent,eol,start"
 
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+opt.signcolumn = "yes"
+opt.updatetime = 100
+opt.laststatus = 2
+opt.history = 200
+opt.encoding = "utf-8"
 
-vim.opt.swapfile = false
-vim.opt.backup = false
+opt.smartindent = true
+opt.scrolloff = 8
 
-vim.opt.spelllang = "en_us,nl"
+opt.ignorecase = true
+opt.smartcase = true
+
+opt.swapfile = false
+opt.backup = false
+
+opt.spelllang = "en_us,nl"
+opt.formatoptions = "cqrnj"

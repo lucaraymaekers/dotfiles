@@ -12,7 +12,7 @@ test -z "${inp:=$@}" &&
 prompt="$(echo "$inp" | tr "\n\t\"" "  '")"
 
 API_KEY="$(pass tokens/openai-api)"
-model="text-ada-001"
+model="text-curie-001"
 tokens="1024"
 temperature=0
 

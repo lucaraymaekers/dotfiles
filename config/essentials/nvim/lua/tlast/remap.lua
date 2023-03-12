@@ -1,48 +1,43 @@
 vim.g.mapleader = " "
-vim.g.localleader = "\\"
+vim.g.maplocalleader = "\\"
 
-vim.keymap.set("n", "-", vim.cmd.Ex)
+-- -- vinegar is already doing this
+-- vim.keymap.set("n", "-", vim.cmd.Ex)
 
 -- moving
-vim.keymap.set("i", "<C-a>", "<C-o>I")
-vim.keymap.set("i", "<C-e>", "<C-o>A")
-vim.keymap.set("i", "<C-k>", "<C-o>D")
+vim.keymap.set("i", "<C-a>", "<C-o>I", { noremap = true })
+vim.keymap.set("i", "<C-e>", "<C-o>A", { noremap = true })
+vim.keymap.set("i", "<C-k>", "<C-o>D", { noremap = true })
 
--- -- add closing
-vim.keymap.set("i", '"', '""<Left>')
--- vim.keymap.set("i", "'", "''<Left>")
--- vim.keymap.set("i", "(", "()<Left>")
--- vim.keymap.set("i", "[", "[]<Left>")
--- vim.keymap.set("i", "{", "{}<Left>")
-vim.keymap.set("i", "{<cr>", "{<cr>}<C-o>O")
-vim.keymap.set("i", "{;<cr>", "{<cr>};<C-o>O")
+vim.keymap.set("i", "{<cr>", "{<cr>}<C-o>O", { noremap = true })
+vim.keymap.set("i", "{;<cr>", "{<cr>};<C-o>O", { noremap = true })
 
 -- buffers
-vim.keymap.set("n", "gb", "<cmd>buffers<cr>:buffer<Space>")
-vim.keymap.set("n", "<Leader>q", "<cmd>q!<cr>")
-vim.keymap.set("n", "<Leader>Q", "<cmd>qa!<cr>")
+vim.keymap.set("n", "gb", "<cmd>buffers<cr>:buffer<Space>", { noremap = true })
+vim.keymap.set("n", "<Leader>q", "<cmd>q!<cr>", { noremap = true })
+vim.keymap.set("n", "<Leader>Q", "<cmd>qa!<cr>", { noremap = true })
 
 -- Windows
-vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-h>", "<C-W>h")
-vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-j>", "<C-W>j")
-vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-k>", "<C-W>k")
-vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-l>", "<C-W>l")
-vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-o>", "<C-W>o")
+vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-h>", "<C-W>h", { noremap = true })
+vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-j>", "<C-W>j", { noremap = true })
+vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-k>", "<C-W>k", { noremap = true })
+vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-l>", "<C-W>l", { noremap = true })
+vim.keymap.set({"n", "i", "v", "c", "o", "s", "x"}, "<A-o>", "<C-W>o", { noremap = true })
 -- command line
-vim.keymap.set("c", "<M-b>", "<C-Left>")
-vim.keymap.set("c", "<M-f>", "<C-Right>")
-vim.keymap.set("c", "<M-d>", "<C-Right><C-w>")
+vim.keymap.set("c", "<M-b>", "<C-Left>", { noremap = true })
+vim.keymap.set("c", "<M-f>", "<C-Right>", { noremap = true })
+vim.keymap.set("c", "<M-d>", "<C-Right><C-w>", { noremap = true })
 
 -- move visual selection up/down wards
-vim.keymap.set("v", "J",  "<cmd>m '>+1<cr>gv=gv<cr>")
-vim.keymap.set("v", "K", "<cmd>m '<-2<cr>gv=gv<cr>")
+vim.keymap.set("v", "J",  "<cmd>m '>+1<cr>gv=gv<cr>", { noremap = true })
+vim.keymap.set("v", "K", "<cmd>m '<-2<cr>gv=gv<cr>", { noremap = true })
 
 -- clipboard
-vim.keymap.set("n", "<Leader>y", "\"+y")
-vim.keymap.set("n", "<Leader>o", "<Plug>OSCYank")
+vim.keymap.set("n", "<Leader>y", "\"+y", { noremap = true })
+vim.keymap.set("n", "<Leader>o", "<Plug>OSCYank", { noremap = true })
 
 -- templates
-vim.keymap.set("n", "<Leader>rt", ":r " .. vim.fn.stdpath("config") .. "/templates/")
+vim.keymap.set("n", "<LocalLeader>rt", ":-1r " .. vim.fn.stdpath("config") .. "/templates", { noremap = true })
 
 -- hide all
 local s = {hidden_all = 0}
@@ -56,41 +51,41 @@ vim.keymap.set("n", "<C-h>", function ()
 	vim.opt.showcmd = opt
 	vim.opt.laststatus = opt and 2 or 0
 	vim.opt.signcolumn = opt and "yes" or "no"
-end)
+end, { noremap = true })
 
 -- utils
-vim.keymap.set("i", "<LocalLeader>r", "<cmd>r!echo -n $RANDOM<cr><esc>kJA")
+vim.keymap.set("i", "<LocalLeader>r", "<cmd>r!echo -n $RANDOM<cr><esc>kJA", { noremap = true })
 -- ordered list
-vim.keymap.set("v", "<Leader>n", "I0. <esc>gvg<C-a>")
-vim.keymap.set("v", "<Leader>u", "<cmd>'<,'>s/^[0-9]\\+\\. //<cr><esc>")
+vim.keymap.set("v", "<Leader>n", "I0. <esc>gvg<C-a>", { noremap = true })
+vim.keymap.set("v", "<Leader>u", "<cmd>'<,'>s/^[0-9]\\+\\. //<cr><esc>", { noremap = true })
 -- scripts
-vim.keymap.set("n", "<Leader>x", "<cmd>!chmod +x %<cr>", { silent = true})
+vim.keymap.set("n", "<Leader>x", "<cmd>!chmod +x %<cr>", { noremap = true, silent = true})
 -- replace
-vim.keymap.set("n", "<Leader>rf", [[:%s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<Leader>rl", [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<Leader>sf", [[:%s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<Leader>sl", [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
 
 -- write
-vim.keymap.set("n", "<LocalLeader>w", "<cmd>write<cr>")
-vim.keymap.set("n", "<LocalLeader>W", "<cmd>write!<cr>")
-vim.keymap.set("n", "<LocalLeader>e", "<cmd>edit<cr>")
-vim.keymap.set("n", "<Leader><M-s>", "<cmd>source<cr>")
+vim.keymap.set("n", "<LocalLeader>w", "<cmd>write<cr>", { noremap = true })
+vim.keymap.set("n", "<LocalLeader>W", "<cmd>write!<cr>", { noremap = true })
+vim.keymap.set("n", "<LocalLeader>e", "<cmd>edit<cr>", { noremap = true })
+vim.keymap.set("n", "<LocalLeader>s", function ()
+	vim.cmd.source()
+	print("sourced.")
+end, { noremap = true })
 
 -- Packer
-vim.keymap.set("n", "<Leader>P", "<cmd>PackerSync<cr>")
+vim.keymap.set("n", "<Leader>P", "<cmd>PackerSync<cr>", { noremap = true })
 
 -- spelling
-vim.keymap.set("n", "<Leader><C-s>", "<cmd>setlocal spell!<cr>")
+vim.keymap.set("n", "<Leader><C-s>", "<cmd>setlocal spell!<cr>", { noremap = true })
 
 -- open terminal in file's parent director
 -- this needs to be asynchrous
 vim.keymap.set("n", "<Return>", function ()
     local cmd = "cd " .. vim.fn.expand("%:p:h") .. "; setsid st"
-    vim.fn.jobstart(cmd, {
-        on_exit = function(job_id, exit_code, event_type)
-            -- Do nothing here
-        end
-    })
-end)
+	-- asynchrous go brr
+    vim.fn.jobstart(cmd, { on_exit = function(job_id, exit_code, event_type) end })
+end, { noremap = true })
 
 
 -- clear registers
@@ -103,4 +98,4 @@ vim.keymap.set("n", "<Leader>rc", function ()
 	for _, r in ipairs(regs) do
 	  vim.fn.setreg(r, {})
 	end
-end)
+end, { noremap = true })

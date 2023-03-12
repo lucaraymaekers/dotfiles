@@ -3,16 +3,17 @@ https://hackaday.com/blog/feed/
 https://thisweek.gnome.org/index.xml
 https://itsfoss.com/rss
 https://archlinux.org/feeds/news/
+https://www.hln.be/home/rss.xml
 "---VIDEOS---"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw
-https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg
-https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA
-https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA
-https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA
-https://www.youtube.com/feeds/videos.xml?channel_id=UC5UAwBUum7CPN5buc-_N1Fw
-https://www.youtube.com/feeds/videos.xml?channel_id=UCbTp1BYjpuhDRG5OmgIT8iw
-https://www.youtube.com/feeds/videos.xml?channel_id=UC_ML5xP23TOWKUcc-oAE_Eg
-https://www.youtube.com/feeds/videos.xml?channel_id=UCx-ljiKQcLSd8_4AFi_yaIw
+https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw # Bugswrite
+https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg # Distrotube 
+https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA # Fireship
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA # Luke Smith
+https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA # Mental Outlaw
+https://www.youtube.com/feeds/videos.xml?channel_id=UC5UAwBUum7CPN5buc-_N1Fw # The Linux Experiment
+https://www.youtube.com/feeds/videos.xml?channel_id=UCbTp1BYjpuhDRG5OmgIT8iw # James Tomsaino
+https://www.youtube.com/feeds/videos.xml?channel_id=UC_ML5xP23TOWKUcc-oAE_Eg # Hussein Nasser
+https://www.youtube.com/feeds/videos.xml?channel_id=UCd3dNckv1Za2coSaHGHl5aA # TJ De vries
 http://vimcasts.org/feeds/ogg.rss
 "---REDDIT---"
 https://www.reddit.com/r/linux.rss
@@ -28,3 +29,4 @@ https://github.com/hrsh7th/nvim-cmp/releases.atom
 https://github.com/L3MON4D3/LuaSnip/releases.atom
 https://github.com/alacritty/alacritty/releases.atom
 https://github.com/umlaeute/v4l2loopback/releases.atom
+https://github.com/MultiMC/Launcher/releases.atom

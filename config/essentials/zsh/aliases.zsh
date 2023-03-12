@@ -7,6 +7,8 @@ alias -g nb='newsboat'
 alias -g sr='surfraw'
 alias -g ccu='calcurse'
 
+alias arduino-cli='arduino-cli --config-file $XDG_CONFIG_HOME/arduino15/arduino-cli.yaml'
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     # alias ls='ls -h --color --group-directories-first'
@@ -20,6 +22,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 alias -g l='ls -l'
+alias -g l1='ls -1'
 alias -g ll='ls -la'
 alias -g la='ls -aF'
 alias -g lst='ls --tree'
@@ -89,7 +92,6 @@ alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
 alias whatsmyip='curl "ifconfig.me"'
 alias icognito='unset HISTFILE'
 alias penv='python -m venv'
-alias ytclipo='yt-dlp "$(xclip -sel c -o)" -f "b" -S "res:720" -P $HOME/movies -o "%(title)s.%(ext)s"'
 
 alias -g '...'='../..'
 alias -g '....'='../../..'
@@ -101,23 +103,30 @@ alias -g pi='ping archlinux.org -c4'
 alias -g sba='source bin/activate'
 alias -g smc='systemctl'
 alias -g smcu='systemctl --user'
-alias zsr='source ~/.zshrc && rehash'
+alias zsr='source ${ZDOTDIR:-$HOME}/.zshrc && rehash'
 alias -g wf='doas wipefs -a'
 alias -g dmci="doas make clean install"
 
 # quick config
-alias -g ez='$EDITOR ~/.zshrc'
-alias -g eza='$EDITOR ~/.config/zsh/aliases.zsh'
+alias -g ez='$EDITOR ${ZDOTDIR:-$HOME}/.zshrc'
+alias -g eza='$EDITOR ${ZDOTDIR}/aliases.zsh'
 alias -g eto='$EDITOR ~/sync/TODO'
 alias -g edw='$EDITOR ~/src/dwm/config.def.h'
 alias -g edm='$EDITOR ~/src/dmenu/config.def.h'
 alias -g est='$EDITOR ~/src/st/config.def.h'
 alias -g esl='$EDITOR ~/src/slock/config.def.h'
 alias -g cfdef='$EDITOR config.def.h'
+alias -g cdo='$HOME/src/dotfiles'
 
-alias -g ff='`fzffile`'
-alias -g fd='`fzfdir`'
-alias -g fdf='`fzfdirfile`'
+alias -g ff='"`fzffile`"'
+alias -g fd='"`fzfdir`"'
+alias -g fdf='"`fzfdirfile`"'
+alias fzps='ps aux | tail +2 | fzf --bind \
+"1:execute(echo -n {} | awk '\''{print \$1}'\'' | xclip -sel c -r),\
+2:execute(echo -n {} | awk '\''{print \$2}'\'' | xclip -sel c -r),\
+3:execute(echo -n {} | awk '\''{print \$7}'\'' | xclip -sel c -r),\
+4:execute(echo -n {} | awk '\''{print \$9}'\'' | xclip -sel c -r),\
+5:execute(echo -n {} | tr -s '\'' '\'' | cut -f 11- -d '\'' '\'' | xclip -sel c -r)"'
 
 alias -s conf="$EDITOR"
 alias -s txt="$EDITOR"
