@@ -1,83 +1,79 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+# Display Clipboard Length
+DICL_LEN=48
+tmp="/tmp/dmclip"
+
 NotImage () {
     echo -n "" | dmenu -p "NOT AN IMAGE"
     exit
 }
 
-# Display clipboard max length
-
-selection="$(echo -e "primary\nclipboard\nswap" | dmenu -l 1 -g 3 -p "selection:")"
-if [[ "${selection}" == "swap" ]]
+selection="$(echo -e "primary\nclipboard\nswap" | 
+	dmenu -l 1 -g 3 -p "selection:")"
+if [[ "$selection" == "swap" ]]
 then
     clipboard="$(xclip -o)"
     xclip -o | xclip -sel c
-    echo -n "${clipboard}" | xclip -sel c
+    echo -n "$clipboard" | xclip -sel c
     exit
-elif [[ "${selection}" == "" ]]
+elif [ "$selection" == "" ]
 then
     exit 1
-fi
-if "${selection}" == "primary" ]]
+elif  [ "$selection" == "primary" ]
 then
     selection2="clipboard"
 else
     selection2="primary"
 fi
 
-
-clipboard="$(xclip -out -sel "${selection}" -r)"
-
-DICL_LEN=48
-if [[ "$(xclip -sel ${selection} -o | head -n1 | cut -c 2-4)" == "PNG" ]]
+if xclip -sel $selection -o -t TARGETS | grep "image/png"
 then
    disp_clip="IMAGE"
 else
-    disp_clip="$(echo -n "${clipboard}" | tr -d '\n' | cut -c -"${DICL_LEN}")"
+	clipboard="$(xclip -out -sel "$selection" -r)"
+    disp_clip="$(echo -n "$clipboard" | 
+		tr -d '\n' | 
+		cut -c -"$DICL_LEN")"
 fi
 
-menu_option="$(\
-    echo -e "save\nload\nimage\nreplace" \
-    | dmenu -l 1 -g 4 -p "'${disp_clip}'" \
-)"
-[[ "${menu_option}" ]] || exit
+menu_option="$(echo -e "save\nload\nimage\nreplace" | 
+	dmenu -l 1 -g 4 -p "'$disp_clip'")"
+[ "${menu_option}" ] || exit
 
-case "${menu_option}" in
-
+case "$menu_option" in
     replace)
-        replace_text="$(echo -n "" | dmenu -l 0 -p "replace:")"
-        [[ "${replace_text}" ]] || exit
-        replace_by_text="$(echo -n "" | dmenu -l 0 -p "by:")"
-        [[ "${replace_by_text}" ]] || exit 
-        echo "${clipboard}" \
-            | sed "s/${replace_text}/${replace_by_text}/g" \
-            | xclip -r -sel "${selection}"
+        replace_text="$(echo -n "" | 
+			dmenu -l 0 -p "replace:")"
+        [ "$replace_text" ] || exit
+        replace_by_text="$(echo -n "" | 
+			dmenu -l 0 -p "by:")"
+        [ "$replace_by_text" ] || exit 
+        echo "$clipboard" | 
+			sed "s/$replace_text/$replace_by_text/g" |
+			xclip -r -sel "$selection"
         ;;
 
     save)
-        echo "${clipboard}" >> /tmp/tmpclip.txt
+        echo "$clipboard" >> /tmp/tmpclip.txt
         ;;
     load)
-        choice="$(\
-            sort /tmp/tmpclip.txt \
-            | uniq \
-            | dmenu -g 1 -l 5 || exit \
-        )"
-        echo -n "${choice}" | xclip -sel "${selection}"
+        choice="$(sort "${tmp}.txt" | 
+			uniq | 
+			dmenu -g 1 -l 5)"
+		[ "$choice" ] || exit 1
+        echo -n "$choice" | xclip -sel "$selection"
         ;;
 
     image)
-        # Menu
-        # 1: line from paragraph
-        # 2: param 
-        # 
-        file_name="tmp_xclip"
-        xclip -o -sel c > "/tmp/${file_name}.png"
-        file "/tmp/${file_name}.png" \
-            | cut -d ':' -f 2 \
-            | grep "image" || NotImage
+        xclip -o -sel c > "${tmp}.png"
+        file -bi "${tmp}.png" |
+            grep "image/png" || NotImage
         # sed so that dmenu doesn't skip if one line
-        tesseract "/tmp/${file_name}.png" stdout > "/tmp/${file_name}"
-        sed "1i\ " "/tmp/${file_name}" | dmenu -l 10 -g 1 -p "PREVIEW:" -l 20 || exit
-        xclip -sel "${selection}" -in "/tmp/${file_name}"
+        tesseract "${tmp}.png" stdout > "$tmp"
+        sed "1i\ " "$tmp" | 
+			dmenu -l 10 -g 1 -p "PREVIEW:" -l 20 || 
+			exit
+        xclip -sel "$selection" -i "$tmp"
         ;;
 esac
