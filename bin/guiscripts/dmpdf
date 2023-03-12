@@ -1,14 +1,14 @@
 #!/bin/bash
 
-find ${1:-$HOME/docs $HOME/dl} 2> /dev/null | grep -E ".+\.pdf" | sort > /tmp/dmpdf
+tmp="/tmp/dmpdf"
+find ${1:-$HOME/docs $HOME/dl} 2> /dev/null | grep -E ".+\.pdf" | sort > "$tmp"
 choice="$(\
-        sed 's|^/home/aluc|\~| ; s|\([^/]\)[^/]*/|\1/|g' /tmp/dmpdf \
-		| awk '{printf "%s %s\n", NR ":", $0}' \
-        | dmenu -l 10 -g 1 -x -i \
-		| grep -oE "^[0-9]+:" \
-)"
+        sed 's|^/home/aluc|\~| ; s|\([^/]\)[^/]*/|\1/|g' "$tmp" | 
+		awk '{printf "%s %s\n", NR ":", $0}' | 
+		dmenu -p "pdf:" -l 10 -g 1 -x -i | 
+		grep -oE "^[0-9]+:")"
 if [ -z "$choice" ]; then
 	exit
 fi
-file="$(sed -n "${choice::-1}p" /tmp/dmpdf)"
+file="$(sed -n "${choice::-1}p" "$tmp")"
 zathura "$file" &
