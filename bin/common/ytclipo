@@ -9,7 +9,7 @@ echo "inp: ${inp}" 1>&2
 # works when link is from yt-local
 inp="$(echo -n "$inp" | awk -F 'https?://' '{print $NF}')"
 echo "inp: ${inp}" 1>&2
-notify-send "ytclipo" "<b>ytclipo</b><br><i>downloading</i> $inp"
+notify-send "ytclipo" "<b>downloading</b> $inp"
 
 yt-dlp "$inp" \
 	-f "b" \
