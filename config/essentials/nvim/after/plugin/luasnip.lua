@@ -71,7 +71,8 @@ ls.add_snippets("java", {
 	-- function
 	s("fn", fmt(
 	[[
-	{}{} {} ({}) {{
+	{}{} {} ({})
+	{{
 		{}
 	}}
 	]],
@@ -84,7 +85,8 @@ ls.add_snippets("java", {
 	-- constructor
 	s("cst", fmt(
 	[[
-	public {} ({}) {{
+	public {} ({})
+	{{
 		{}
 	}}{}
 	]],
@@ -92,7 +94,8 @@ ls.add_snippets("java", {
 	-- setter function
 	s("sfn", fmt(
 	[[
-	{}void set_{} ({} {}) {{
+	{}void set_{} ({} {})
+	{{
 		this.{} = {};
 	}}{}
 	]],
@@ -101,15 +104,18 @@ ls.add_snippets("java", {
 	-- getter function
 	s("gfn", fmt(
 	[[
-	{}{} get_{} () {{
+	{}{} get_{} ()
+	{{
 		return this.{};
 	}}{}
 	]],
 	{ c(1, {t "public ", t "private ", t ""}), i(2, "type"), i(3), rep(3), i(0)})),
 	s("psv", fmt(
 	[[
-	public class Main {{
-		public static void main (String[] args) {{
+	public class Main
+	{{
+		public static void main (String[] args)
+		{{
 			{}
 		}}
 	}}
@@ -118,16 +124,28 @@ ls.add_snippets("java", {
 	-- constructor
 	s("class", fmt(
 	[[
-	{}class {} {{
+	{}class {}
+	{{
 		{}
 	}}
 	]],
 	{ c(1, {t "public ", t "private ", t ""}), i(2), i(0)})),
+	-- StringBuilder
+	s("sb", fmt(
+	[[
+	public void print()
+	{{
+		StringBuilder sb = new StringBuilder(30);
+		sb.append({});
+		sb.append(", ").append({});{}
+		System.out.print(sb.toString());
+	}}{}
+	]],
+	{ i(1), i(2), i(3), i(0)})),
 	-- print
 	parse("pt", "System.out.println($1);$0", {}),
 	parse("pti", "System.out.println(\"$1: \" + $1);$0", {}),
-	parse("abs", "Math.abs($1);$0", {}),
-	-- quick
+	-- quickies 
 	s("pr", t "private "),
 	s("ob", fmt(
 	[[
@@ -135,6 +153,7 @@ ls.add_snippets("java", {
 	{}
 	]],
 	{ i(1), i(2), rep(1), i(3), i(0) })),
+	parse("abs", "Math.abs($1);$0", {}),
 })
 
 ls.add_snippets("sh", {
