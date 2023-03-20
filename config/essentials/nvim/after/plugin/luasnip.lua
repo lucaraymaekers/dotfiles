@@ -71,7 +71,7 @@ ls.add_snippets("java", {
 	-- function
 	s("fn", fmt(
 	[[
-	{}{} {} ({})
+	{}{} {}({})
 	{{
 		{}
 	}}
@@ -82,34 +82,7 @@ ls.add_snippets("java", {
 		i(3, "f"),
 		i(4), i(0)
 	})),
-	-- constructor
-	s("cst", fmt(
-	[[
-	public {} ({})
-	{{
-		{}
-	}}{}
-	]],
-	{ i(1), i(2), i(3), i(0) })),
 	-- setter function
-	s("sfn", fmt(
-	[[
-	{}void set_{} ({} {})
-	{{
-		this.{} = {};
-	}}{}
-	]],
-	{ c(1, {t "public ", t "private ", t ""}),
-	i(2), i(3), rep(2), rep(2), rep(2), i(0) })),
-	-- getter function
-	s("gfn", fmt(
-	[[
-	{}{} get_{} ()
-	{{
-		return this.{};
-	}}{}
-	]],
-	{ c(1, {t "public ", t "private ", t ""}), i(2, "type"), i(3), rep(3), i(0)})),
 	s("psv", fmt(
 	[[
 	public class Main
@@ -127,9 +100,9 @@ ls.add_snippets("java", {
 	{}class {}
 	{{
 		{}
-	}}
+	}}{}
 	]],
-	{ c(1, {t "public ", t "private ", t ""}), i(2), i(0)})),
+	{ c(1, {t "public ", t "private ", t ""}), i(2), i(3), i(0)})),
 	-- StringBuilder
 	s("sb", fmt(
 	[[
