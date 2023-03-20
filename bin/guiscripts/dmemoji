@@ -21,7 +21,7 @@ case "$1" in
     fi
     ;;
   "")
-    bash $0 list | dmenu -x -g 1 -p 'Emoji: ' | bash $0 copy
+    bash $0 list | dmenu -x -i -g 1 -l 20 -p 'Emoji:' | bash $0 copy
     ;;
 esac
 
