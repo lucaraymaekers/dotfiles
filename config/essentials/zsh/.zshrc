@@ -86,6 +86,10 @@ parse_git_status() {
 	git status --short 2> /dev/null | head -n1 | awk '{print $1 " "}'
 }
 
+export REPORTTIME=2
+export TIMEFMT='-> %*E'
+alias time='/usr/bin/time'
+
 # Options
 setopt correct 
 setopt nonomatch 
