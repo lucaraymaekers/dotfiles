@@ -34,7 +34,6 @@ vim.keymap.set("v", "K", "<cmd>m '<-2<cr>gv=gv<cr>", { noremap = true })
 
 -- clipboard
 vim.keymap.set("n", "<Leader>y", "\"+y", { noremap = true })
-vim.keymap.set("n", "<Leader>o", "<Plug>OSCYank", { noremap = true })
 
 -- templates
 vim.keymap.set("n", "<LocalLeader>rt", ":-1r " .. vim.fn.stdpath("config") .. "/templates", { noremap = true })
