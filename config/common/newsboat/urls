@@ -1,3 +1,6 @@
+"---NEWS---"
+https://rss.rtbf.be/article/rss/highlight_rtbf_info.xml?source=internal
+"---LINUX---"
 https://www.linuxjournal.com/node/feed
 https://hackaday.com/blog/feed/
 https://thisweek.gnome.org/index.xml
@@ -24,6 +27,7 @@ https://www.reddit.com/r/danklinuxusers.rss
 "---MUSIC---"
 https://mastodonmusic.social/@djomnimaga.rss
 "---REPOS---"
+https://code.cronyakatsuki.xyz/crony/UpFast.atom
 https://github.com/vim/vim/releases.atom
 https://github.com/neovim/neovim/releases.atom
 https://github.com/yt-dlp/yt-dlp/releases.atom
