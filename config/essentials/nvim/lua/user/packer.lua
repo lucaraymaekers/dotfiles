@@ -33,7 +33,6 @@ return require('packer').startup(function(use)
 	-- utils
 	use('godlygeek/tabular')
 	use('renerocksai/calendar-vim')
-	use('LordTlasT/live-server')
 	use('ojroques/vim-oscyank', {branch = "main"})
 	use("potamides/pantran.nvim")
 
