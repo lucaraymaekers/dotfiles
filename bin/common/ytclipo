@@ -12,6 +12,7 @@ echo "inp: ${inp}" 1>&2
 notify-send "ytclipo" "<b>downloading</b> $inp"
 
 yt-dlp "$inp" \
+	--restrict-filenames \
 	-f "b" \
 	-S "res:720" \
 	-P "$HOME/vids" \
