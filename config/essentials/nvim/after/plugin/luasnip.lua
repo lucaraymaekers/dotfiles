@@ -62,8 +62,8 @@ ls.add_snippets("html", {
   		t("</title>"), i(2),
 		t({"", "\t</head>", "\t<body>", "\t\t<h1>"}),
 		i(3, "Header"),
-		t("</h1>"), i(4),
-		t({"", "\t</body>", "</html>"}), i(0)
+		t("</h1>"), i(0),
+		t({"", "\t</body>", "</html>"})
 	}),
 })
 
@@ -131,4 +131,9 @@ ls.add_snippets("java", {
 
 ls.add_snippets("sh", {
 	parse("fn", "function $1 {\n\t$2\n}$0", {})
+})
+
+ls.add_snippets("javascript", {
+	-- print
+	s("pt", fmt("console.log({}){}", { i(1, "\"Hello World!\"") , i(0) })),
 })
