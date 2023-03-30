@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # argument ($1) -> clipboard -> stdin
-test -z "${inp:=${1:-"$(xclip -sel c -o)"}}" \
-	&& inp="$(cat /dev/stdin)"
+test -z "${inp:=${1:-"$(xclip -sel c -o)"}}" &&
+	inp="$(cat /dev/stdin)"
 
 echo "inp: ${inp}" 1>&2
 # take last link from clipboard
