@@ -9,6 +9,8 @@ vim.keymap.set("i", "<C-a>", "<C-o>I", { noremap = true })
 vim.keymap.set("i", "<C-e>", "<C-o>A", { noremap = true })
 vim.keymap.set("i", "<C-k>", "<C-o>D", { noremap = true })
 
+vim.keymap.set("i", "(<cr>", "(<cr>)<C-o>O", { noremap = true })
+vim.keymap.set("i", "(;<cr>", "(<cr>);<C-o>O", { noremap = true })
 vim.keymap.set("i", "{<cr>", "{<cr>}<C-o>O", { noremap = true })
 vim.keymap.set("i", "{;<cr>", "{<cr>};<C-o>O", { noremap = true })
 
