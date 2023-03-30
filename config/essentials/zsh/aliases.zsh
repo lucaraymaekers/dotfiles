@@ -94,7 +94,7 @@ alias srcgd='
 for dir in ~/src/* 
 do 
 	cd $dir 
-	test "$(git status --short 2>/dev/null | head -1)" && echo "$PWD \e[1;31m*changes\e[0m"
+	test "$(git status --short 2>/dev/null | grep -v "??" | head -1)" && echo "$PWD \e[1;31m*changes\e[0m"
 	test "$(parse_git_remote)" && echo "$PWD \e[0;32m*push/pull\e[0m" ;
 done'
 
