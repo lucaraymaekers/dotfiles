@@ -66,6 +66,7 @@ alias scr='nvim +"setlocal buftype=nofile bufhidden=hide noswapfile filetype=txt
 alias -g vimp="vim '+PlugInstall'"
 alias -g nvimp="nvim '+PackerSync'"
 alias -g nvg='git status > /dev/null 2>&1 && nv "+Git"'
+alias -g nvn='nv "+Telekasten panel"'
  
 alias -g xclipp='xclip -selection clipboard -r'
 alias -g xclipo='xclip -o -selection clipboard -r'
@@ -119,7 +120,7 @@ alias -g ehist='$EDITOR $ZDOTDIR/histfile'
 alias -g est='$EDITOR ~/src/st/config.def.h'
 alias -g esl='$EDITOR ~/src/slock/config.def.h'
 alias -g esls='$EDITOR ~/src/slstatus/config.def.h'
-alias -g cfdef='$EDITOR config.def.h'
+alias -g cfd='$EDITOR config.def.h'
 alias -g cdo='$HOME/src/dotfiles'
 
 alias -g ff='"`fzffile`"'
