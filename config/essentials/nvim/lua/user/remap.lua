@@ -57,7 +57,7 @@ end, { noremap = true })
 -- utils
 vim.keymap.set("i", "<LocalLeader>r", "<cmd>r!echo -n $RANDOM<cr><esc>kJA", { noremap = true })
 -- ordered list
-vim.keymap.set("n", "<LocalLeader>n", "0vap<C-v>I0. <esc>gvg<C-a>", { noremap = true })
+vim.keymap.set("n", "<LocalLeader>n", "<C-v>I0. <esc>gvg<C-a>", { noremap = true })
 vim.keymap.set("v", "<Leader>u", "<cmd>'<,'>s/^[0-9]\\+\\. //<cr><esc>", { noremap = true })
 -- scripts
 vim.keymap.set("n", "<Leader>x", "<cmd>!chmod +x %<cr>", { noremap = true, silent = true})
