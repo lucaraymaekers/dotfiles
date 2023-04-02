@@ -89,6 +89,6 @@ sgd () {
 			git fetch > /dev/null 2>&1
 		fi
 		test "$(parse_git_remote)" && 
-			echo "$PWD \e[0;32m*push/pull\e[0m" ;
+			echo "$PWD \e[0;32m*push/pull\e[0m"
 		done
 	}
