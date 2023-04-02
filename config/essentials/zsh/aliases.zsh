@@ -90,13 +90,6 @@ alias -g sha 'ssh-add'
 alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
 alias whatsmyip='curl "ifconfig.me"'
 alias icognito='unset HISTFILE'
-alias sgd='
-for dir in ~/src/* 
-do 
-	cd $dir 
-	test "$(git status --short 2>/dev/null | grep -v "??" | head -1)" && echo "$PWD \e[1;31m*changes\e[0m"
-	test "$(parse_git_remote)" && echo "$PWD \e[0;32m*push/pull\e[0m" ;
-done'
 
 # Python
 alias penv='python -m venv env'

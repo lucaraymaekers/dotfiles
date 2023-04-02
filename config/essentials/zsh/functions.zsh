@@ -77,3 +77,18 @@ delfile () {
 upfile () {
 	curl -F "file=@\"$1\"" "https://upfast.craftmenners.men"
 }
+
+sgd () {
+	for dir in ${1:-$HOME/src/*} 
+	do 
+		cd $dir 
+		if [ "$(git status --short 2>/dev/null | grep -v "??" | head -1)" ]
+		then
+			# There are changes, and this is a git repo
+			echo "$PWD \e[1;31m*changes\e[0m"
+			git fetch > /dev/null 2>&1
+		fi
+		test "$(parse_git_remote)" && 
+			echo "$PWD \e[0;32m*push/pull\e[0m" ;
+		done
+	}
