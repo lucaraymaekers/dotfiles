@@ -8,9 +8,9 @@ fi
 
 # Programs
 alias nv='nvim'
-alias -g nb='newsboat'
-alias -g sr='surfraw'
-alias -g ccu='calcurse'
+alias nb='newsboat'
+alias sr='surfraw'
+alias ccu='calcurse'
 
 alias arduino-cli='arduino-cli --config-file $XDG_CONFIG_HOME/arduino15/arduino-cli.yaml'
 
