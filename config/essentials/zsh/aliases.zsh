@@ -63,28 +63,27 @@ alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
 
 # vim
 alias scr='nvim +"setlocal buftype=nofile bufhidden=hide noswapfile filetype=txt" scratch'
-alias -g vimp="vim '+PlugInstall'"
-alias -g nvimp="nvim '+PackerSync'"
-alias -g nvg='git status > /dev/null 2>&1 && nv "+Git"'
-alias -g nvn='nv "+Telekasten panel"'
+alias vimp="vim '+PlugInstall'"
+alias nvimp="nvim '+PackerSync'"
+alias nvg='git status > /dev/null 2>&1 && nv "+Git"'
+alias nvn='nv "+Telekasten panel"'
  
 alias -g xclipp='xclip -selection clipboard -r'
 alias -g xclipo='xclip -o -selection clipboard -r'
 alias -g xclippc='xclip -o -selection primary | xclip -selection clipboard -r'
 alias -g xclipcp='xclip -o -selection clipboard | xclip'
  
-alias -g xrandr-rpgmaker='xrandr --auto --output VGA-1 --mode 1024x768 --left-of HDMI-1 && ~/.fehbg'
-alias -g xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HDMI-1 --output HDMI-1 --mode 1920x1080 && ~/.fehbg'
+alias xrandr-rpgmaker='xrandr --auto --output VGA-1 --mode 1024x768 --left-of HDMI-1 && ~/.fehbg'
+alias xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HDMI-1 --output HDMI-1 --mode 1920x1080 && ~/.fehbg'
  
-alias -g dud='du * -d 0 -h 2>/dev/null | sort -h'
+alias dud='du * -d 0 -h 2>/dev/null | sort -h'
 alias df='df -h'
 alias shred='shred -uz'
 alias lsblk='lsblk -o name,type,fsused,size,fstype,label,mountpoint'
-alias -g floc='doas find / -type "f" 2> /dev/null | grep'
-alias -g dloc='doas find / -type "d" 2> /dev/null | grep'
-alias lsblk='lsblk -o name,type,fsused,size,fstype,label,mountpoint'
-alias -g fif='find . -type "f" | grep'
-alias -g fid='find . -type "d" | grep'
+alias floc='doas find / -type "f" 2> /dev/null | grep'
+alias dloc='doas find / -type "d" 2> /dev/null | grep'
+alias fif='find . -type "f" | grep'
+alias fid='find . -type "d" | grep'
 
 # ssh
 alias sha='ssh-add'
@@ -134,9 +133,6 @@ alias -g esls='$EDITOR ~/src/slstatus/config.def.h'
 alias -g cfd='$EDITOR config.def.h'
 alias -g cdo='$HOME/src/dotfiles'
 
-alias -g ff='"`fzffile`"'
-alias -g fd='"`fzfdir`"'
-alias -g fdf='"`fzfdirfile`"'
 alias fzps='ps aux | tail +2 | fzf --bind \
 "1:execute(echo -n {} | awk '\''{print \$1}'\'' | xclip -sel c -r),\
 2:execute(echo -n {} | awk '\''{print \$2}'\'' | xclip -sel c -r),\
