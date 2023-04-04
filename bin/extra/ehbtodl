@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 echo "$1" | sed 's/-H/\\\n\t&/g' | sed '/gzip/d' > /tmp/curlcommand.sh 
 sh /tmp/curlcommand.sh > /tmp/ehbso.html
 vids="$(grep -oE "youtube\.com/embed/.{11}" /tmp/ehbso.html | cut -d'/' -f 3 | tr '\n' ' ')"

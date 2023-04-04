@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "$@" > /tmp/truewhile.tmp
 while true
 do
-  bash /tmp/truewhile.tmp
+  sh /tmp/truewhile.tmp
   sleep 1
   clear
 done

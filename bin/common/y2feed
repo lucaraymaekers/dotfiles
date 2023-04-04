@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 test -z "${url:=$1}" \
 	&& url="$(cat /dev/stdin)"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 store="$HOME/.password-store"
 lscmd="ls --group-directories-first"
 dmenucmd="dmenu -l 4 -g 2"

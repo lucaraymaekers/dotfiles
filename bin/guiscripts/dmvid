@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 find ${1:-~/vids ~/dl} 2> /dev/null | grep -E ".+\.(webm|mp4|mpeg|mkv)$" | sort > /tmp/dmvids
 

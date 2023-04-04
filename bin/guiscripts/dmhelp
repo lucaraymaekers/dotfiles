@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 program="${1:-$(dmenu_path | dmenu -l 4 -g 5)}"
 opfil="/tmp/dmh_options.txt"
 test -z "${program}" && exit 1

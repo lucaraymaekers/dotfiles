@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Searches through .desktop files and prompt to launch them via dmenu
 gtk-launch "$(find ~/.local/share/applications \
     -maxdepth 1 \

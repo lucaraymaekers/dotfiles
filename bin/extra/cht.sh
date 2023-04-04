@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # shellcheck disable=SC1117,SC2001
 #
 # [X] open section
@@ -234,13 +234,13 @@ EOF
     if CHEATSH_TEST_STANDALONE=YES \
        CHEATSH_TEST_SKIP_ONLINE=NO \
        CHEATSH_TEST_SHOW_DETAILS=NO \
-       PYTHON=../ve/bin/python bash run-tests.sh | tee -a "$LOG"
+       PYTHON=../ve/bin/python sh run-tests.sh | tee -a "$LOG"
     then
       printf "\033[0;32m%s\033[0m\n" "SUCCESS"
     else
       printf "\033[0;31m%s\033[0m\n" "FAILED"
       echo "Some tests were failed. Run the tests manually for further investigation:"
-      echo "  cd $PWD; bash run-tests.sh)"
+      echo "  cd $PWD; sh run-tests.sh)"
     fi
   )
 
@@ -773,7 +773,7 @@ while true; do
   fi
 
   input=$(
-    rlwrap -H "$CHTSH_HOME/history" -pgreen -C cht.sh -S "$full_prompt" bash "$0" --read | sed 's/ *#.*//'
+    rlwrap -H "$CHTSH_HOME/history" -pgreen -C cht.sh -S "$full_prompt" sh "$0" --read | sed 's/ *#.*//'
   )
 
   cmd_name=${input%% *}

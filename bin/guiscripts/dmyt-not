@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Open a video from channels.yt-not by selecting the channel
 channel="$(awk '{print $2}' ~/.local/share/yt-not/channels.yt-not | dmenu -l 2 -g 4)"
 video_id="$(awk "/$channel/ {print \$3}" ~/.local/share/yt-not/channels.yt-not )"

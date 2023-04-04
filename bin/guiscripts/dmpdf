@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 tmp="/tmp/dmpdf"
 find ${1:-$HOME/docs $HOME/dl} 2> /dev/null | grep -E ".+\.pdf" | sort > "$tmp"

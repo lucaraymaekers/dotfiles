@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 choice="$(echo -ne "multiline\nsingle" | dmenu -l 1 -g 2)"
 test -z "${choice}" && exit 1
 
@@ -12,7 +12,8 @@ then
     test -z "${login}" && exit 1
     url="$(echo -n "" | dmenu -p "url:")"
     test -z "${url}" && exit 1
-    echo -e "${password}\nlogin: ${login}\nurl: ${url}" | pass insert -mf "${password}"
+    echo "${password}\nlogin: ${login}\nurl: ${url}" |
+		pass insert -mf "${password}"
     pass generate -ci "${password}"
 else
     pass generate -cf "${password}"

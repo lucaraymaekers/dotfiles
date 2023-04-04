@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 keyboards_file="/home/aluc/bin/keyboards.txt"
 cur_keyboard="$(setxkbmap -print | grep "xkb_symbols" | cut -f 2 -d "+")"
 # Get line number of match

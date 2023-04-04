@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 git status --porcelain=v1 | grep "^??" | cut -d' ' -f2- | sed -r 's/^["](.*)["]$/\1/' >> .gitignore

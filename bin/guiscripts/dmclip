@@ -9,7 +9,7 @@ NotImage () {
     exit
 }
 
-selection="$(echo -e "primary\nclipboard\nswap" | 
+selection="$(echo "primary\nclipboard\nswap" | 
 	dmenu -l 1 -g 3 -p "selection:")"
 if [[ "$selection" == "swap" ]]
 then
@@ -37,7 +37,7 @@ else
 		cut -c -"$DICL_LEN")"
 fi
 
-menu_option="$(echo -e "save\nload\nimage\nreplace" | 
+menu_option="$(echo "save\nload\nimage\nreplace" | 
 	dmenu -l 1 -g 4 -p "'$disp_clip'")"
 [ "${menu_option}" ] || exit
 

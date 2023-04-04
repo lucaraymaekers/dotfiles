@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 WINDOWID=${1:-$(xdotool getwindowfocus)}
 WIDTH=$(xdotool getwindowgeometry -s ${WINDOWID} | grep WIDTH | cut -d ' ' -f 2)
 dmenu_run -w ${1:-$(xdotool getwindowfocus)} -c

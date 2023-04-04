@@ -2,7 +2,7 @@
 while true
 do 
 	volume="$(mpc volume | awk '{print $2}' | cut -f1 -d'%')"
-	choice="$(echo -e "plus\nmin" |
+	choice="$(echo "plus\nmin" |
 		dmenu -g 2 -l 1 -p "$volume" |
 		sed 's/plus/+/;s/min/-/')"
 	test -z "$choice" && break

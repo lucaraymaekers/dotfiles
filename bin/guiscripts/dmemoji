@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # This files comes from:
 # https://github.com/porras/dmenu-emoji
 #
@@ -21,7 +21,7 @@ case "$1" in
     fi
     ;;
   "")
-    bash $0 list | dmenu -x -i -g 1 -l 20 -p 'Emoji:' | bash $0 copy
+    sh $0 list | dmenu -x -i -g 1 -l 20 -p 'Emoji:' | sh $0 copy
     ;;
 esac
 
