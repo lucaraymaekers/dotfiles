@@ -139,6 +139,7 @@ alias fzps='ps aux | tail +2 | fzf --bind \
 3:execute(echo -n {} | awk '\''{print \$7}'\'' | xclip -sel c -r),\
 4:execute(echo -n {} | awk '\''{print \$9}'\'' | xclip -sel c -r),\
 5:execute(echo -n {} | tr -s '\'' '\'' | cut -f 11- -d '\'' '\'' | xclip -sel c -r)"'
+alias asf='alias | fzf'
 
 alias -s conf="$EDITOR"
 alias -s txt="$EDITOR"
