@@ -126,3 +126,13 @@ function git_develop_branch() {
   done
   echo develop
 }
+
+# gpg backup
+gpg_backup ()
+{
+	gpg --export-secret-keys --armor > private.asc
+	gpg --export --armor > public.asc
+	gpg --export-ownertrust --armor > trust.asc
+	tar czf gpg_backup.tar.gz {public,private,trust}.asc
+	shred -uz {public,private,trust}.asc
+}
