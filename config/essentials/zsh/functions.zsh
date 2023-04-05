@@ -27,9 +27,6 @@ ogo ()
 	d="$(fhome f ${1:-$HOME} | fzf | xargs dirname)"
 	test -d "$d" && cd "$d"
 }
-alias o.='o .'
-alias go.='go .'
-alias ogo.='ogo .'
 
 ipc () 
 {

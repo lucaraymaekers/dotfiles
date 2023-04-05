@@ -139,6 +139,14 @@ alias -g esls='$EDITOR ~/src/slstatus/config.def.h'
 alias -g cfd='$EDITOR config.def.h'
 alias -g cdo='$HOME/src/dotfiles'
 
+# googoo aliases
+alias o.='o .'
+alias go.='go .'
+alias ogo.='ogo .'
+alias o/='o /'
+alias go/='go /'
+alias ogo/='ogo /'
+
 alias fzps='ps aux | tail +2 | fzf --bind \
 "1:execute(echo -n {} | awk '\''{print \$1}'\'' | xclip -sel c -r),\
 2:execute(echo -n {} | awk '\''{print \$2}'\'' | xclip -sel c -r),\
