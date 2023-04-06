@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Adds a torrent to deluge container
+# Assumes there is a config folder where auth and torrents/ are located
+
+DLPATH="/srv/deluge/config"
+
+mkdir -p /tmp/dladd
+LOG="/tmp/dladd/$(date +"%Y-%m-%d_%H-%M-%S").log"
+
+# Check for errors and input type
+if [ $# -eq 0 ]
+then
+    echo "No file name provided. Usage: $0 <file>" >&2
+	exit 1
+elif [ -f "$1" ]
+then
+	echo "is a file"
+	magnet=0
+elif echo "$1 " | grep -q "magnet:?xt=urn:btih:[a-zA-Z0-9]*"
+then
+	echo "is a magnet link"
+	magnet=1
+else
+	echo "File '$1' not found." >&2
+	exit 1
+fi
+
+password="$(cut -f2 -d: "$DLPATH/auth")"
+if [ "$magnet" -eq 0 ]
+then
+	file="$(date +"%Y-%m-%d_%H-%M-%S").torrent"
+	cp "$1" "$DLPATH/torrents/$file"
+	if docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; add /config/torrents/$file" > "$LOG" 2>&1
+	then
+		echo "torrent added!"
+		rm "$LOG"
+	else
+		echo "torrent couldn't be added, log at $LOG"
+	fi
+else
+	link=$(echo -n "$1" | tr -d "'\"")
+	if docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; add $link" > "$LOG" 2>&1
+	then
+		echo "torrent added!"
+		rm "$LOG"
+	else
+		echo "torrent couldn't be added, log at $LOG"
+	fi
+fi
+rm -d /tmp/dladd 2>/dev/null
