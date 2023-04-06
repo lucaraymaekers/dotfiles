@@ -77,8 +77,6 @@ alias nvn='nv "+Telekasten panel"'
  
 alias -g xclipp='xclip -selection clipboard -r'
 alias -g xclipo='xclip -o -selection clipboard -r'
-alias -g xclippc='xclip -o -selection primary | xclip -selection clipboard -r'
-alias -g xclipcp='xclip -o -selection clipboard | xclip'
  
 alias xrandr-rpgmaker='xrandr --auto --output VGA-1 --mode 1024x768 --left-of HDMI-1 && ~/.fehbg'
 alias xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HDMI-1 --output HDMI-1 --mode 1920x1080 && ~/.fehbg'
@@ -118,13 +116,13 @@ alias -g bg='&; disown'
 alias -g cx='chmod +x'
 alias -g ch='chown ${USER}:${USER} -R'
 alias -g hl='--help |& less -r'
-alias -g pi='ping archlinux.org -c4'
+alias pi='ping archlinux.org -c4'
 alias -g sba='source env/bin/activate || source bin/activate'
-alias -g smc='systemctl'
-alias -g smcu='systemctl --user'
+alias smc='systemctl'
+alias smcu='systemctl --user'
 alias zsr='source ${ZDOTDIR:-$HOME}/.zshrc && rehash'
-alias -g wf='doas wipefs -a'
-alias -g dmci="doas make clean install"
+alias wf='doas wipefs -a'
+alias dmci="doas make clean install"
 alias rmd='rm -f *.{orig,rej}'
 
 # quick config
