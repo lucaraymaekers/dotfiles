@@ -8,14 +8,14 @@ fi
 
 if [ "$WAYLAND_DISPLAY" ]
 then
-	alias -g wclip='wl-copy'
-	alias -g wclipo='wl-paste'
+	alias -g clipp='wl-copy'
+	alias -g clipo='wl-paste'
 elif [ "$(which devour > /dev/null 2>&1)" ] 
 then
 	alias mpv='devour mpv'
 	alias zathura='devour zathura'
-	alias -g xclipp='xclip -selection clipboard -r'
-	alias -g xclipo='xclip -o -selection clipboard -r'
+	alias -g clipp='xclip -selection clipboard -r'
+	alias -g clipo='xclip -o -selection clipboard -r'
 fi
 
 # Programs

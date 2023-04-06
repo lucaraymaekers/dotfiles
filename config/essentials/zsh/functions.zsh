@@ -46,7 +46,14 @@ unique () {
 	mv "$f" "$1"
 }
 
-clip () { echo -n "$@" | xclip -selection clipboard -rmlastnl }
+clip () { 
+	if [ "$WAYLAND_DISPLAY" ]
+	then
+		echo -n "$@" | wl-copy
+	else
+		echo -n "$@" | xclip -selection clipboard -rmlastnl
+	fi
+}
 
 fzh () {
     choice="$(tac $HOME/.config/zsh/histfile | fzf)"
