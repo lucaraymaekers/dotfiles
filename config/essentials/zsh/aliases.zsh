@@ -142,8 +142,14 @@ alias ezh=' $EDITOR $HOME/.config/hypr/hyprland.conf'
 alias est='$EDITOR ~/src/st/config.def.h'
 alias esl='$EDITOR ~/src/slock/config.def.h'
 alias esls='$EDITOR ~/src/slstatus/config.def.h'
+alias ehy='$EDITOR ~/.config/hypr/hyprland.conf'
+# quick cd
 alias cfd='$EDITOR config.def.h'
-alias cdo='$HOME/src/dotfiles'
+alias cdo='cd $HOME/src/dotfiles'
+alias cdm='cd $HOME/music'
+alias cdd='cd $HOME/dl'
+alias cdrs='cd /srv/'
+alias cdng='cd /etc/nginx'
 
 # googoo aliases
 alias o.='o .'
