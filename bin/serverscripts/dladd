@@ -15,11 +15,9 @@ then
 	exit 1
 elif [ -f "$1" ]
 then
-	echo "is a file"
 	magnet=0
 elif echo "$1 " | grep -q "magnet:?xt=urn:btih:[a-zA-Z0-9]*"
 then
-	echo "is a magnet link"
 	magnet=1
 else
 	echo "File '$1' not found." >&2
@@ -29,23 +27,15 @@ fi
 password="$(cut -f2 -d: "$DLPATH/auth")"
 if [ "$magnet" -eq 0 ]
 then
+	echo "Adding file."
 	file="$(date +"%Y-%m-%d_%H-%M-%S").torrent"
 	cp "$1" "$DLPATH/torrents/$file"
-	if docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; add /config/torrents/$file" > "$LOG" 2>&1
-	then
-		echo "torrent added!"
-		rm "$LOG"
-	else
-		echo "torrent couldn't be added, log at $LOG"
-	fi
+	docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; add /config/torrents/$file" 2>/dev/null |
+		tail -n 2
 else
+	echo "Adding magnet."
 	link=$(echo -n "$1" | tr -d "'\"")
-	if docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; add $link" > "$LOG" 2>&1
-	then
-		echo "torrent added!"
-		rm "$LOG"
-	else
-		echo "torrent couldn't be added, log at $LOG"
-	fi
+	docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; add $link" 2>/dev/null |
+		tail -n 2
 fi
 rm -d /tmp/dladd 2>/dev/null

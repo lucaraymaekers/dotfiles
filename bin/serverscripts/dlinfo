@@ -1,0 +1,3 @@
+#!/bin/sh
+password="$(cut -f 2 -d ':' /srv/deluge/config/auth)"
+docker exec -i deluge deluge-console "connect 127.0.0.1 localclient $password; info"
