@@ -75,9 +75,6 @@ alias yqs='yay -Qs'
 alias yql='yay -Ql'
 alias yays='yay -S'
 alias yrm='yay -Rns'
-# 
-# 
-# -----------------------------------------------------------
 
 alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
 
@@ -121,6 +118,7 @@ alias -g bg='&; disown'
 alias -g cx='chmod +x'
 alias -g ch='chown ${USER}:${USER} -R'
 alias -g hl='--help |& less -r'
+alias kll='killall'
 alias pi='ping archlinux.org -c4'
 alias -g sba='source env/bin/activate || source bin/activate'
 alias smc='systemctl'
