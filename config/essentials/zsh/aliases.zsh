@@ -66,7 +66,7 @@ alias dopacs='dopac -S'
 alias dopacc='dopac -Sc'
 alias doprm='dopac -Rns'
 
-test which pikaur > /dev/null 2>&1 &&
+which pikaur > /dev/null 2>&1 &&
 	alias yay='pikaur'
 alias yup='yay -Syu'
 alias ysi='yay -Si'
