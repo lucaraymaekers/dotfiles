@@ -6,6 +6,18 @@ then
 	alias aptup='apt update && apt upgrade -y'
 fi
 
+if [ "$WAYLAND_DISPLAY" ]
+then
+	alias -g wclip='wl-copy'
+	alias -g wclipo='wl-paste'
+elif [ "$(which devour > /dev/null 2>&1)" ] 
+then
+	alias mpv='devour mpv'
+	alias zathura='devour zathura'
+	alias -g xclipp='xclip -selection clipboard -r'
+	alias -g xclipo='xclip -o -selection clipboard -r'
+fi
+
 # Programs
 alias nv='nvim'
 alias nb='newsboat'
@@ -74,9 +86,6 @@ alias vimp="vim '+PlugInstall'"
 alias nvimp="nvim '+PackerSync'"
 alias nvg='git status > /dev/null 2>&1 && nv "+Git"'
 alias nvn='nv "+Telekasten panel"'
- 
-alias -g xclipp='xclip -selection clipboard -r'
-alias -g xclipo='xclip -o -selection clipboard -r'
  
 alias xrandr-rpgmaker='xrandr --auto --output VGA-1 --mode 1024x768 --left-of HDMI-1 && ~/.fehbg'
 alias xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HDMI-1 --output HDMI-1 --mode 1920x1080 && ~/.fehbg'
