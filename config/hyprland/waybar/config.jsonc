@@ -20,7 +20,7 @@
 		"seperate-outputs": true
 	},
     "mpd": {
-        "format": "{artist} - {title} {elapsedTime:%M:%S}/{totalTime:%M:%S}",
+        "format": "{elapsedTime:%M:%S}/{totalTime:%M:%S} {title}",
         "format-disconnected": "",
         "format-stopped": "",
         "format-paused": "",
