@@ -28,7 +28,7 @@ case "$MACH" in
 		;;
 	"server" | "s")
 		mkdir -p "$HOME/bin"
-		stow -d bin/ -t "$HOME/bin" -R common
+		stow -d bin/ -t "$HOME/bin" -R common serverscripts
 		mkdir -p "$HOME/.config"
 		stow -d config/ -t "$HOME/.config" -R essentials common
 		stow -d config/ -t "$HOME/" -R home
