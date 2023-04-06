@@ -35,7 +35,8 @@ alias lst1='ls --tree -L1'
 alias lst2='ls --tree -L2'
 alias lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
-alias ls='exa --sort extension --group-directories-first'
+test which exa >/dev/null 2>&1 &&
+	alias ls='exa --sort extension --group-directories-first'
 
 # pacman aliases
 alias pac='pacman'
@@ -52,7 +53,8 @@ alias dopacs='dopac -S'
 alias dopacc='dopac -Sc'
 alias doprm='dopac -Rns'
 
-alias yay='pikaur'
+test which pikaur > /dev/null 2>&1 &&
+	alias yay='pikaur'
 alias yup='yay -Syu'
 alias ysi='yay -Si'
 alias yss='yay -Ss'
@@ -100,7 +102,7 @@ alias icognito='unset HISTFILE'
 alias webcam='v4l2-ctl --set-fmt-video=width=1280,height=720; mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed --no-resume-playback'
 alias wtip='wt ip -c -brief addr'
 # swallow gui
-if which devour > /dev/null
+if [ "$(which devour > /dev/null 2>&1)" ] && [ "$WAYLAND_DISPLAY" ]
 then
 	alias mpv='devour mpv'
 	alias zathura='devour zathura'
