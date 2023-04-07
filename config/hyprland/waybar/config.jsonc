@@ -3,6 +3,9 @@
 	"modules-left": ["wlr/workspaces", "mpd"],
 	"modules-center": ["hyprland/window"],
 	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "memory", "clock", "tray"],
+	"wlr/workspaces": {
+		"on-click": "activate",
+	},
 	"mpd": {
 		"tooltip": false,
 		"format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
