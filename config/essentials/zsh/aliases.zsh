@@ -57,9 +57,10 @@ which exa >/dev/null 2>&1 &&
 alias pac='pacman'
 alias pacsi='pac -Si'
 alias pacs='pac -Ss'
-alias pacq='pac -Ql'
-alias pacqe='pac -Q'
+alias pacq='pac -Q'
+alias pacql='pac -Ql'
 alias pacqs='pac -Qs'
+alias paci='pac -Qi'
 
 alias pacup='dopac -Syu'
 alias dopac='doas pacman'
