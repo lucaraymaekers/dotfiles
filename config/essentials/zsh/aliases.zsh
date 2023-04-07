@@ -10,10 +10,12 @@ if [ "$WAYLAND_DISPLAY" ]
 then
 	alias -g clipp='wl-copy'
 	alias -g clipo='wl-paste'
-elif [ "$(which devour > /dev/null 2>&1)" ] 
-then
-	alias mpv='devour mpv'
-	alias zathura='devour zathura'
+else
+	if which devour > /dev/null 2>&1  
+	then
+		alias mpv='devour mpv'
+		alias zathura='devour zathura'
+	fi
 	alias -g clipp='xclip -selection clipboard -r'
 	alias -g clipo='xclip -o -selection clipboard -r'
 fi
