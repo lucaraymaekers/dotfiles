@@ -26,20 +26,27 @@
 		"format": "{icon} {volume}%",
 		"format-icons": {
 			"default": ["奄", "奔", "墳"]
-		}
+		},
 	},
 	"network": {
 		"tooltip": false,
 		"format-wifi": " {essid}",
-		"format-ethernet": ""
+		"format-ethernet": "",
 	},
 	"cpu": {
 		"tooltip": false,
-		"format": " {}%"
+		"format": " {usage:2}%",
+		"interval": 3,
 	},
 	"memory": {
 		"tooltip": false,
-		"format": " {used}G"
+		"format": " {used:.2f}G",
+		"interval": 3,
+	},
+	"clock": {
+		"format": "{:%H:%M}",
+        "format-alt": " {:%A, %B %d, %Y (%R)}",
+		"interval": 1,
 	},
 	"tray": {
 		"spacing": 5,
