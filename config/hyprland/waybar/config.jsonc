@@ -13,8 +13,9 @@
 		"format-stopped": "",
         "state-icons": {
             "playing": "",
-            "paused": ""
-        }
+            "paused": "",
+        },
+		"on-click": "mpc toggle",
 	},
 	"hyprland/window": {
 		"format": "{}",
