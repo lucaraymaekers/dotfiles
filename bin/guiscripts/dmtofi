@@ -1,0 +1,8 @@
+#!/bin/sh
+if ! mv ~/bin/.dmenu ~/bin/dmenu 2>/dev/null
+then
+	mv ~/bin/dmenu ~/bin/.dmenu
+	notify-send "dmtofi" "dmenu <b>enabled</b>!"
+else
+	notify-send "dmtofi" "dmenu <b>disabled</b>!"
+fi
