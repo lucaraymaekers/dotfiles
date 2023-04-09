@@ -1,5 +1,5 @@
 ### Font
-font = JetBrains Mono Bold
+font = monospace bold
 font-size = 12
 
 text-color = #d8dee9
