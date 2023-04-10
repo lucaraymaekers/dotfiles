@@ -1,0 +1,7 @@
+config/essentials/zsh/.zcompdump
+config/essentials/zsh/histfile
+config/essentials/gnupg/*
+config/X/mpv/watch_later/*
+config/common/mpd/database
+config/essentials/nvim/plugin/
+config/common/newsboat/urls
