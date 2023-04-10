@@ -107,7 +107,7 @@ alias sha='ssh-add'
 alias ssh-start='eval "$(ssh-agent)" && ssh-add'
 
 alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
-alias whatsmyip='curl -s "ifconfig.me"'
+alias whatsmyip='curl -s "ifconfig.co"'
 alias icognito='unset HISTFILE'
 alias webcam='v4l2-ctl --set-fmt-video=width=1280,height=720; mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed --no-resume-playback'
 alias wtip='wt ip -c -brief addr'
