@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+then
+	echo "no domain provided."
+	exit 1
+fi
+
+certbot certonly \
+	--dns-cloudflare \
+	--dns-cloudflare-credentials ~/.secrets/cloudflare.ini \
+	-m raymaekers.luca@gmail.com \
+	-d $1
