@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [ "/dev/tty1" = "$TTY" ] || [ "/dev/tty2" = "$TTY" ]
+if [[ "/dev/tty1" = "$TTY" || "/dev/tty2" = "$TTY" ]] && [[ "$(id -u)" -ne 0 ]]
 then
 	clear
 	eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D 2> /dev/null)"
