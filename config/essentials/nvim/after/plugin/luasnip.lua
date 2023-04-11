@@ -138,7 +138,7 @@ ls.add_snippets("sh", {
 		echo "\$1" >&2
 	}
 	]], {}),
-	parse("die", "die \"$1\"$0", {}),
+	parse("die", "die \"I: $1\"$0", {}),
 })
 
 ls.add_snippets("javascript", {
