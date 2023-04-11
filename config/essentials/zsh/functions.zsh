@@ -156,3 +156,20 @@ gpg_import ()
 	gpg --import private.asc
 	shred -uz {public,private,trust}.asc
 }
+
+vbsr ()
+{
+	vboxmanage snapshot "$1" restore "$2" &&
+		vboxmanage startvm "$1" ||
+		vboxmanage controlvm "$1" poweroff
+}
+vbsrr ()
+{
+	vbsr "$1" "$2"
+	sleep 3
+	vbsr "$1" "$2"
+}
+vbst ()
+{
+	vboxmanage snapshot "$1" take "$2"
+}
