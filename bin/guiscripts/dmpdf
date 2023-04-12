@@ -6,9 +6,10 @@ choice="$(\
         sed 's|^/home/aluc|\~| ; s|\([^/]\)[^/]*/|\1/|g' "$tmp" | 
 		awk '{printf "%s %s\n", NR ":", $0}' | 
 		dmenu -p "pdf:" -l 10 -g 1 -x -i | 
-		grep -oE "^[0-9]+:")"
+		grep -oE "^[0-9]+:" |
+		cut -f1 -d:)"
 if [ -z "$choice" ]; then
 	exit
 fi
-file="$(sed -n "${choice::-1}p" "$tmp")"
+file="$(sed -n "${choice}p" "$tmp")"
 zathura "$file" &
