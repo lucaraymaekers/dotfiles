@@ -1,12 +1,24 @@
 #!/usr/bin/env sh
 
-find ${1:-~/vids ~/dl} 2> /dev/null |
+dirs="${1:-$HOME/vids $HOME/dl}"
+find -L $dirs 2> /dev/null |
 	grep ".\+\.\(webm\|mp4\|mpeg\|mkv\)$" |
 	sort > /tmp/dmvids
+cat /tmp/dmvids
+
+if [ "$MENUCMD" = "tofi" ]
+then
+	menucmd="tofi --width 30% --height 30%"
+elif [ "$MENUCMD" = "dmenu" ]
+then
+	menucmd="dmenu -l 10 -g 1 -x -i" 
+else
+	menucmd="fzf"
+fi
 
 choice="$(sed 's|^/home/aluc|\~| ; s|\([^/]\)[^/]*/|\1/|g' /tmp/dmvids | 
 	awk '{printf "%s %s\n", NR ":", $0}' | 
-	dmenu -l 10 -g 1 -x -i | 
+	$menucmd | 
 	cut -f 1 -d ':')"
 test -z "$choice" &&
 	exit 1

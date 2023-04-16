@@ -1,17 +1,44 @@
 #!/usr/bin/env sh
-choice="$(echo "multiline\nsingle" | dmenu -l 1 -g 2)"
+
+input ()
+{
+	# menu prompt for output
+	if [ "$MENUCMD" = "tofi" ]
+	then
+		inp="$(tofi --prompt-text "$1 " </dev/null)"
+	elif [ "$MENUCMD" = "dmenu" ]
+	then
+		inp="$(dmenu -p "$1" < /dev/null)"
+	else
+		echo -n "$1:" >&2
+		read inp
+	fi
+	echo $inp
+}
+# menu select long
+if [ "$MENUCMD" = "tofi" ]
+then
+	menucmd="tofi --prompt login:"
+elif [ "$MENUCMD" = "dmenu" ]
+then
+	menucmd="dmenu -l 10 -g 1 -x -i -p login:" 
+else
+	menucmd="fzf"
+fi
+
+choice="$(echo "multiline\nsingle" | $MENUCMD)"
 test -z "${choice}" && exit 1
 
-password="$(dmenu -p "name:" </dev/null)"
+password="$(input "name:")"
 test -z "${password}" && exit 1
 
 if [ "${choice}" = "multiline" ]
 then
 	login="$(ls -1 ~/.password-store/e-mails |
 		sed 's/\.gpg$//' | 
-		dmenu -g 1 -l 8 -p "login:")"
+		$menucmd)"
     test -z "${login}" && exit 1
-    url="$(dmenu -p "url:" </dev/null)"
+    url="$(input "url:")"
     test -z "${url}" && exit 1
     echo "${password}\nlogin: ${login}\nurl: ${url}" |
 		pass insert -mf "${password}"
@@ -19,4 +46,3 @@ then
 else
     pass generate -cf "${password}"
 fi
-
