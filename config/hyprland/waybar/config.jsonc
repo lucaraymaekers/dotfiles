@@ -2,7 +2,7 @@
 	"layer": "top",
 	"modules-left": ["wlr/workspaces", "mpd"],
 	"modules-center": ["hyprland/window"],
-	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "memory", "clock", "tray"],
+	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "custom/memory", "clock", "tray"],
 	"wlr/workspaces": {
 		"on-click": "activate",
 	},
@@ -39,10 +39,10 @@
 		"format": " {usage:2}%",
 		"interval": 3,
 	},
-	"memory": {
-		"tooltip": false,
-		"format": " {used:.2f}G",
-		"interval": 3,
+	"custom/memory": {
+		"exec": "/home/aluc/script.sh",
+		"format": "{}",
+		"restart-interval": 3,
 	},
 	"clock": {
 		"format": "{:%H:%M}",

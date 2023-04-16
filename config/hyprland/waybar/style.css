@@ -36,7 +36,7 @@ window#waybar.PCSX2 #window {
 }
 
 #mpd,
-#network, #pulseaudio, #temperature, #cpu, #memory {
+#network, #pulseaudio, #temperature, #cpu, #custom-memory {
 	margin-left: 8px;
 	padding-left: 16px;
 	padding-right: 16px;
@@ -44,7 +44,7 @@ window#waybar.PCSX2 #window {
 }
 
 #workspaces, #mpd,
-#network, #pulseaudio, #temperature, #cpu, #memory, #workspaces, #clock, #tray {
+#network, #pulseaudio, #temperature, #cpu, #custom-memory, #workspaces, #clock, #tray {
 	margin-top: 4px;
 	margin-bottom: 2px;
 	transition: none;
@@ -107,7 +107,7 @@ window#waybar.PCSX2 #window {
 	background: #ebcb8b;
 }
 
-#memory {
+#custom-memory {
 	color: #2e3440;
 	background: #a3be8c;
 }
