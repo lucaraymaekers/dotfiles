@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-	"modules-left": ["wlr/workspaces", "mpd"],
+	"modules-left": ["battery", "wlr/workspaces", "mpd"],
 	"modules-center": ["hyprland/window"],
 	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "custom/memory", "clock", "tray"],
 	"wlr/workspaces": {
@@ -16,6 +16,9 @@
             "paused": "",
         },
 		"on-click": "mpc toggle",
+	},
+	"battery": {
+		"interval": 10,
 	},
 	"hyprland/window": {
 		"format": "{}",

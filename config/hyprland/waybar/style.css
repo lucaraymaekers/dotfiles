@@ -35,7 +35,7 @@ window#waybar.PCSX2 #window {
 	background: #e6e6e6;
 }
 
-#mpd,
+#mpd, #battery,
 #network, #pulseaudio, #temperature, #cpu, #custom-memory {
 	margin-left: 8px;
 	padding-left: 16px;
@@ -43,11 +43,16 @@ window#waybar.PCSX2 #window {
 	border-radius: 26px;
 }
 
-#workspaces, #mpd,
+#workspaces, #mpd, #battery,
 #network, #pulseaudio, #temperature, #cpu, #custom-memory, #workspaces, #clock, #tray {
 	margin-top: 4px;
 	margin-bottom: 2px;
 	transition: none;
+}
+
+#battery {
+	color: #b48ead;
+	background: #4c566a;
 }
 
 #workspaces {
