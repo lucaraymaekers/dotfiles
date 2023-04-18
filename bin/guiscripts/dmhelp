@@ -1,26 +1,32 @@
 #!/usr/bin/env sh
-program="${1:-$(dmenu_path | dmenu -l 4 -g 5)}"
-opfil="/tmp/dmh_options.txt"
+OPTIONS="/tmp/dmh_options.txt"
+
+if [ "$MENUCMD" = "tofi" ]
+then
+	program="$(tofi-run --prompt-text "program: ")"
+	menucmd="tofi --width 50% --height 30% --matching-algorithm normal --prompt-text $program:"
+elif [ "$MENUCMD" = "dmenu" ]
+then
+	program="$(dmenu_path | dmenu -l 4 -g 5 -p "program:")" 
+	menucmd="dmenu -l 20 -g 1 -x -i -p $program:" 
+else
+	program="$(dmenu_path | fzf)"
+	menucmd="fzf"
+fi
+
 test -z "${program}" && exit 1
 
-if ${program} --help > "${opfil}"
+if $program --help > "$OPTIONS"
 then
-    option="$(\
-        grep -E "^ *-[-a-Z]* " "${opfil}" \
-            | tr -s ' ' \
-            | sort | uniq \
-            | column -l 2 -t \
-            | dmenu -x -l 20 -g 1 -p "${program}" \
-            | awk '{print $1}' \
-    )"
-elif man $program > "${opfil}"
-then
-    echo lesgo
-else
-    echo "No options found for '${program}'" > /dev/stderr
-    exit 1
-fi
-test -z "${option}" && exit 1
+    option="$(grep -E "^ *-[-a-Z]* " "$OPTIONS" |
+		tr -s ' ' |
+		sort |
+		uniq |
+		column -l 2 -t |
+		$menucmd |
+		awk '{print $1}')"
 
-rm -f "${opfil}"
-${program} ${option}
+test -z "$option" && exit 1
+
+rm -f "$OPTIONS"
+setsid $program $option
