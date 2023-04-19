@@ -52,6 +52,8 @@ return require('packer').startup(function(use)
 	use('hrsh7th/cmp-nvim-lsp-signature-help')
 	use('alvan/vim-closetag')
 
+	use('mfussenegger/nvim-dap')
+
 	-- java
 	use('mfussenegger/nvim-jdtls')
 
