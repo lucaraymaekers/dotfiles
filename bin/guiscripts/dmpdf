@@ -1,11 +1,21 @@
 #!/bin/sh
 
+if [ "$MENUCMD" = "tofi" ]
+then
+	menucmd="tofi --width 30% --height 30% --matching-algorithm normal --prompt-text pdf:"
+elif [ "$MENUCMD" = "dmenu" ]
+then
+	menucmd="dmenu -l 10 -g 1 -x -i -p pdf:" 
+else
+	menucmd="fzf"
+fi
+
 tmp="/tmp/dmpdf"
 find ${1:-$HOME/docs $HOME/dl} 2> /dev/null | grep -E ".+\.pdf" | sort > "$tmp"
 choice="$(\
         sed 's|^/home/aluc|\~| ; s|\([^/]\)[^/]*/|\1/|g' "$tmp" | 
 		awk '{printf "%s %s\n", NR ":", $0}' | 
-		dmenu -p "pdf:" -l 10 -g 1 -x -i | 
+		$menucmd |
 		grep -oE "^[0-9]+:" |
 		cut -f1 -d:)"
 if [ -z "$choice" ]; then
