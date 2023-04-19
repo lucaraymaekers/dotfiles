@@ -1,6 +1,8 @@
 #!/bin/sh
+which swaylock convert grim > /dev/null ||
+	exit 1
 umask 077
 file=/tmp/bg.png
-grim - > $file
+grim -l 0 - > $file
 convert -resize 10% -resize 1000% $file $file
 swaylock -i $file
