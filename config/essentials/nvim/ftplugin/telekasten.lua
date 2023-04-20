@@ -26,4 +26,4 @@ vim.keymap.set("i", "<LocalLeader>t", "<cmd>Telekasten toggle_todo<cr><Esc>A")
 vim.keymap.set("n", "<LocalLeader>y", "<cmd>Telekasten yank_notelink<cr>")
 vim.keymap.set("n", "<LocalLeader>z", "<cmd>Telekasten follow_link<cr>")
 
-vim.keymap.set("i", "<LocalLeader>l", "<esc>![<esc>A]()<left><C-r>+<esc>A")
+vim.keymap.set("i", "<LocalLeader>l", "<esc>I[<esc>A]()<left><C-r>+<esc>A")

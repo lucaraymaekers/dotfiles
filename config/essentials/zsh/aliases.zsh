@@ -102,6 +102,7 @@ alias dloc='doas find / -type "d" 2> /dev/null | grep'
 alias fif='find . -type "f" | grep'
 alias fid='find . -type "d" | grep'
 alias sxt='sxiv -t'
+alias wgsh='wget --quiet --show-progress'
 
 # ssh
 alias sha='ssh-add'
