@@ -1,0 +1,31 @@
+#!/bin/sh
+if [ "$(id -u)" -ne 0 ]
+then
+	echo "Please run as root." >&2
+	exit 1
+fi
+
+which pptpsetup > /dev/null 2>&1 ||
+	echo "Please install pptpsetup..." >&2
+
+name="ehb_tunnel"
+ip="193.190.238.38"
+pass="e-mails/luca.raymaekers@student.ehb.be"
+username="$(su aluc -c "pass show $pass" |
+	grep "^login:" | 
+	cut -f 2- -d ' ')" 
+password="$(su aluc -c "pass show $pass" |
+	head -1)"
+
+pptpsetup \
+	--create "$name" \
+	--server "$ip" \
+	--username "$username" \
+	--password "$password" \
+	--encrypt &&
+	cat >&2 <<EOF
+Created tunnel: $name
+activate it with
+# pon ehb_tunnel debug dump logfd 2 nodetach
+EOF
+
