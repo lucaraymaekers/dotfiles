@@ -10,21 +10,24 @@ vimh() { vim -c "help $1" -c 'call feedkeys("\<c-w>o")' }
 nnn() { test -z "$NNNLVL" && /usr/bin/nnn "$@" || exit }
 ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
 
-# googoo
+# googoo aliases
+ff () { goo f $1 | fzf }
+fd () { goo d $1 | fzf }
+fdf () { goo f $1 | fzf | xargs dirname }
 o ()
 {
-	f="$(fhome f ${1:-$HOME} | fzf)"
+	f="$(ff $1)"
 	test "$1" && shift
 	test -n "$f" && $EDITOR $@ "$f"
 }
 go ()
 {
-	d="$(fhome d ${1:-$HOME} | fzf)"
+	d="$(fd $1)"
 	test -d "$d" && cd "$d"
 }
 ogo ()
 {
-	d="$(fhome f ${1:-$HOME} | fzf | xargs dirname)"
+	d="$(fdf $1)"
 	test -d "$d" && cd "$d"
 }
 
