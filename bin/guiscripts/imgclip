@@ -1,0 +1,23 @@
+#!/bin/sh
+
+tmppic="/tmp/imgclip.png"
+if [ "$WAYLAND_DISPLAY" ]
+then
+	clipo='wl-paste'
+	clipp='wl-copy'
+else
+	clipo='xclip -o -selection clipboard -r'
+	clipp='xclip -selection clipboard -r'
+fi
+
+$clipo > $tmppic 2>/dev/null
+ftype="$(file /tmp/imgclip.png -bi | cut -f 1 -d ';')"
+if [ "$ftype" != image/png ]
+then
+	notify-send "$(basename $0)" "Not an image."
+	exit 1
+fi
+
+tesseract "$tmppic" stdout | $clipp
+
+notify-send "$(basename $0)" "<i>$($clipo)</i>"
