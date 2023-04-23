@@ -181,3 +181,18 @@ vbst ()
 {
 	vboxmanage snapshot "$1" take "$2"
 }
+
+pacsize ()
+{
+	if test -n "$1"; then
+		packages="$@"
+	elif test ! -t 0; then
+		packages="$(cat)"
+	else
+		echo "No data provided..."
+		return 1
+	fi
+	echo $packages |
+		expac '%m %n' - |
+		numfmt --to=iec-i --suffix=B --format="%.2f"
+}
