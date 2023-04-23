@@ -83,6 +83,10 @@ add-zsh-hook -Uz precmd rehash_precmd
 PS1=' %B%(#.%F{1}.%F{13})[%n%b%f@%B%F{6}%m]%b%f %3~ '
 RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
 
+precmd () {
+	print -Pn "\e]0;$USER@$HOST on ${PWD//$HOME/\~}\a"
+}
+
 setopt prompt_subst
 parse_git_remote() {
 	b="$(git branch -v 2> /dev/null | grep "^*" | sed 's/.\+\[\([^ ]\+\).*$/\1/')"
