@@ -8,9 +8,8 @@ set runtimepath+=~/.config/vim,~/.config/vim/after
 set viminfo+=n~/.config/vim/viminfo
 " Plugins 
 " s;https://github.com/\(.*\);Plug '\1';
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/vim/plugged')
 Plug 'LordTlasT/live-server'
-Plug 'tpope/vim-endwise'
 Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'godlygeek/tabular'
@@ -19,11 +18,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-capslock'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'yuezk/vim-js'
+Plug 'theRealCarneiro/hyprland-vim-syntax'
 call plug#end()
 
 set termguicolors " amazing!
@@ -60,11 +61,7 @@ let &t_EI = "\e[2 q" " Normal cursor
 let ghregex='\(^\|\s\s\)\zs\.\S\+' " Start netrw with dotfiles hidden
 let g:netrw_list_hide=ghregex
 
-let g:indentLine_fileTypeExclude = ['dashboard'] " No indentline on dashboard
-
 """"""""""""""""""" FUNCTIONS AND COMMANDS
-" Force quit faster
-command Q execute 'quit!'
 
 " autocomment z80
 autocmd FileType z80 setlocal commentstring=;\ %s
@@ -75,10 +72,11 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
-augroup nvim_term
-    autocmd!
-    autocmd TermOpen * startinsert
-    autocmd TermOpen * :setlocal nonumber norelativenumber signcolumn=no
+" Absolute numbers if window isn't focused
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,WinEnter * if &nu | set rnu   | endif
+  autocmd BufLeave,FocusLost,WinLeave   * if &nu | set nornu | endif
 augroup END
 
 " Toggle status bar
@@ -115,3 +113,63 @@ inoremap { {}<left>
 
 " goto buffer
 nnoremap gb :buffers<CR>:buffer<Space>
+
+let mapleader = " "
+let maplocalleader = "\\"
+
+" -- vinegar is already doing this
+nnoremap - <cmd>Ex<cr>
+
+" moving
+inoremap <C-a> <C-o>I
+inoremap <C-e> <C-o>A
+inoremap <C-k> <C-o>D
+
+inoremap (<cr> (<cr>)<C-o>O
+inoremap (;<cr> (<cr>);<C-o>O
+inoremap {<cr> {<cr>}<C-o>O
+inoremap {;<cr> {<cr>};<C-o>O
+
+" buffers
+nnoremap gb <cmd>buffers<cr>:buffer<Space>
+nnoremap <Leader>q <cmd>q!<cr>
+nnoremap <Leader>Q <cmd>qa!<cr>
+
+" Windows
+nnoremap <A-h> <C-W>h
+nnoremap <A-j> <C-W>j
+nnoremap <A-k> <C-W>k
+nnoremap <A-l> <C-W>l
+nnoremap <A-o> <C-W>o
+" command line
+cnoremap <M-b> <C-Left>
+cnoremap <M-f> <C-Right>
+cnoremap <M-d> <C-Right><C-w>
+
+" clipboard
+nnoremap <Leader>y \
+
+" templates
+nnoremap <LocalLeader>rt :-1r 
+
+" utils
+inoremap <LocalLeader>r <cmd>r!echo -n $RANDOM<cr><esc>kJA
+" ordered list
+nnoremap <LocalLeader>n <C-v>I0. <esc>gvg<C-a>
+vnoremap <Leader>u <cmd>'<,'>s/^[0-9]\\+\\. //<cr><esc>
+" scripts
+nnoremap <Leader>x <cmd>!chmod +x %<cr>
+" replace
+nnoremap <Leader>sf [[:%s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]]
+nnoremap <Leader>sl [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]]
+
+" write
+nnoremap <LocalLeader>w <cmd>write<cr>
+nnoremap <LocalLeader>W <cmd>write!<cr>
+nnoremap <LocalLeader>e <cmd>edit<cr>
+
+" Packer
+nnoremap <Leader>P <cmd>PackerSync<cr>
+
+" spelling
+nnoremap <Leader><C-s> <cmd>setlocal spell!<cr>
