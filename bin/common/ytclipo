@@ -20,7 +20,7 @@ yt-dlp "$inp" \
 	--restrict-filenames \
 	-f "b" \
 	-S "res:720" \
-	-P "$HOME/vids" \
+	-P "$HOME/vids/youtube/" \
 	-o "%(title)s.%(ext)s"
 notify-send "ytclipo" "<b>ytclipo</b><br>finished downloading."
 echo "$inp" >> /tmp/ytclipo_history
