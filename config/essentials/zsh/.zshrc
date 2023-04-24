@@ -28,7 +28,8 @@ zle -N add-surround surround
 zle -N change-surround surround
 compinit
 
-if grep -qi "debian\|ubuntu" /etc/os-release; then
+if grep -qi "debian\|ubuntu" /etc/os-release 2> /dev/null
+then
     sfiles=(
         /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -36,8 +37,7 @@ if grep -qi "debian\|ubuntu" /etc/os-release; then
 else
     sfiles=(
         /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-        /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    )
+        /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh)
 fi
 sfiles+=(
 		~/.config/zsh/functions.zsh
