@@ -113,6 +113,7 @@ parse_git_status() {
 
 export REPORTTIME=2
 export TIMEFMT="-> %*E"
+# override built-in time command
 alias time='/usr/bin/time'
 export MENUCMD='fzf'
 
