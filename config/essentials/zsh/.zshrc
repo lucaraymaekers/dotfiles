@@ -83,9 +83,14 @@ add-zsh-hook -Uz precmd rehash_precmd
 PS1=' %B%(#.%F{1}.%F{13})[%n%b%f@%B%F{6}%m]%b%f %3~ '
 RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
 
-precmd () {
+set_wt_action () {
+	print -Pn "\e]0;$USER@$HOST on ${PWD//$HOME/\~} | $1\a"
+}
+add-zsh-hook -Uz preexec set_wt_action
+set_wt () {
 	print -Pn "\e]0;$USER@$HOST on ${PWD//$HOME/\~}\a"
 }
+add-zsh-hook -Uz precmd set_wt
 
 setopt prompt_subst
 parse_git_remote() {
