@@ -9,6 +9,7 @@
 	"mpd": {
 		"tooltip": false,
 		"format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+		"artist-len": 24,
 		"format-disconnected": "ﳌ",
 		"format-stopped": "",
 		"state-icons": {
