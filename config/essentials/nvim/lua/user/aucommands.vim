@@ -19,3 +19,5 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
+" Makes vim-commentary work
+autocmd FileType dosini setlocal commentstring=#\ %s
