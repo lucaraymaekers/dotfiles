@@ -9,3 +9,4 @@ config/common/newsboat/urls
 config/extra/jftui/settings
 config/essentials/nvim/spell/
 bin/common/stowdots
+config/extra/mutt/muttrc
