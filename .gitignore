@@ -2,6 +2,7 @@ bin/common/stowdots
 config/common/mpd/database
 config/common/mpv/playfile.txt
 config/common/mpv/watch_later/*
+config/common/newsboat/nb_urls
 config/common/newsboat/urls
 config/essentials/gnupg/*
 config/essentials/nvim/plugin/
