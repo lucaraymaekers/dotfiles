@@ -30,6 +30,9 @@ vim.keymap.set("n", "<A-o>", "<C-W>o", { noremap = true })
 vim.keymap.set("c", "<M-b>", "<C-Left>", { noremap = true })
 vim.keymap.set("c", "<M-f>", "<C-Right>", { noremap = true })
 vim.keymap.set("c", "<M-d>", "<C-Right><C-w>", { noremap = true })
+vim.keymap.set("c", "<C-f>", "<Right>", { noremap = true })
+vim.keymap.set("c", "<C-b>", "<Left>", { noremap = true })
+vim.keymap.set("c", "<C-a>", "<Home>", { noremap = true })
 
 -- move visual selection up/down wards
 vim.keymap.set("v", "J",  "<cmd>m '>+1<cr>gv=gv<cr>", { noremap = true })
