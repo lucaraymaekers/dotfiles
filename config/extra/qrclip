@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ "$WAYLAND_DISPLAY" ]
+then
+	which wl-copy > /dev/null || exit 1
+	clipp () { 
+		wl-copy
+	}
+	clipo () { 
+		wl-paste
+	}
+else
+	which xclip > /dev/null || exit 1
+	clipp () { 
+		xclip -selection clipboard -r
+	}
+	clipo () { 
+		xclip -o -selection clipboard -r
+	}
+fi
+
+case $1 in
+	'-o')
+		qrencode -s 16 "$(clipo)" -o - |
+			imv -w "imv - $(clipo)" - ;;
+	'-s')
+		qrencode -s 16 "https://duckduckgo.com/$(clipo)" -o - |
+			imv -w "imv - search $(clipo)" - ;;
+esac

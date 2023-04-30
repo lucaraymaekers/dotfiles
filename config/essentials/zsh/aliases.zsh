@@ -117,7 +117,6 @@ alias webcam='v4l2-ctl --set-fmt-video=width=1280,height=720; mpv --demuxer-lavf
 alias airpods='bluetoothctl connect 60:93:16:24:00:10'
 alias hotpsot='nmcli dev wifi hotspot ifname wlan0 ssid wiefie password "peepeepoopoo"'
 alias wtip='wt ip -c -brief addr'
-alias qrclipo='qrencode -s 16 "$(clipo)" -io - | imv -w "imv - $(clipo)" -'
 alias muttmail='echo -n "email set: " >&2
 ls $HOME/.config/mutt/configs |
 fzf |
