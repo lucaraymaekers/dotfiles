@@ -14,13 +14,14 @@ die ()
 help ()
 {
 	local verbose=1
-	die "ladd [OPTION [ARG]...] [FILE]"
-	die "\t-c CATEGORY\t\twill be uppercased"
-	die "\t-d DESCRIPTION"
-	die "\t-f FILE"
-	die "\t-l LINK"
-	die "\t-v\t\t\tverbose"
-	die "\t-y\t\t\tassume yes"
+	die "ladd [OPTION [ARG]...] [FILE]
+        -c CATEGORY
+        -d DESCRIPTION
+        -f FILE
+        -h                        display help
+        -l LINK
+        -v                        verbose
+        -y                        assume 'yes'"
 }
 
 alias shiftt='
