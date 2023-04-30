@@ -10,10 +10,6 @@ vim.keymap.set("i", "<C-e>", "<C-o>A", { noremap = true })
 vim.keymap.set("i", "<C-k>", "<C-o>D", { noremap = true })
 
 vim.keymap.set("i", "\\\\", "\\", { noremap = true })
-vim.keymap.set("i", "(<cr>", "(<cr>)<C-o>O", { noremap = true })
-vim.keymap.set("i", "(;<cr>", "(<cr>);<C-o>O", { noremap = true })
-vim.keymap.set("i", "{<cr>", "{<cr>}<C-o>O", { noremap = true })
-vim.keymap.set("i", "{;<cr>", "{<cr>};<C-o>O", { noremap = true })
 
 -- buffers
 vim.keymap.set("n", "gb", "<cmd>buffers<cr>:buffer<Space>", { noremap = true })
