@@ -13,6 +13,23 @@ vmp() {
 vimh() {
 	vim -c "help $1" -c 'call feedkeys("\<c-w>o")'
 }
+nvf() {
+	local cache="$HOME/.cache/nvf"
+	local match="$(grep -m1 "$1" "$cache" 2> /dev/null)"
+	if test ! -f "$match"
+	then
+		die "resetting cache..."
+		match="$(goo | tee "$cache" | grep -m 1 "$1" 2> /dev/null)"
+		# # Alternative:
+		# match="$(goo | grep -m 1 "$1" 2> /dev/null | tee -a | "$cache")"
+	fi
+	if test -f "$match"
+	then
+		vim "$match" && return
+	else
+		die "no match." && return 1
+	fi
+}
 
 nnn() { test -z "$NNNLVL" && /usr/bin/nnn "$@" || exit }
 ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
