@@ -1,8 +1,8 @@
 #!/bin/sh
 
 dir="$(xdg-user-dir PICTURES)"
-test -d "$dir" &&
-	dir="$HOME/pics"
+dir="${dir:-$HOME/pics}/screenshots"
+mkdir -p "$dir"
 
 case $1 in
 	"-m")
@@ -10,13 +10,13 @@ case $1 in
 		actmon="$(hyprctl monitors -j |
 			jq -r ".[] | select(.id == $actwin)" |
 			jq -r '.name')" 
-		grim -o "$actmon" "$dir/screenshots/$(date +%y%m%d_%H_%M_%S.png)"
+		grim -o "$actmon" "$dir/$(date +%y%m%d_%H_%M_%S)_mon.png"
 		;;
 	"-f")
-		grim "$dir/screenshots/$(date +%y%m%d_%H_%M_%S.png)"
+		grim "$dir/$(date +%y%m%d_%H_%M_%S)_full.png"
 		;;
 	"-s")
-		grim -g "$(slurp)" "$dir/screenshots/$(date +%y%m%d_%H_%M_%S.png)"
+		grim -g "$(slurp)" "$dir/$(date +%y%m%d_%H_%M_%S)_sel.png"
 		;;
 	"-sc")
 		grim -g "$(slurp)" - | wl-copy
