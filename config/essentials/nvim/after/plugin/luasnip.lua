@@ -56,15 +56,22 @@ ls.add_snippets("lua", {
 })
 
 ls.add_snippets("html", {
-	s("<!DOCTYPE>", {
-		t({"<!DOCTYPE html>", "<html lang=\"en\">", "\t<head>", "\t\t<title>"}),
-		i(1, "title"),
-		t("</title>"), i(2),
-		t({"", "\t</head>", "\t<body>", "\t\t<h1>"}),
-		i(3, "Header"),
-		t("</h1>"), i(0),
-		t({"", "\t</body>", "</html>"})
-	}),
+	s("<!DOCTYPE>", fmt(
+	[[
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width-device-width, initial-scale=1.0">
+			<meta http-equiv="X-UA-Compatible" content="ie=edge">
+			<title>{}</title>{}
+		</head>
+		<body>
+			<h1>{}</h1>{}
+		</body>
+	</html>
+	]],
+	{i(1, "title"), i(2), i(3, "Header"), i(0)})),
 })
 
 ls.add_snippets("java", {
