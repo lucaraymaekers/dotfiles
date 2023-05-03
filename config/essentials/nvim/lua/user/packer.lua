@@ -26,11 +26,12 @@ return require('packer').startup(function(use)
 
 	use('tpope/vim-capslock')
 	use('tpope/vim-commentary')
-	use('tpope/vim-endwise')
+	-- use('tpope/vim-endwise')
 	use('tpope/vim-fugitive')
 	use('tpope/vim-repeat')
 	use('tpope/vim-surround')
 	use('tpope/vim-vinegar')
+	use('m4xshen/autoclose.nvim')
 
 	-- utils
 	use('godlygeek/tabular')
