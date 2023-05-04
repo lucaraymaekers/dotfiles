@@ -11,5 +11,7 @@ config/essentials/zsh/histfile
 config/essentials/zsh/.zcompdump
 config/extra/jftui/settings
 config/extra/mutt/muttrc
+config/hyprland/foot/colors
+config/hyprland/waybar/colors.css
 config/old/vim/plugged/
 config/old/vim/viminfo*
