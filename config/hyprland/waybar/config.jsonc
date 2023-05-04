@@ -19,6 +19,7 @@
 		"on-click": "mpc toggle",
 	},
 	"battery": {
+		"format-charging": " {capacity}%",
 		"interval": 10,
 	},
 	"hyprland/window": {
