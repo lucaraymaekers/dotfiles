@@ -1,0 +1,47 @@
+#!/bin/sh
+# Dependency check
+which swaybg wal identify > /dev/null || exit 1
+
+wall="$HOME/pics/wallpaper"
+wal="$(find $HOME/pics/wallpapers -type f |
+	xargs identify |
+	grep 1920x1080 |
+	awk '{print $1}' |
+	shuf -n 1)"
+
+ln -sf "$wal"  "$wall"
+pkill swaybg # There should be only one
+swaybg -i "$wall" &
+wal -c
+wal -i "$wall"
+
+# foot
+. "$HOME/.cache/wal/colors.sh"
+cat <<EOF | tr -d '#' > "$HOME/.config/foot/colors"
+[colors]
+foreground = $foreground
+background = $background
+
+regular0 = $color0
+regular1 = $color1
+regular2 = $color2
+regular3 = $color3
+regular4 = $color4
+regular5 = $color5
+regular6 = $color6
+regular7 = $color7
+
+bright0 = $color8
+bright1 = $color9
+bright2 = $color10
+bright3 = $color11
+bright4 = $color12
+bright5 = $color13
+bright6 = $color14
+bright7 = $color15
+EOF
+
+# waybar
+pkill waybar
+ln -sf "$HOME/.cache/wal/colors-waybar.css" "$HOME/.config/waybar/colors.css"
+waybar &
