@@ -67,5 +67,4 @@ EOF
 
 # waybar
 ln -sf "$walcache/colors-waybar.css" "$HOME/.config/waybar/colors.css"
-pkill waybar
-waybar &
+pkill -USR2 waybar
