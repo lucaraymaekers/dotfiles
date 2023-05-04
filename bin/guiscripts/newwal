@@ -3,13 +3,14 @@
 which swaybg wal identify > /dev/null || exit 1
 
 wall="$HOME/pics/wallpaper"
+walls="$HOME/pics/wallpapers"
 wdir="$HOME/.cache/wal"
 res="1920x1080"
 test -d "$wdir" || exit 1
 
 # if no (valid) argument, use random wallpaper
 test -f "${wal:=$(realpath "$1")}" ||
-	wal="$(find $HOME/pics/wallpapers -type f |
+	wal="$(find "$walls" -type f |
 		xargs identify |
 		grep "$res" |
 		awk '{print $1}' |
