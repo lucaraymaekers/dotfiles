@@ -53,8 +53,8 @@ window#waybar.PCSX2 #window {
 }
 
 #battery {
-	color: @foreground;
-	background: @color12;
+	color: @color6;
+	background: @background;
 }
 
 #workspaces {
