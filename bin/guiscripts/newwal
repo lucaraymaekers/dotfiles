@@ -5,11 +5,14 @@ which swaybg wal identify > /dev/null || exit 1
 wall="$HOME/pics/wallpaper"
 wdir="$HOME/.cache/wal"
 test -d "$wdir" || exit 1
-wal="$(find $HOME/pics/wallpapers -type f |
-	xargs identify |
-	grep 1920x1080 |
-	awk '{print $1}' |
-	shuf -n 1)"
+
+# if no (valid) argument, use random wallpaper
+test -f "${wal:=$(realpath "$1")}" ||
+	wal="$(find $HOME/pics/wallpapers -type f |
+		xargs identify |
+		grep 1920x1080 |
+		awk '{print $1}' |
+		shuf -n 1)"
 
 ln -sf "$wal"  "$wall"
 pkill swaybg # There should be only one
