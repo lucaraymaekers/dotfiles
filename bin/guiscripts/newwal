@@ -7,7 +7,8 @@ walls="$HOME/pics/wallpapers"
 walcache="$HOME/.cache/wal"
 res="1920x1080"
 
-# if no (valid) argument, use random wallpaper
+# if no (valid) argument, use find any image with $res resolution
+# and take a random one
 test -f "${wal:=$(realpath "$1")}" ||
 	wal="$(find "$walls" -type f |
 		xargs identify |
