@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
 
 	-- colors
 	-- use('shaunsingh/nord.nvim')
-	use({ 'AlphaTechnolog/pywal.nvim', as = 'pywal' })
+	use { 'uZer/pywal16.nvim', as = 'pywal16' }
 	use('norcalli/nvim-colorizer.lua')
 
 	use('airblade/vim-gitgutter')
