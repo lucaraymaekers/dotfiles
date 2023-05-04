@@ -14,7 +14,7 @@ require("autoclose").setup({
       ["`"] = { escape = true, close = true, pair = "``"},
    },
    options = {
-      disabled_filetypes = { "text" },
+      disabled_filetypes = { "text", "telekasten", "diff", "gitcommit", "fugitive" },
       disable_when_touch = true,
    },
 })
