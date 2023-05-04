@@ -19,7 +19,6 @@ test -f "${wal:=$(realpath "$1")}" ||
 ln -sf "$wal"  "$wall"
 pkill swaybg # There should be only one
 swaybg -i "$wall" &
-wal -c
 wal -i "$wall"
 
 # foot
