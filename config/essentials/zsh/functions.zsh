@@ -5,6 +5,10 @@ die ()
 	echo "$1" >&2
 }
 
+awnk() {
+	awk "{print \$$1}"
+}
+
 vmp() {
     col -b | \
     vim -MR \
