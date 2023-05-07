@@ -17,6 +17,8 @@
 			"paused": "",
 		},
 		"on-click": "mpc toggle",
+		"on-scroll-up": "mpc volume +5",
+		"on-scroll-down": "mpc volume -5",
 	},
 	"battery": {
 		"format-charging": " {capacity}%",
