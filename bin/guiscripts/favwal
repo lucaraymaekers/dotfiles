@@ -1,0 +1,6 @@
+#!/bin/sh
+pics=$(xdg-user-dir PICTURES")"
+mkdir -p "${pics:=$HOME/pics}/favorites"
+wal="$(realpath "pics/wallpaper")"
+cp "$wal" "$pics/favorites"
+echo "$wal"
