@@ -17,9 +17,8 @@ do
 	file="$file/$choice"
 done
 
-pass show -c "$file" 
-
-test -n "$WAYLAND_DISPLAY" && pgrep -f "cliphist" &&
-	cliphist list |
-		tail -1 |
-		cliphist delete
+pass show -c "$file" &&
+	if [ -n "$WAYLAND_DISPLAY" ] && cliphist list >/dev/null
+then
+	cliphist list | head -n 1 | cliphist delete
+fi
