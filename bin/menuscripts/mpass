@@ -10,10 +10,16 @@ then
 else
 	menucmd="fzf --prompt pass:"
 fi
-while [ -d "${store}/${file}" ]
+while [ -d "$store/$file" ]
 do
-	choice="$($lscmd "${store}/${file}" | sed 's/\.gpg$//'| $menucmd)"
+	choice="$($lscmd "$store/$file" | sed 's/\.gpg$//'| $menucmd)"
 	[ "$choice" ] || break
-	file="${file}/${choice}"
+	file="$file/$choice"
 done
-pass show -c "${file}" 
+
+pass show -c "$file" 
+
+test -n "$WAYLAND_DISPLAY" && pgrep -f "cliphist" &&
+	cliphist list |
+		tail -1 |
+		cliphist delete
