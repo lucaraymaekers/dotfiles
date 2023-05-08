@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ "$MENUCMD" = "tofi" ]
+then
+	menucmd="tofi --width 30% --height 20% --padding-left 2% --matching-algorithm normal"
+elif [ "$MENUCMD" = "dmenu" ]
+then
+	menucmd="dmenu -l 10 -g 1 -x -i" 
+else
+	menucmd="fzf"
+fi
+
+cliphist list |
+	$menucmd |
+	cliphist decode |
+	wl-copy -n
