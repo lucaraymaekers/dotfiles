@@ -2,7 +2,7 @@
 pics="$(xdg-user-dir PICTURES)"
 mkdir -p "${pics:=$HOME/pics}/favorites"
 wal="$(realpath "$pics/wallpaper")"
-diff "$wal" "$pics/favorites/$(realpath "$wal" | xargs basename)" &&
+diff "$wal" "$pics/favorites/$(realpath "$wal" | xargs basename)" > /dev/null 2>&1 &&
 	exit
 cp "$wal" "$pics/favorites"
 echo "$wal"
