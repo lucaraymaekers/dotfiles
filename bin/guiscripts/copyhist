@@ -2,7 +2,7 @@
 
 if [ "$MENUCMD" = "tofi" ]
 then
-	menucmd="tofi --width 30% --height 20% --padding-left 2% --matching-algorithm normal"
+	menucmd="tofi --width 30% --height 50% --anchor bottom-right --matching-algorithm normal"
 elif [ "$MENUCMD" = "dmenu" ]
 then
 	menucmd="dmenu -l 10 -g 1 -x -i" 
