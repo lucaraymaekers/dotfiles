@@ -2,6 +2,7 @@
 if test -z "$1"
 then
 	ln -sf /usr/share/foot/themes/nord ~/.config/foot/colors
+	ln -sf ~/.config/tofi/themes/nord ~/.config/tofi/config
 	ln -sf ~/.config/waybar/colors/colors-nord ~/.config/waybar/colors.css
 	ln -sf ~/pics/wallpapers/nord/nord_background3.jpg ~/pics/wallpaper
 	swaybg -i ~/pics/wallpaper &
