@@ -161,7 +161,8 @@ ls.add_snippets("sh", {
 
 ls.add_snippets("javascript", {
 	-- print
-	s("pt", fmt("console.log({}){}", { i(1, "\"Hello World!\"") , i(0) })),
+	s("pt", fmt("console.log({});{}", { i(1, "\"Hello World!\"") , i(0) })),
+	s("rq", fmt("var {} = require('{}');", { i(1), rep(1) })),
 })
 
 ls.add_snippets("telekasten", {
