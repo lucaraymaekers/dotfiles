@@ -137,6 +137,7 @@ ls.add_snippets("java", {
 })
 
 ls.add_snippets("sh", {
+	s("TD", t "THISDIR=$(dirname $(readlink -f \"$0\"))"),
 	parse("fn", "$1 ()\n{\n\t$2\n}$0", {}),
 	parse("fdie",
 	[[
@@ -162,7 +163,14 @@ ls.add_snippets("sh", {
 ls.add_snippets("javascript", {
 	-- print
 	s("pt", fmt("console.log({});{}", { i(1, "\"Hello World!\"") , i(0) })),
-	s("rq", fmt("var {} = require('{}');", { i(1), rep(1) })),
+	s("rq", fmt("const {} = require('{}');", { i(1), rep(1) })),
+	s("apr", fmt(
+	[[
+	app.get('{}', (req, res) => {{
+		{}
+	}});{}
+	]],
+	{ i(1), i(2, "app.get(\"Hello world!\")"), i(0) })),
 })
 
 ls.add_snippets("telekasten", {
