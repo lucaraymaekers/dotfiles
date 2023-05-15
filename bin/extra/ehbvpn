@@ -10,12 +10,11 @@ which pptpsetup > /dev/null 2>&1 ||
 
 name="ehb_tunnel"
 ip="193.190.238.38"
-pass="e-mails/luca.raymaekers@student.ehb.be"
-username="$(su aluc -c "pass show $pass" |
-	grep "^login:" | 
-	cut -f 2- -d ' ')" 
-password="$(su aluc -c "pass show $pass" |
-	head -1)"
+read -p "username: " username
+stty -echo # disable terminal output
+read -p "password: " password
+stty echo
+echo
 
 pptpsetup \
 	--create "$name" \
