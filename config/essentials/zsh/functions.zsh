@@ -238,3 +238,14 @@ mime-default ()
 		xargs -I {} xdg-mime default "$1" "{}"
 	die "Done."
 }
+
+addedkeys () {
+	find ~/.ssh -iname "*.pub" | while read key
+	do 
+		local fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null)" 
+		if ssh-add -l | grep -q "$fingerprint"
+		then
+		echo "$key"
+		fi
+	done | sed "s,$HOME/.ssh/,,"
+}
