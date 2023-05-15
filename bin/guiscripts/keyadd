@@ -1,0 +1,24 @@
+#!/bin/sh
+die ()
+{
+	echo "$1" >&2
+}
+
+key="$(find ~/.ssh -iname "*.pub" |
+	sed "s,$HOME/.ssh/,," |
+	cut -f1 -d. |
+	$MENUCMD)"
+die "key: $key"
+
+HOST=$(hostnamectl hostname | sed 's/forlure/fl/;s/montecristo/mc/')
+
+if ! ssh-add -l | grep -q "$(ssh-keygen -lf $HOME/.ssh/$key)"
+then
+	export SSH_ASKPASS="passvar"
+	export PASSWORD="keys/fl/ssh/$key"
+	ssh-add - < $HOME/.ssh/$key
+	notify-send "$0" "added <b>$key</b>"
+else
+	die "key already added."
+	notify-send "$0" "key already added."
+fi
