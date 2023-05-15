@@ -5,8 +5,11 @@ then
 	exit 1
 fi
 
-which pptpsetup > /dev/null 2>&1 ||
+if ! which pptpsetup > /dev/null 2>&1
+then
 	echo "Please install pptpsetup..." >&2
+	exit 1
+fi
 
 name="ehb_tunnel"
 ip="193.190.238.38"
@@ -27,4 +30,3 @@ Created tunnel: $name
 activate it with
 # pon ehb_tunnel debug dump logfd 2 nodetach
 EOF
-
