@@ -6,3 +6,4 @@ file=/tmp/bg.png
 grim -l 0 - > $file
 pixelate $file $file
 swaylock -u -i $file
+shred -uz $file
