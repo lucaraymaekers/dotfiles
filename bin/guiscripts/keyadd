@@ -25,7 +25,7 @@ HOST=$(hostnamectl hostname | sed 's/forlure/fl/;s/montecristo/mc/')
 if [ "$1" = "-d" ]
 then
 	ssh-add -d - < $HOME/.ssh/$key.pub &&
-		notify-send "$0" "delted <b>$key</b>"
+		notify-send "$0" "deleted <b>$key</b>"
 elif ! ssh-add -l | grep -q "$(ssh-keygen -lf $HOME/.ssh/$key)"
 then
 	export PASSWORD="keys/fl/ssh/$key"
