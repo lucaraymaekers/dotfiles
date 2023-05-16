@@ -21,7 +21,7 @@ then
 elif ! ssh-add -l | grep -q "$(ssh-keygen -lf $HOME/.ssh/$key)"
 then
 	export SSH_ASKPASS="passvar"
-	export PASSWORD="keys/fl/ssh/$key"
+	export PASSWORD="keys/$HOST/ssh/$key"
 	ssh-add - < $HOME/.ssh/$key &&
 		notify-send "$0" "added <b>$key</b>"
 else
