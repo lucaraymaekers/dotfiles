@@ -69,3 +69,4 @@ EOF
 # waybar
 ln -sf "$walcache/colors-waybar.css" "$HOME/.config/waybar/colors.css"
 pkill -USR2 waybar
+pywalfox update
