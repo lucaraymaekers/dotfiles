@@ -4,6 +4,14 @@ die ()
 	echo "$1" >&2
 }
 
+# For when script calls itself
+if [ -n "$PASSWORD" ]
+then
+	pass show "$PASSWORD" &&
+		exit
+	exit 1
+fi
+
 key="$(find ~/.ssh -iname "*.pub" |
 	sed "s,$HOME/.ssh/,," |
 	cut -f1 -d. |
@@ -20,8 +28,8 @@ then
 		notify-send "$0" "delted <b>$key</b>"
 elif ! ssh-add -l | grep -q "$(ssh-keygen -lf $HOME/.ssh/$key)"
 then
-	export SSH_ASKPASS="passvar"
 	export PASSWORD="keys/fl/ssh/$key"
+	export SSH_ASKPASS="$0"
 	ssh-add - < $HOME/.ssh/$key &&
 		notify-send "$0" "added <b>$key</b>"
 else
