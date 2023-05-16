@@ -10,6 +10,8 @@ key="$(find ~/.ssh -iname "*.pub" |
 	$MENUCMD)"
 die "key: $key"
 
+test ! -f "$HOME/.ssh/$key" && exit 1
+
 HOST=$(hostnamectl hostname | sed 's/forlure/fl/;s/montecristo/mc/')
 
 if ! ssh-add -l | grep -q "$(ssh-keygen -lf $HOME/.ssh/$key)"
