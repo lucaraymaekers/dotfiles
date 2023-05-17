@@ -10,11 +10,11 @@
 		"tooltip": false,
 		"format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
 		"artist-len": 24,
-		"format-disconnected": "ﳌ",
-		"format-stopped": "",
+		"format-disconnected": "",
+		"format-stopped": "",
 		"state-icons": {
-			"playing": "",
-			"paused": "",
+			"playing": "",
+			"paused": "",
 		},
 		"on-click": "mpc toggle",
 		"on-scroll-up": "mpc volume +5",
@@ -31,9 +31,9 @@
 	"pulseaudio": {
 		"tooltip": false,
 		"scroll-step": 5,
-		"format": "{icon} {volume}%",
+		"format": "{icon} {volume:3}%",
 		"format-icons": {
-			"default": ["奄", "奔", "墳"]
+			"default": ["", "", ""]
 		},
 		"on-click": "pavucontrol",
 	},
@@ -49,7 +49,7 @@
 		"tooltip-format-wifi": "{ifname} {essid}",
 		"format-ethernet": "",
 		"tooltip-format-ethernet": "{ifname} {ipaddr}",
-		"format-disconnected": "裏",
+		"format-disconnected": "",
 	},
 	"cpu": {
 		"tooltip": false,
