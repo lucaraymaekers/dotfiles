@@ -1,7 +1,7 @@
 {
 	"layer": "top",
-	"modules-left": ["battery", "wlr/workspaces", "mpd"],
-	"modules-center": ["clock"],
+	"modules-left": ["battery", "clock", "wlr/workspaces", "mpd"],
+	"modules-center": ["hyprland/window"],
 	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
 	"wlr/workspaces": {
 		"on-click": "activate",
