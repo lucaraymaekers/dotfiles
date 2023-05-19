@@ -39,6 +39,11 @@ require('telekasten').setup({
 	rename_update_links = true,
 	media_previewer = "telescope-media-files",
 	follow_url_fallback = nil,
+	vaults = {
+		businessIT = {
+			home = home .. "/" .. "businessIT"
+		}
+	}
 })
 
 vim.keymap.set("n", "<leader>z", "<cmd>Telekasten panel<cr>")
