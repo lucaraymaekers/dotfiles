@@ -86,13 +86,6 @@ clip () {
 	fi
 }
 
-fzh () {
-    choice="$(tac $HOME/.config/zsh/histfile | fzf)"
-    test -z "${choice}" && return
-    echo "${choice}" >> "${HOME}/.config/zsh/histfile"
-    eval "${choice}"
-}
-
 unzipp () {
     file=$1
     shift

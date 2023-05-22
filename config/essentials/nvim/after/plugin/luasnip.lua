@@ -170,7 +170,7 @@ ls.add_snippets("javascript", {
 		{}
 	}});{}
 	]],
-	{ i(1), i(2, "app.get(\"Hello world!\")"), i(0) })),
+	{ i(1), i(2, "res.send(\"Hello world!\")"), i(0) })),
 })
 
 ls.add_snippets("telekasten", {

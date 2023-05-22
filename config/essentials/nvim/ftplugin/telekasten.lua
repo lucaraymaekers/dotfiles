@@ -10,9 +10,6 @@ vim.cmd("hi link CalNavi CalRuler")
 vim.cmd("hi tkTagSep ctermfg=gray guifg=gray")
 vim.cmd("hi tkTag ctermfg=175 guifg=#d3869B")
 
-vim.keymap.set("i", "(", "()<Left>")
-vim.keymap.set("i", "[", "[]<Left>")
-
 vim.keymap.set("n", "<LocalLeader>a", "<cmd>Telekasten show_tags<cr>")
 vim.keymap.set("n", "<LocalLeader>b", "<cmd>Telekasten show_backlinks<cr>")
 vim.keymap.set("n", "<LocalLeader>c", "<cmd>Telekasten show_calendar<cr>")

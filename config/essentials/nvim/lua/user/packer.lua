@@ -39,6 +39,7 @@ return require('packer').startup(function(use)
 	use('renerocksai/calendar-vim')
 	use('ojroques/vim-oscyank', {branch = "main"})
 	use("potamides/pantran.nvim")
+	use('alx741/vinfo')
 
 	-- objects
 	use('michaeljsmith/vim-indent-object')

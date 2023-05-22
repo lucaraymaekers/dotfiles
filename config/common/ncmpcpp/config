@@ -445,7 +445,7 @@
 ##
 ## Note: You can define startup screen by choosing screen from the list above.
 ##
-#startup_screen = playlist
+startup_screen = browser
 #
 ##
 ## Note: You can define startup slave screen by choosing screen from the list

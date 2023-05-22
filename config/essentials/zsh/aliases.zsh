@@ -127,6 +127,7 @@ fzf |
 tee /dev/stderr |
 xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc'
 alias fusephone='sshfs myphone: /media/phone'
+alias ttyper='ttyper -l english1000 -w 100'
 
 # Python
 alias penv='python3 -m venv env'
@@ -149,6 +150,7 @@ alias rh='rehash'
 alias wf='doas wipefs -a'
 alias dmci="doas make clean install"
 alias rmd='rm -f *.{orig,rej}'
+alias mdbw='mariadb -h 0.0.0.0 -P 4033 -u padmin -pbulbizarre padmindb'
 
 alias vbm='vboxmanage'
 alias vbls='vbm list vms'
@@ -209,6 +211,7 @@ alias fzps='ps aux | tail +2 | fzf --bind \
 4:execute(echo -n {} | awk '\''{print \$9}'\'' | xclip -sel c -r),\
 5:execute(echo -n {} | tr -s '\'' '\'' | cut -f 11- -d '\'' '\'' | xclip -sel c -r)"'
 alias asf='alias | fzf'
+alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
 
 alias -s conf="$EDITOR"
 alias -s txt="$EDITOR"
