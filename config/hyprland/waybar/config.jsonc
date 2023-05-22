@@ -63,7 +63,7 @@
 	},
 	"clock": {
 		"format": "{:%H:%M}",
-		"format-alt": "{:%R %A %d %B}",
+		"format-alt": "{:(%R) %A %d %B}",
 		"interval": 1,
 	},
 	"tray": {
