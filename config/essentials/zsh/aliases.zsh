@@ -108,6 +108,7 @@ alias sxt='sxiv -t'
 alias wgsh='wget --quiet --show-progress'
 alias ss4='ss -tln4p | cut -f1 -d,'
 alias mdbw='mariadb -h 0.0.0.0 -P 4033 -u padmin -pbulbizarre padmindb'
+alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 
 # ssh
 alias sha='ssh-add'
@@ -128,6 +129,9 @@ tee /dev/stderr |
 xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc'
 alias fusephone='sshfs myphone: /media/phone'
 alias ttyper='ttyper -l english1000 -w 100'
+
+# NPM
+alias npi="npm init --yes"
 
 # Python
 alias penv='python3 -m venv env'
