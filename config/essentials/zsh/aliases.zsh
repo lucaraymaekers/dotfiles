@@ -217,10 +217,6 @@ alias fzps='ps aux | tail +2 | fzf --bind \
 alias asf='alias | fzf'
 alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
 
-alias -s conf="$EDITOR"
-alias -s txt="$EDITOR"
-alias -s c="$EDITOR"
-alias -s z80="$EDITOR"
 alias -s zip='unzip -l'
 alias -s tar='tar tf'
 

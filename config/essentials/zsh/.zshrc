@@ -15,6 +15,20 @@ then
 	exit
 fi
 
+isTextFile()
+{
+	if [ -n "$1" ]
+	then
+		local file_type=$(file -b --mime-type "$1")
+		if [[ $file_type == text/* ]]
+		then
+			return
+		else
+			return 1
+		fi
+	fi
+}
+
 autoload -U select-word-style
 autoload -z edit-command-line
 zle -N edit-command-line
@@ -97,7 +111,16 @@ function osc7 {
     print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
 }
 add-zsh-hook -Uz chpwd osc7
-
+command_not_found_handler () {
+	isTextFile "$1" || 
+		echo "zsh: command not found: $1" >&2
+}
+# open file with file name
+open_file() {
+	isTextFile "$1" && 
+		"$EDITOR" "$1"
+}
+add-zsh-hook -Uz preexec open_file
 
 # prompt
 PS1=' %B%(#.%F{1}.%F{13})[%n%b%f@%B%F{6}%m]%b%f %3~ '
