@@ -196,6 +196,7 @@ alias cdd='cd $HOME/dl'
 alias cdp='cd $HOME/pics'
 alias cdrs='cd /srv/'
 alias cdng='cd /etc/nginx'
+alias czo='cd $HOME/zot/'
 
 # googoo aliases
 alias o.='o .'
