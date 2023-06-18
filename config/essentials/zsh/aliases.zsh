@@ -1,7 +1,7 @@
 #!/bin/zsh
 # s/alias \([^-]\)/alias -g \1
 
-if grep -qi "debian\|ubuntu" /etc/os-release
+if grep -qi "debian\|ubuntu" /etc/os-release 2> /dev/null
 then
 	alias aptup='apt update && apt upgrade -y'
 fi
