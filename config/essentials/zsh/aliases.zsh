@@ -53,7 +53,7 @@ alias lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
 which exa >/dev/null 2>&1 &&
 	alias ls='exa --sort extension --group-directories-first' ||
-	alias ls='ls --color --group-directories-fist --sort=extension'
+	alias ls='ls --color --group-directories-first --sort=extension'
 
 # pacman aliases
 alias pac='pacman'
