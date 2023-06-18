@@ -5,17 +5,19 @@ then
 	exit 1
 fi
 
-which pptpsetup > /dev/null 2>&1 ||
+if ! which pptpsetup > /dev/null 2>&1
+then
 	echo "Please install pptpsetup..." >&2
+	exit 1
+fi
 
 name="ehb_tunnel"
 ip="193.190.238.38"
-pass="e-mails/luca.raymaekers@student.ehb.be"
-username="$(su aluc -c "pass show $pass" |
-	grep "^login:" | 
-	cut -f 2- -d ' ')" 
-password="$(su aluc -c "pass show $pass" |
-	head -1)"
+read -p "username: " username
+stty -echo # disable terminal output
+read -p "password: " password
+stty echo
+echo
 
 pptpsetup \
 	--create "$name" \
@@ -28,4 +30,3 @@ Created tunnel: $name
 activate it with
 # pon ehb_tunnel debug dump logfd 2 nodetach
 EOF
-

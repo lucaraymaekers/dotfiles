@@ -21,3 +21,15 @@ autocmd BufReadPost *
 
 " Makes vim-commentary work
 autocmd FileType dosini setlocal commentstring=#\ %s
+
+funct! Filter(command)
+    redir =>output
+    silent exec a:command
+    redir END
+    let @o = output
+    execute "put o"
+	redraw!
+    return ''
+endfunct!
+
+nnoremap <Leader>F :silent call Filter('g/')<left><Left>

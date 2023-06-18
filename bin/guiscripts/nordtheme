@@ -1,0 +1,16 @@
+#!/bin/sh
+if test -z "$1"
+then
+	ln -sf /usr/share/foot/themes/nord ~/.config/foot/colors
+	ln -sf ~/.config/tofi/themes/nord ~/.config/tofi/config
+	ln -sf ~/.config/waybar/colors/colors-nord ~/.config/waybar/colors.css
+	ln -sf ~/pics/wallpapers/nord/nord_background3.jpg ~/pics/wallpaper
+	swaybg -i ~/pics/wallpaper &
+	pkill -USR2 waybar
+	sed -i 's/ColorMyPencils("[^"]\+")/ColorMyPencils("nord")/g' ~/.config/nvim/after/plugin/colors.lua
+else
+	ln -sf ~/.cache/wal/colors-waybar.css ~/.config/waybar/colors.css
+	ln -sf ~/.config/tofi/themes/base16 ~/.config/tofi/config
+	newwal
+	sed -i 's/ColorMyPencils("[^"]\+")/ColorMyPencils("pywal")/g' ~/.config/nvim/after/plugin/colors.lua
+fi

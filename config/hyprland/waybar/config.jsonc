@@ -1,8 +1,8 @@
 {
 	"layer": "top",
-	"modules-left": ["battery", "wlr/workspaces", "mpd"],
+	"modules-left": ["battery", "clock", "wlr/workspaces", "mpd"],
 	"modules-center": ["hyprland/window"],
-	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "custom/memory", "clock", "tray"],
+	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
 	"wlr/workspaces": {
 		"on-click": "activate",
 	},
@@ -10,13 +10,15 @@
 		"tooltip": false,
 		"format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
 		"artist-len": 24,
-		"format-disconnected": "ﳌ",
-		"format-stopped": "",
+		"format-disconnected": "",
+		"format-stopped": "",
 		"state-icons": {
-			"playing": "",
-			"paused": "",
+			"playing": "",
+			"paused": "",
 		},
 		"on-click": "mpc toggle",
+		"on-scroll-up": "mpc volume +5",
+		"on-scroll-down": "mpc volume -5",
 	},
 	"battery": {
 		"format-charging": " {capacity}%",
@@ -29,9 +31,9 @@
 	"pulseaudio": {
 		"tooltip": false,
 		"scroll-step": 5,
-		"format": "{icon} {volume}%",
+		"format": "{icon} {volume:3}%",
 		"format-icons": {
-			"default": ["奄", "奔", "墳"]
+			"default": ["", "", ""]
 		},
 		"on-click": "pavucontrol",
 	},
@@ -43,11 +45,11 @@
 		},
 	},
 	"network": {
-		"format-wifi": "",
+		"format-wifi": " ",
 		"tooltip-format-wifi": "{ifname} {essid}",
 		"format-ethernet": "",
 		"tooltip-format-ethernet": "{ifname} {ipaddr}",
-		"format-disconnected": "裏",
+		"format-disconnected": "",
 	},
 	"cpu": {
 		"tooltip": false,
@@ -61,7 +63,7 @@
 	},
 	"clock": {
 		"format": "{:%H:%M}",
-		"format-alt": " {:%A, %B %d, %Y (%R)}",
+		"format-alt": "{:(%R) %A %d %B}",
 		"interval": 1,
 	},
 	"tray": {

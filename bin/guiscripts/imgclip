@@ -3,8 +3,8 @@
 tmppic="/tmp/imgclip.png"
 if [ "$WAYLAND_DISPLAY" ]
 then
-	clipo='wl-paste'
-	clipp='wl-copy'
+	clipo='wl-paste -n'
+	clipp='wl-copy -n'
 else
 	clipo='xclip -o -selection clipboard -r'
 	clipp='xclip -selection clipboard -r'

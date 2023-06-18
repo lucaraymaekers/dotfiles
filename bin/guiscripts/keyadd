@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# For when script calls itself
+if [ -n "$PASSWORD" ]
+then
+	pass show "$PASSWORD" &&
+		exit
+	exit 1
+fi
+
+
+if [ "$MENUCMD" = "tofi" ]
+then
+	menucmd="tofi --matching-algorithm=normal"
+else
+	menucmd="$MENUCMD"
+fi
+
+
+die ()
+{
+	echo "$1" >&2
+}
+
+SSHFOLDER="$HOME/.ssh"
+
+key="$(find "$SSHFOLDER" -iname "*.pub" |
+	sed "s,$SSHFOLDER/,," | # Clean
+	sed 's/\.pub$//' |
+	$menucmd)"
+die "key: $key"
+
+test ! -f "$SSHFOLDER/$key" && exit 1
+
+HOST=$(hostnamectl hostname | sed 's/forlure/fl/;s/montecristo/mc/')
+die "HOST: $HOST"
+
+if [ "$1" = "-d" ]
+then
+	ssh-add -d - < "$SSHFOLDER"/$key.pub &&
+		notify-send "$0" "deleted <b>$key</b>" ||
+		notify-send "$0" "could not delete."
+elif ! ssh-add -l | grep -q "$(ssh-keygen -lf "$SSHFOLDER"/$key)"
+then
+	export PASSWORD="keys/$HOST/ssh/$key"
+	export SSH_ASKPASS="$0"
+	ssh-add - < "$SSHFOLDER"/$key &&
+		notify-send "$0" "added <b>$key</b>"
+else
+	die "key already added."
+	notify-send "$0" "key already added."
+fi

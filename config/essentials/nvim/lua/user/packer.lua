@@ -13,7 +13,7 @@ return require('packer').startup(function(use)
 	use('theprimeagen/harpoon')
 
 	-- colors
-	-- use('shaunsingh/nord.nvim')
+	use('shaunsingh/nord.nvim')
 	use { 'uZer/pywal16.nvim', as = 'pywal16' }
 	use('norcalli/nvim-colorizer.lua')
 
@@ -39,6 +39,8 @@ return require('packer').startup(function(use)
 	use('renerocksai/calendar-vim')
 	use('ojroques/vim-oscyank', {branch = "main"})
 	use("potamides/pantran.nvim")
+	use('alx741/vinfo')
+	use('github/copilot.vim')
 
 	-- objects
 	use('michaeljsmith/vim-indent-object')

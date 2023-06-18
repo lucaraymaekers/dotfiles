@@ -1,8 +1,22 @@
 #!/bin/sh
-which swaylock convert grim > /dev/null ||
+which swaylock grim pixelate > /dev/null ||
 	exit 1
 umask 077
-file=/tmp/bg.png
-grim -l 0 - > $file
-convert -resize 10% -resize 1000% $file $file
-swaylock -i $file
+
+monitors="$(hyprctl monitors -j |
+	jq -r '.[].name' |
+	tr '\n' ' ' |
+	sed 's,.$,,')"
+
+for monitor in $monitors
+do
+	file="/tmp/locker-$monitor.png"
+	grim -l 0 -o "$monitor" "$file"
+	pixelate "$file" "$file"
+	# Create image command for swaylock
+	icmd="$icmd --image $monitor:$file"
+	files="$files $file"
+done
+
+swaylock -f -u $icmd
+shred -uz -- $files

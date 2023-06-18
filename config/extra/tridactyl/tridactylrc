@@ -40,17 +40,22 @@ set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASea
 set searchurls.qwant https://www.qwant.com/?q=
 
 " Binds
+" vim macro:
+" Ibind gnp tabopen yy2pwwdtojRwinbblrwkro
 bind J tabnext
 bind K tabprev
-bind gna tabopen moz-extension://7cf2fd76-6055-4053-bb4b-f518030f6240/static/docs/classes/_src_lib_config_.default_config.html
-bind goa open moz-extension://7cf2fd76-6055-4053-bb4b-f518030f6240/static/docs/classes/_src_lib_config_.default_config.html
-bind gwa winopen moz-extension://7cf2fd76-6055-4053-bb4b-f518030f6240/static/docs/classes/_src_lib_config_.default_config.html
+" chat gpt
 bind gnc tabopen https://chat.openai.com/chat
 bind goc open https://chat.openai.com/chat
 bind gwc winopen https://chat.openai.com/chat
+" awesome pixel tutorials
 bind gnp tabopen https://github.com/Siilwyn/awesome-pixel-art#tutorials
 bind gop open https://github.com/Siilwyn/awesome-pixel-art#tutorials
 bind gwp winopen https://github.com/Siilwyn/awesome-pixel-art#tutorials
+" deluge
+bind gnd tabopen http://192.168.178.52:8112/
+bind god open http://192.168.178.52:8112/
+bind gwd winopen http://192.168.178.52:8112/
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl

@@ -1,0 +1,10 @@
+#!/bin/sh
+pics="$(xdg-user-dir PICTURES)"
+favs="wallpapers/favorites"
+
+mkdir -p "${pics:=$HOME/pics}/$favs"
+wal="$(realpath "$pics/wallpaper")"
+diff "$wal" "$pics/$favs/$(realpath "$wal" | xargs basename)" > /dev/null 2>&1 &&
+	exit
+cp "$wal" "$pics/$favs"
+echo "$wal"

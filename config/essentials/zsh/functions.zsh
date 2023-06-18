@@ -86,13 +86,6 @@ clip () {
 	fi
 }
 
-fzh () {
-    choice="$(tac $HOME/.config/zsh/histfile | fzf)"
-    test -z "${choice}" && return
-    echo "${choice}" >> "${HOME}/.config/zsh/histfile"
-    eval "${choice}"
-}
-
 unzipp () {
     file=$1
     shift
@@ -110,10 +103,10 @@ esc () {
 }
 
 delfile () {
-	curl ${2:-"https://up.kallipso.be/delete/$1"}
+	curl "${2:-https://up.kallipso.be/delete/$1}"
 }
 upfile () {
-	curl -F "file=@\"$1\"" ${2:-"https://up.kallipso.be"}
+	curl -F "file=@\"$1\"" ${2:-http://0x0.st}
 }
 
 sgd () {
@@ -237,4 +230,23 @@ mime-default ()
 		tr ';' '\n' |
 		xargs -I {} xdg-mime default "$1" "{}"
 	die "Done."
+}
+
+addedkeys () {
+	find ~/.ssh -iname "*.pub" | while read key
+	do 
+		local fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null)" 
+		if ssh-add -l | grep -q "$fingerprint"
+		then
+		echo "$key"
+		fi
+	done | sed "s,$HOME/.ssh/,,"
+}
+
+fpass () {
+	find $HOME/.password-store -type f -not -path ".git" |
+		grep "\.gpg$" |
+		sed "s,$HOME/.password-store/,,;s,\.gpg$,," |
+		fzf |
+		xargs pass show -c
 }

@@ -64,6 +64,7 @@ vim.keymap.set("n", "<Leader>x", "<cmd>!chmod +x %<cr>", { noremap = true, silen
 -- replace
 vim.keymap.set("n", "<Leader>sf", [[:%s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<Leader>sl", [[:s/\<<C-r><C-w>\>/<C-r><C-w><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<LocalLeader>f", "<cmd>.!fold -w 80 -s<cr>")
 
 -- write
 vim.keymap.set("n", "<LocalLeader>w", "<cmd>write<cr>", { noremap = true })

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-test -z "${chidot:=$1}" \
-	&& chidot="$(cat /dev/stdin)"
-
-echo "chidot: ${chidot}" 1>&2
-curl -s "https://www.youtube.com/${chidot}/"| pup 'meta[itemprop="channelId"] attr{content}'

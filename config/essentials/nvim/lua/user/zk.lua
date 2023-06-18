@@ -39,6 +39,18 @@ require('telekasten').setup({
 	rename_update_links = true,
 	media_previewer = "telescope-media-files",
 	follow_url_fallback = nil,
+	vaults = {
+		SoftwareDesign = {
+			home = home .. "/" .. "SoftwareDesign",
+			template_new_note = home .. "/" .. "templates/new_note.md",
+			new_note_filename = "title",
+		},
+		businessIT = {
+			home = home .. "/" .. "businessIT",
+			template_new_note = home .. "/" .. "templates/new_note.md",
+			new_note_filename = "title",
+		}
+	}
 })
 
 vim.keymap.set("n", "<leader>z", "<cmd>Telekasten panel<cr>")
@@ -53,5 +65,6 @@ vim.keymap.set("n", "<leader>zm", "<cmd>Telekasten browse_media<cr>")
 vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<cr>")
 vim.keymap.set("n", "<leader>zp", "<cmd>Telekasten preview_img<cr>")
 vim.keymap.set("n", "<leader>zs", "<cmd>Telekasten switch_vault<cr>")
+vim.keymap.set("n", "<leader>zt", "<cmd>Telekasten panel<cr>")
 vim.keymap.set("n", "<leader>zw", "<cmd>Telekasten find_weekly_notes<cr>")
 vim.keymap.set("n", "<leader>#", "<cmd>Telekasten show_tags<cr>")

@@ -8,8 +8,8 @@ fi
 
 if [ "$WAYLAND_DISPLAY" ]
 then
-	alias -g clipp='wl-copy'
-	alias -g clipo='wl-paste'
+	alias -g clipp='wl-copy -n'
+	alias -g clipo='wl-paste -n'
 else
 	if which devour > /dev/null 2>&1  
 	then
@@ -21,7 +21,7 @@ else
 fi
 
 # Programs
-alias nv='nvim'
+alias vi='nvim'
 alias nb='newsboat'
 alias sr='surfraw'
 alias ccu='calcurse'
@@ -89,8 +89,8 @@ alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
 alias scr='nvim +"setlocal buftype=nofile bufhidden=hide noswapfile filetype=txt" scratch'
 alias vimp="vim '+PlugInstall'"
 alias nvimp="nvim '+PackerSync'"
-alias nvg='git status > /dev/null 2>&1 && nv "+Git"'
-alias nvn='nv "+Telekasten panel"'
+alias nvg='git status > /dev/null 2>&1 && nvim "+Git"'
+alias nvn='nvim "+Telekasten panel"'
  
 alias xrandr-rpgmaker='xrandr --auto --output VGA-1 --mode 1024x768 --left-of HDMI-1 && ~/.fehbg'
 alias xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HDMI-1 --output HDMI-1 --mode 1920x1080 && ~/.fehbg'
@@ -106,6 +106,9 @@ alias fif='find . -type "f" | grep'
 alias fid='find . -type "d" | grep'
 alias sxt='sxiv -t'
 alias wgsh='wget --quiet --show-progress'
+alias ss4='ss -tln4p | cut -f1 -d,'
+alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
+alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 
 # ssh
 alias sha='ssh-add'
@@ -115,6 +118,8 @@ alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
 alias whatsmyip='curl -s "ifconfig.co"'
 alias icognito='unset HISTFILE'
 alias webcam='v4l2-ctl --set-fmt-video=width=1280,height=720; mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed --no-resume-playback'
+alias capture='echo "Y" | wf-recorder -o "$(hyprctl -j monitors | jq -r '\''.[].name'\'' | fzf)" --codec=vp8_vaapi --device=/dev/dri/renderD128 -f output.webm -D'
+alias qrclipo='qrencode -s 16 "$(clipo)" -o - | imv -w "imv - $(clipo)" -'
 alias airpods='bluetoothctl connect 60:93:16:24:00:10'
 alias hotpsot='nmcli dev wifi hotspot ifname wlan0 ssid wiefie password "peepeepoopoo"'
 alias wtip='wt ip -c -brief addr'
@@ -123,6 +128,11 @@ ls $HOME/.config/mutt/configs |
 fzf |
 tee /dev/stderr |
 xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc'
+alias fusephone='sshfs myphone: /media/phone'
+alias ttyper='ttyper -l english1000 -w 100'
+
+# NPM
+alias npi="npm init --yes"
 
 # Python
 alias penv='python3 -m venv env'
@@ -138,12 +148,14 @@ alias kll='killall'
 alias pi='ping archlinux.org -c4'
 alias -g sba='source env/bin/activate || source bin/activate'
 alias -g smc='systemctl'
-alias smcu='systemctl --user'
+alias ssc='doas smc'
+alias smcu='smc --user'
 alias zsr='source ${ZDOTDIR:-$HOME}/.zshrc && rehash'
 alias rh='rehash'
 alias wf='doas wipefs -a'
 alias dmci="doas make clean install"
 alias rmd='rm -f *.{orig,rej}'
+alias cdzot='mkdir -p /tmp/zottesite && cd /tmp/zottesite'
 
 alias vbm='vboxmanage'
 alias vbls='vbm list vms'
@@ -158,7 +170,7 @@ alias eto='$EDITOR ~/sync/TODO'
 alias edw='$EDITOR ~/src/dwm/config.def.h'
 alias edm='$EDITOR ~/src/dmenu/config.def.h'
 alias ehst='$EDITOR $ZDOTDIR/histfile'
-alias ezh=' $EDITOR $HOME/.config/hypr/hyprland.conf'
+alias ezh=' $EDITOR $HISTFILE'
 alias est='$EDITOR ~/src/st/config.def.h'
 alias esl='$EDITOR ~/src/slock/config.def.h'
 alias esls='$EDITOR ~/src/slstatus/config.def.h'
@@ -167,6 +179,7 @@ alias cfd='$EDITOR config.def.h'
 # quick cd
 alias cda='cd $HOME/docs/android/projects'
 alias cds='cd $HOME/src/'
+alias cdsw='cd $HOME/src/WheelAdvisor'
 alias cdw='cd $HOME/src/dwm'
 alias cddm='cd $HOME/src/dmenu'
 alias cdslo='cd $HOME/src/slock'
@@ -184,6 +197,7 @@ alias cdd='cd $HOME/dl'
 alias cdp='cd $HOME/pics'
 alias cdrs='cd /srv/'
 alias cdng='cd /etc/nginx'
+alias czo='cd $HOME/zot/'
 
 # googoo aliases
 alias o.='o .'
@@ -203,13 +217,15 @@ alias fzps='ps aux | tail +2 | fzf --bind \
 4:execute(echo -n {} | awk '\''{print \$9}'\'' | xclip -sel c -r),\
 5:execute(echo -n {} | tr -s '\'' '\'' | cut -f 11- -d '\'' '\'' | xclip -sel c -r)"'
 alias asf='alias | fzf'
+alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
 
-alias -s conf="$EDITOR"
-alias -s txt="$EDITOR"
-alias -s c="$EDITOR"
-alias -s z80="$EDITOR"
 alias -s zip='unzip -l'
 alias -s tar='tar tf'
+
+alias dcb='docker build'
+alias dcbt='docker build -t'
+alias dce='docker exec'
+alias dcet='docker exec -it'
 
 alias cfg='git --git-dir=$HOME/src/dotfiles/.git --work-tree=$HOME/src/dotfiles'
 # oh-my-zsh git aliases

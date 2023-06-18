@@ -72,6 +72,11 @@ ls.add_snippets("html", {
 	</html>
 	]],
 	{i(1, "title"), i(2), i(3, "Header"), i(0)})),
+	s("sty", fmt(
+	[[
+	<link rel="stylesheet" type="text/css" href="{}">{}
+	]],
+	{ i(1), i(0) })),
 })
 
 ls.add_snippets("java", {
@@ -137,6 +142,7 @@ ls.add_snippets("java", {
 })
 
 ls.add_snippets("sh", {
+	s("TD", t "THISDIR=$(dirname $(readlink -f \"$0\"))"),
 	parse("fn", "$1 ()\n{\n\t$2\n}$0", {}),
 	parse("fdie",
 	[[
@@ -161,7 +167,32 @@ ls.add_snippets("sh", {
 
 ls.add_snippets("javascript", {
 	-- print
-	s("pt", fmt("console.log({}){}", { i(1, "\"Hello World!\"") , i(0) })),
+	s("pt", fmt("console.log({});{}", { i(1, "\"Hello World!\"") , i(0) })),
+	s("rq", fmt("const {} = require('{}');", { i(1), rep(1) })),
+	s("dbconn", fmt(
+	[[
+		let conn = null;
+		try {{
+			conn = await dbConnect();{}
+			conn.end()
+		}} catch(err) {{
+			console.error('Error:', err);
+		}}
+	]],
+	{ i(0) })),
+	s("apr", fmt(
+	[[
+	app.get('{}', (req, res) => {{
+		{}
+	}});{}
+	]],
+	{ i(1), i(2, "res.send(\"Hello world!\")"), i(0) })),
+	s("cerr", t "console.error('Error:', err);"),
+	s("gel", fmt(
+	[[
+	let {} = document.getElementById('{}');{}
+	]],
+	{ i(1), rep(1), i(0) })),
 })
 
 ls.add_snippets("telekasten", {
