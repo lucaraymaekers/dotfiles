@@ -29,7 +29,7 @@ nvf() {
 	fi
 	if test -f "$match"
 	then
-		vim "$match" && return
+		$EDITOR "$match" && return
 	else
 		die "no match." && return 1
 	fi
