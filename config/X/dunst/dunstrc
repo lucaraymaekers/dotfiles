@@ -33,7 +33,7 @@
     origin = top-center
 
     # Offset from the origin
-    offset = 10x26
+    offset = 0x10
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -90,7 +90,7 @@
     frame_width = 1
 
     # Defines color of the frame around the notification window.
-    frame_color = "#00000"
+    frame_color = "#969B95"
 
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
@@ -212,7 +212,7 @@
     max_icon_size = 32
 
     # Paths to default icons (only neccesary when not using recursive icon lookup)
-    icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
+    icon_path = /usr/share/icons/
 
     ### History ###
 
@@ -316,9 +316,9 @@
     timeout = 6
 
 [urgency_normal]
-    background = "#393d4b"
-    foreground = "#80a0c0"
-    frame_color = "#81a1c1"
+    background = "#b48ead"
+    foreground = "#2e3440"
+    frame_color = "#2e3440"
     timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
