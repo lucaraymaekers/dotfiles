@@ -250,3 +250,8 @@ fpass () {
 		fzf |
 		xargs pass show -c
 }
+
+oclip ()
+{
+	printf "\033]52;c;$(echo -n "$@" | base64)\a"
+}
