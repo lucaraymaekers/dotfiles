@@ -103,10 +103,10 @@ esc () {
 }
 
 delfile () {
-	curl "${2:-https://up.kallipso.be/delete/$1}"
+	curl "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"
 }
 upfile () {
-	curl -F "file=@\"$1\"" ${2:-http://0x0.st}
+	curl -F "file=@\"$1\"" ${2:-https://upfast.cronyakatsuki.xyz}
 }
 
 sgd () {
