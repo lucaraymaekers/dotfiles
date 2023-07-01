@@ -40,6 +40,11 @@ require('telekasten').setup({
 	media_previewer = "telescope-media-files",
 	follow_url_fallback = nil,
 	vaults = {
+		Driving = {
+			home = home .. "/" .. "Driving",
+			template_new_note = home .. "/" .. "templates/new_note.md",
+			new_note_filename = "title",
+		},
 		businessIT = {
 			home = home .. "/" .. "businessIT",
 			template_new_note = home .. "/" .. "templates/new_note.md",
