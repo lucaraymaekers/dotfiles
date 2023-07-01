@@ -140,6 +140,7 @@ alias npi="npm init --yes"
 
 # Python
 alias penv='python3 -m venv env'
+alias phttp='python3 -m http.server'
 alias pipreq='pip install -r requirements.txt'
 
 alias -g '...'='../..'
@@ -230,6 +231,7 @@ alias dcb='docker build'
 alias dcbt='docker build -t'
 alias dce='docker exec'
 alias dcet='docker exec -it'
+alias dcmp='docker compose up -d'
 
 alias cfg='git --git-dir=$HOME/src/dotfiles/.git --work-tree=$HOME/src/dotfiles'
 # oh-my-zsh git aliases
