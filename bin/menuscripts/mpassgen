@@ -34,7 +34,7 @@ test -z "${password}" && exit 1
 
 if [ "${choice}" = "multiline" ]
 then
-	login="$(ls -1 ~/.password-store/e-mails |
+	login="$(ls -1 ${PASSWORD_STORE_DIR:=$HOME/.password-store}/e-mails |
 		sed 's/\.gpg$//' | 
 		$menucmd)"
     test -z "${login}" && exit 1
