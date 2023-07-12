@@ -111,18 +111,19 @@ upfile () {
 
 sgd () {
 	d="$PWD"
-	for dir in ${1:-$HOME/src/*} 
-	do 
-		cd $dir
+	find $HOME/src -maxdepth 1 -mindepth 1 -type d |
+		while read -r dir
+	do
+		cd "$dir"
+		git status > /dev/null 2>&1 || continue
 		git fetch > /dev/null 2>&1
-		if [ "$(git status --short 2>/dev/null | grep -v "??" | head -1)" ]
-		then
-			# There are changes, and this is a git repo
-			echo "$PWD \e[1;31m*changes\e[0m"
-		fi
+		printf "$PWD"
+		test "$(git status --short 2>/dev/null | grep -v "??" | head -1)" &&
+			printf " \e[1;31m*changes\e[0m" | sed "s#$HOME#~#" >&2
 		test "$(parse_git_remote)" && 
-			echo "$PWD \e[0;32m*push/pull\e[0m"
-		done
+			printf " \e[0;32m*push/pull\e[0m" | sed "s#$HOME#~#" >&2
+		printf "\n"
+	done
 	cd "$d"
 	unset d
 }
