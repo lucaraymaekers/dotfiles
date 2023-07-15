@@ -72,6 +72,8 @@ alias dopacs='dopac -S'
 alias dopacc='dopac -Sc'
 alias doprm='dopac -Rns'
 
+alias mpkg='makepkg -si'
+
 which pikaur > /dev/null 2>&1 &&
 	alias yay='pikaur'
 alias yup='yay -Syu'
@@ -83,6 +85,11 @@ alias yays='yay -S'
 alias yrm='yay -Rns'
 
 alias pkb='pkgfile -b'
+
+# transmission
+alias tr='transmission-remote debuc.com'
+alias trls='transmission-remote debuc.com -t all -l'
+alias tradd='transmission-remote debuc.com -a'
 
 alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
 
@@ -153,7 +160,7 @@ alias kll='killall'
 alias pi='ping archlinux.org -c4'
 alias sba='source env/bin/activate || source bin/activate'
 alias smc='systemctl'
-alias ssc='doas smc'
+alias ssc='doas systemctl'
 alias smcu='smc --user'
 alias zsr='source ${ZDOTDIR:-$HOME}/.zshrc && rehash'
 alias rh='rehash'
@@ -162,6 +169,7 @@ alias dmci="doas make clean install"
 alias rmd='rm -f *.{orig,rej}'
 alias cdzot='mkdir -p /tmp/zottesite && cd /tmp/zottesite'
 alias gdate="date +%y%m%d_%H%M%S"
+alias tpid='tail -f /dev/null --pid'
 
 alias vbm='vboxmanage'
 alias vbls='vbm list vms'
@@ -216,10 +224,13 @@ alias go/s='go /srv'
 alias ogo/='ogo /'
 alias ogo/s='ogo /srv'
 
+# fzf aliases
 alias fzps='ps aux | tail +2 | fzf | tee /dev/stderr | awk '\''{print $2}'\'' | clipp'
 alias asf='alias | fzf'
 alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
+alias ffwin='hyprctl clients -j | jq '\''.[].pid'\'' | fzf --preview "hyprctl clients -j | jq '\''.[] | select(.pid == {}) | {class, title, workspace, xwayland}'\''"'
 alias pff='find ${PASSWORD_STORE_DIR:=$HOME/src/password-store/} -name "*.gpg" | sed -e "s@$PASSWORD_STORE_DIR/@@" -e '\''s/\.gpg$//'\'' | fzf | xargs pass show -c'
+alias fzps='fzf --print0 | xargs -0I{}'
 
 alias -s zip='unzip -l'
 alias -s tar='tar tf'
