@@ -72,7 +72,8 @@ ipc ()
 calc () { echo "$@" | bc -l }
 
 unique () {
-	f="/tmp/$(uuidgen)"
+	local f
+	f="$(mktemp)"
 	awk '!x[$0]++' "$1" > "$f"
 	mv "$f" "$1"
 }
