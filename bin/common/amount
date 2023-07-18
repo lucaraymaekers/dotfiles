@@ -1,0 +1,36 @@
+#!/bin/sh
+
+tmp="$(mktemp)"
+
+die ()
+{
+	echo "$1" >&2
+}
+
+clear
+lsblk -o name,size,type,mountpoints
+die "───────────────────────────────────"
+lsblk --ascii -o name,mountpoint |
+	grep '^.-' |
+	while read line
+do
+	words="$(printf "$line" | wc -w)"
+	test $words -gt 1 && continue 
+	i=$((${i:-0}+1))
+	printf "%s. %s\n" "$i" "$(printf "$line" | cut -f 2- -d '-')"
+done | tee "$tmp"
+
+read -p '>' choice
+
+dev="$(grep "^$choice\." "$tmp" | cut -f 2- -d ' ')"
+if test -n "$dev"
+then
+	die "mounting /dev/$dev on /media/$dev"
+	sudo mount --mkdir /dev/$dev /media/$dev > /dev/null 2>&1 &&
+		die 'Mounted succesfully.' ||
+		die 'Failed to mount.'
+	die 'Press [Enter] to continue.'
+	head -n 1 > /dev/null
+fi
+
+rm -f "$tmp"
