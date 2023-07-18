@@ -8,7 +8,7 @@ die ()
 }
 
 clear
-lsblk -o name,size,type,mountpoints
+lsblk -o name,size,type,mountpoint
 die "───────────────────────────────────"
 lsblk --ascii -o name,mountpoint |
 	grep '^.-' |

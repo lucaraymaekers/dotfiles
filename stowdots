@@ -1,6 +1,6 @@
 #!/bin/sh
 
-trap "echo -e '\nbye'; exit 1" EXIT
+trap "exit 1" EXIT INT
 
 die () {
 	echo "$@" 1>&2
@@ -22,7 +22,7 @@ else
 	die "E: MACH not set" >&2
 	die "Enter valid value for 'MACH'"
 	die "d(esktop) | s(erver) | l(aptop)"
-	echo -n ">" >&2
+	die -n ">"
 	read MACH
 fi
 
