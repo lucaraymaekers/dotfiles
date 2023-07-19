@@ -25,29 +25,23 @@ mount ()
 	dev="$(grep "^$1\." "$tmp" | cut -f 2- -d ' ')"
 	test -z "$dev" && exit
 
-	die "mounting /dev/$dev on /media/$dev"
+	die "Mounting /dev/$dev on /media/$dev"
 	mkdir -p /media/$dev
 	$sudo mount /dev/$dev /media/$dev > /dev/null 2>&1 ||
 		return 1
 }
 
-# eject the device with $1 as the choice
-eject ()
+# umount the device with $1 as the choice
+umount ()
 {
 	printf "$1" | grep -q "[0-9]" || exit 1
 	mountpoint="$(sed -n "${1}p" "$tmp" |
 		awk '{print $3}')"
 	test -z "$mountpoint" && exit 1
 
-	# Get device for mountpoint with df
-	dev="$(df -P "$mountpoint" |
-		tail -n +2 | head -n 1 | # skip headers
-		awk '{print $1}')"
-
-	die "ejecting $dev"
-	$sudo eject "$dev" &&
-		die "Succesfully ejected." ||
-		die "Failed to eject."
+	die "Unmounting $mountpoint"
+	$sudo umount "$mountpoint" ||
+		return 1
 }
 
 # print lsblk, use $1 to print only devices with mountpoints or without
@@ -76,15 +70,17 @@ cleanup ()
 
 trap cleanup EXIT INT
 
-die "m(ount) e(ject) ?"
+die "m(ount) u(mount) ?"
 choice="$(read_char)"
 
 case $choice in
 	"m") i=2; cmd=mount ;;
-	"e") i=1; cmd=eject ;;
+	"u") i=1; cmd=umount ;;
 	*) exit 1 ;;
 esac
 
 pr_lsblk $i
 choice="$(read_char)"
-$cmd $choice
+$cmd $choice &&
+	die "Successful." ||
+	die "Failed."
