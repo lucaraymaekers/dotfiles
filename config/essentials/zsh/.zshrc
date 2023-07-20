@@ -41,7 +41,7 @@ else
 fi
 sfiles+=(
 		~/.config/zsh/functions.zsh
-		~/.config/zsh/aliases.zsh
+		~/.config/zsh/aliases.sh
 )
 for f in "${sfiles[@]}"; do
     test -f "$f" && source "$f"

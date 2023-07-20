@@ -1,25 +1,46 @@
 #!/bin/zsh
 # s/alias \([^-]\)/alias -g \1
 
+# Zsh specific aliases
+if [ $SHELL = "/bin/zsh" ]
+then
+	# googoo aliases
+	alias o.='o .'
+	alias go.='go .'
+	alias ogo.='ogo .'
+	alias o/='o /'
+	alias o/s='o /srv'
+	alias go/='go /'
+	alias go/s='go /srv'
+	alias ogo/='ogo /'
+	alias ogo/s='ogo /srv'
+
+	if [ "$WAYLAND_DISPLAY" ]
+	then
+		alias -g clipp='wl-copy -n'
+		alias -g clipo='wl-paste -n'
+	else
+		if which devour > /dev/null 2>&1  
+		then
+			alias mpv='devour mpv'
+			alias zathura='devour zathura'
+		fi
+		alias -g clipp='xclip -selection clipboard -r'
+		alias -g clipo='xclip -o -selection clipboard -r'
+	fi
+	alias clipic='clipo > /tmp/pic.png'
+
+	alias -g '...'='../..'
+	alias -g '....'='../../..'
+	alias -g bg='&; disown'
+	alias -g hl='--help |& less -r'
+fi
+
+
 if grep -qi "debian\|ubuntu" /etc/os-release 2> /dev/null
 then
 	alias aptup='apt update && apt upgrade -y'
 fi
-
-if [ "$WAYLAND_DISPLAY" ]
-then
-	alias -g clipp='wl-copy -n'
-	alias -g clipo='wl-paste -n'
-else
-	if which devour > /dev/null 2>&1  
-	then
-		alias mpv='devour mpv'
-		alias zathura='devour zathura'
-	fi
-	alias -g clipp='xclip -selection clipboard -r'
-	alias -g clipo='xclip -o -selection clipboard -r'
-fi
-alias clipic='clipo > /tmp/pic.png'
 
 # Programs
 alias vi='nvim'
@@ -132,11 +153,6 @@ alias qrclipo='qrencode -s 16 "$(clipo)" -o - | imv -w "imv - $(clipo)" -'
 alias airpods='bluetoothctl connect 60:93:16:24:00:10'
 alias hotpsot='nmcli dev wifi hotspot ifname wlan0 ssid wiefie password "peepeepoopoo"'
 alias wtip='wt ip -c -brief addr'
-alias muttmail='echo -n "email set: " >&2
-ls $HOME/.config/mutt/configs |
-fzf |
-tee /dev/stderr |
-xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc'
 alias fusephone='sshfs myphone: /media/phone'
 alias ttyper='ttyper -l english1000 -w 100'
 
@@ -151,12 +167,8 @@ alias penv='python3 -m venv env'
 alias phttp='python3 -m http.server'
 alias pipreq='pip install -r requirements.txt'
 
-alias -g '...'='../..'
-alias -g '....'='../../..'
-alias -g bg='&; disown'
 alias cx='chmod +x'
 alias ch='chown ${USER}:${USER} -R'
-alias -g hl='--help |& less -r'
 alias kll='killall'
 alias pi='ping archlinux.org -c4'
 alias sba='source env/bin/activate || source bin/activate'
@@ -194,6 +206,7 @@ alias cfd='$EDITOR config.def.h'
 # quick cd
 alias cda='cd $HOME/docs/android/projects'
 alias cds='cd $HOME/src/'
+alias cdpw='cd ${PASSWORD_STORE_DIR:-$HOME/.password-store}'
 alias cdsw='cd $HOME/src/WheelAdvisor'
 alias cdw='cd $HOME/src/dwm'
 alias cddm='cd $HOME/src/dmenu'
@@ -214,17 +227,6 @@ alias cdrs='cd /srv/'
 alias cdng='cd /etc/nginx'
 alias czo='cd $HOME/zot/'
 
-# googoo aliases
-alias o.='o .'
-alias go.='go .'
-alias ogo.='ogo .'
-alias o/='o /'
-alias o/s='o /srv'
-alias go/='go /'
-alias go/s='go /srv'
-alias ogo/='ogo /'
-alias ogo/s='ogo /srv'
-
 # fzf aliases
 alias fzps='ps aux | tail +2 | fzf | tee /dev/stderr | awk '\''{print $2}'\'' | clipp'
 alias asf='alias | fzf'
@@ -232,9 +234,6 @@ alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
 alias ffwin='hyprctl clients -j | jq '\''.[].pid'\'' | fzf --preview "hyprctl clients -j | jq '\''.[] | select(.pid == {}) | {class, title, workspace, xwayland}'\''"'
 alias pff='find ${PASSWORD_STORE_DIR:=$HOME/src/password-store/} -name "*.gpg" | sed -e "s@$PASSWORD_STORE_DIR/@@" -e '\''s/\.gpg$//'\'' | fzf | xargs pass show -c'
 alias fzps='fzf --print0 | xargs -0I{}'
-
-alias -s zip='unzip -l'
-alias -s tar='tar tf'
 
 alias dcb='docker build'
 alias dcbt='docker build -t'
