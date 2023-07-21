@@ -2,7 +2,7 @@
 
 die ()
 {
-	echo "$1" >&2
+	echo "$@" >&2
 }
 
 awnk() {
@@ -266,4 +266,15 @@ sms ()
 trcp ()
 {
 	scp "$1" db:/media/basilisk/downloads/transmission/torrents/
+}
+
+muttmail ()
+{
+	die -n "email set: "
+	ls $HOME/.config/mutt/configs |
+		fzf |
+		tee /dev/stderr |
+		xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc
+	die -n 'Press [Enter to login]'
+	read && mutt
 }
