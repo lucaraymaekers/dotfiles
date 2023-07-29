@@ -167,7 +167,6 @@ alias penv='python3 -m venv env'
 alias phttp='python3 -m http.server'
 alias pipreq='pip install -r requirements.txt'
 
-alias cx='chmod +x'
 alias ch='chown ${USER}:${USER} -R'
 alias kll='killall'
 alias pi='ping archlinux.org -c4'
