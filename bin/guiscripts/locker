@@ -3,10 +3,7 @@ which swaylock grim pixelate > /dev/null ||
 	exit 1
 umask 077
 
-monitors="$(hyprctl monitors -j |
-	jq -r '.[].name' |
-	tr '\n' ' ' |
-	sed 's,.$,,')"
+monitors="$(hyprctl monitors -j | jq -r '.[].name' | xargs)"
 
 for monitor in $monitors
 do
@@ -14,9 +11,9 @@ do
 	grim -l 0 -o "$monitor" "$file"
 	pixelate "$file" "$file"
 	# Create image command for swaylock
-	icmd="$icmd --image $monitor:$file"
+	img_opt="--image $monitor:$file $img_opt"
 	files="$files $file"
 done
 
-swaylock -f -u $icmd
+swaylock -f -u $img_opt
 shred -uz -- $files
