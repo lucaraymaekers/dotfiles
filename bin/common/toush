@@ -1,0 +1,14 @@
+#!/bin/sh
+# fork of
+# https://codeberg.org/futxlii/bin/toush :)
+
+shebang='#!/bin/sh'
+
+usage() { >&2 printf 'Usage: %s' "${0##*/}"; exit 1 ;}
+
+[ "$1" ] || usage
+while [ "$1" ]; do
+	[ -f "$1" ] && usage
+	printf '%s\n\n' "$shebang" > "$1" && chmod +x "$1"
+	shift
+done

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+die ()
+{
+	echo "$@" >&2
+}
+
+if [ "$1" = "-k" ]
+then
+	pgrep -f -- "ssh.*-L.*mc-wd" |
+		xargs kill
+	exit
+fi
+
+# For when script calls itself
+if [ -n "$PASSWORD" ]
+then
+	pass show "$PASSWORD" &&
+		exit
+	exit 1
+fi
+
+keyadd ehb/ai
+
+export SSH_ASKPASS="$0"
+export SSH_ASKPASS_REQUIRE="prefer"
+export PASSWORD=aluc
+
+die "I: Activating vpn"
+ssh mc-wd rasdial "vpn.student.ehb.be"
+ssh -f -N \
+	-L 2222:10.2.160.41:22 \
+	mc-wd
+
+ssh -t \
+	-L 8188:localhost:8188 \
+	mc-wd \
+	ssh -N -L 8188:localhost:8188 luca@10.2.160.41
+die "[8188], [2222]"

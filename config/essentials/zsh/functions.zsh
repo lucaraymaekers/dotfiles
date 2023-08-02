@@ -2,7 +2,7 @@
 
 die ()
 {
-	echo "$1" >&2
+	echo "$@" >&2
 }
 
 awnk() {
@@ -72,7 +72,8 @@ ipc ()
 calc () { echo "$@" | bc -l }
 
 unique () {
-	f="/tmp/$(uuidgen)"
+	local f
+	f="$(mktemp)"
 	awk '!x[$0]++' "$1" > "$f"
 	mv "$f" "$1"
 }
@@ -260,4 +261,28 @@ oclip ()
 sms ()
 {
 	ssh phone sendmsg "$1" "'$2'"
+}
+
+trcp ()
+{
+	scp "$1" db:/media/basilisk/downloads/transmission/torrents/
+}
+
+muttmail ()
+{
+	die -n "email set: "
+	ls $HOME/.config/mutt/configs |
+		fzf |
+		tee /dev/stderr |
+		xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc
+	die -n 'Press [Enter to login]'
+	read && mutt
+}
+
+resize ()
+{
+	test $# -lt 2 &&
+		printf "usage: %s <format> <file> [out]\n" "$0" >&2 &&
+		return 1
+	convert -resize $1^ -gravity center -crop $1+0+0 -- "$2" "${3:-$1}"
 }

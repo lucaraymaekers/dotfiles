@@ -4,5 +4,5 @@ then
 	echo "Please run as root."
 	exit 1
 fi
-echo 3 | tee /proc/sys/vm/drop_caches >/dev/null
+echo 3 > /proc/sys/vm/drop_caches
 echo "cache cleared."

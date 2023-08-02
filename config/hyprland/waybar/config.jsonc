@@ -2,7 +2,7 @@
 	"layer": "top",
 	"modules-left": ["battery", "clock", "wlr/workspaces", "mpd"],
 	"modules-center": ["hyprland/window"],
-	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
+	"modules-right": ["custom/wireguard", "network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
 	"wlr/workspaces": {
 		"on-click": "activate",
 	},
@@ -43,6 +43,11 @@
 		"format-icons": {
 			"default":["", "", "", "", ""]
 		},
+	},
+	"custom/wireguard": {
+		"exec": "ip addr show dev wg0",
+		"format": "wg0",
+		"restart-interval": 3,
 	},
 	"network": {
 		"format-wifi": " ",

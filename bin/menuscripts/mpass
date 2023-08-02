@@ -6,7 +6,7 @@ then
 	menucmd="tofi --prompt pass:"
 elif [ "$MENUCMD" = "dmenu" ]
 then
-	menucmd="dmenu -l 4 -g 2 -x -i -p pass:" 
+	menucmd="dmenu -l 4 -g 2 -i -p pass:" 
 else
 	menucmd="fzf --prompt pass:"
 fi
@@ -17,6 +17,7 @@ do
 	file="$file/$choice"
 done
 
+test -z "$file" && exit 1
 pass show -c "$file" &&
 	if [ -n "$WAYLAND_DISPLAY" ] && cliphist list >/dev/null
 then

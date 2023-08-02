@@ -1,28 +1,48 @@
 #!/bin/zsh
 # s/alias \([^-]\)/alias -g \1
 
+# Zsh specific aliases
+if [ $SHELL = "/bin/zsh" ]
+then
+	# googoo aliases
+	alias o.='o .'
+	alias go.='go .'
+	alias ogo.='ogo .'
+	alias o/='o /'
+	alias o/s='o /srv'
+	alias go/='go /'
+	alias go/s='go /srv'
+	alias ogo/='ogo /'
+	alias ogo/s='ogo /srv'
+
+	if [ "$WAYLAND_DISPLAY" ]
+	then
+		alias -g clipp='wl-copy -n'
+		alias -g clipo='wl-paste -n'
+	else
+		if which devour > /dev/null 2>&1  
+		then
+			alias mpv='devour mpv'
+			alias zathura='devour zathura'
+		fi
+		alias -g clipp='xclip -selection clipboard -r'
+		alias -g clipo='xclip -o -selection clipboard -r'
+	fi
+	alias clipic='clipo > /tmp/pic.png'
+
+	alias -g '...'='../..'
+	alias -g '....'='../../..'
+	alias -g bg='&; disown'
+	alias -g hl='--help |& less -r'
+fi
+
+
 if grep -qi "debian\|ubuntu" /etc/os-release 2> /dev/null
 then
 	alias aptup='apt update && apt upgrade -y'
 fi
 
-if [ "$WAYLAND_DISPLAY" ]
-then
-	alias -g clipp='wl-copy -n'
-	alias -g clipo='wl-paste -n'
-else
-	if which devour > /dev/null 2>&1  
-	then
-		alias mpv='devour mpv'
-		alias zathura='devour zathura'
-	fi
-	alias -g clipp='xclip -selection clipboard -r'
-	alias -g clipo='xclip -o -selection clipboard -r'
-fi
-alias clipic='clipo > /tmp/pic.png'
-
 # Programs
-alias vi='nvim'
 alias nb='newsboat'
 alias sr='surfraw'
 alias ccu='calcurse'
@@ -72,6 +92,8 @@ alias dopacs='dopac -S'
 alias dopacc='dopac -Sc'
 alias doprm='dopac -Rns'
 
+alias mpkg='makepkg -si'
+
 which pikaur > /dev/null 2>&1 &&
 	alias yay='pikaur'
 alias yup='yay -Syu'
@@ -83,6 +105,12 @@ alias yays='yay -S'
 alias yrm='yay -Rns'
 
 alias pkb='pkgfile -b'
+
+# transmission
+alias trr='transmission-remote debuc.com'
+alias trls='transmission-remote debuc.com -t all -l'
+alias tradd='transmission-remote debuc.com -a'
+alias trclipo='transmission-remote debuc.com -a "$(clipo)"'
 
 alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
 
@@ -107,7 +135,8 @@ alias fif='find . -type "f" | grep'
 alias fid='find . -type "d" | grep'
 alias sxt='sxiv -t'
 alias wgsh='wget --quiet --show-progress'
-alias ss4='ss -tln4p | cut -f1 -d,'
+alias wgc='wgsh "$(clipo)"'
+alias ss4='ss -tln4p'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
 alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 
@@ -124,11 +153,6 @@ alias qrclipo='qrencode -s 16 "$(clipo)" -o - | imv -w "imv - $(clipo)" -'
 alias airpods='bluetoothctl connect 60:93:16:24:00:10'
 alias hotpsot='nmcli dev wifi hotspot ifname wlan0 ssid wiefie password "peepeepoopoo"'
 alias wtip='wt ip -c -brief addr'
-alias muttmail='echo -n "email set: " >&2
-ls $HOME/.config/mutt/configs |
-fzf |
-tee /dev/stderr |
-xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc'
 alias fusephone='sshfs myphone: /media/phone'
 alias ttyper='ttyper -l english1000 -w 100'
 
@@ -143,17 +167,12 @@ alias penv='python3 -m venv env'
 alias phttp='python3 -m http.server'
 alias pipreq='pip install -r requirements.txt'
 
-alias -g '...'='../..'
-alias -g '....'='../../..'
-alias -g bg='&; disown'
-alias cx='chmod +x'
 alias ch='chown ${USER}:${USER} -R'
-alias -g hl='--help |& less -r'
 alias kll='killall'
 alias pi='ping archlinux.org -c4'
 alias sba='source env/bin/activate || source bin/activate'
 alias smc='systemctl'
-alias ssc='doas smc'
+alias ssc='doas systemctl'
 alias smcu='smc --user'
 alias zsr='source ${ZDOTDIR:-$HOME}/.zshrc && rehash'
 alias rh='rehash'
@@ -162,6 +181,7 @@ alias dmci="doas make clean install"
 alias rmd='rm -f *.{orig,rej}'
 alias cdzot='mkdir -p /tmp/zottesite && cd /tmp/zottesite'
 alias gdate="date +%y%m%d_%H%M%S"
+alias tpid='tail -f /dev/null --pid'
 
 alias vbm='vboxmanage'
 alias vbls='vbm list vms'
@@ -170,59 +190,55 @@ alias vb='vbm startvm'
 
 # quick config
 alias ez='$EDITOR ${ZDOTDIR:-$HOME}/.zshrc'
-alias eza='$EDITOR ${ZDOTDIR}/aliases.zsh'
+alias eza='$EDITOR ${ZDOTDIR}/aliases.sh'
 alias ezf='$EDITOR ${ZDOTDIR}/functions.zsh'
 alias eto='$EDITOR ~/sync/TODO'
-alias edw='$EDITOR ~/src/dwm/config.def.h'
-alias edm='$EDITOR ~/src/dmenu/config.def.h'
+alias edw='$EDITOR ~/proj/suckless/dwm/config.def.h'
+alias edm='$EDITOR ~/proj/suckless/dmenu/config.def.h'
 alias ehst='$EDITOR $ZDOTDIR/histfile'
 alias ezh=' $EDITOR $HISTFILE'
-alias est='$EDITOR ~/src/st/config.def.h'
-alias esl='$EDITOR ~/src/slock/config.def.h'
-alias esls='$EDITOR ~/src/slstatus/config.def.h'
+alias est='$EDITOR ~/proj/suckless/st/config.def.h'
+alias esl='$EDITOR ~/proj/suckless/slock/config.def.h'
+alias esls='$EDITOR ~/proj/suckless/slstatus/config.def.h'
 alias ehy='$EDITOR ~/.config/hypr/hyprland.conf'
 alias cfd='$EDITOR config.def.h'
-# quick cd
-alias cda='cd $HOME/docs/android/projects'
-alias cds='cd $HOME/src/'
-alias cdsw='cd $HOME/src/WheelAdvisor'
-alias cdw='cd $HOME/src/dwm'
-alias cddm='cd $HOME/src/dmenu'
-alias cdslo='cd $HOME/src/slock'
-alias cdsl='cd $HOME/src/slstatus'
-alias cdst='cd $HOME/src/st'
-alias cdsta='cd $HOME/src/stable-diffusion-webui'
+# /# quick cdjV}k:!sort -t "'" -k 2
 alias cdl='cd $HOME/dl'
-alias cdo='cd $HOME/src/dotfiles'
 alias cdoc='cd $HOME/docs'
+alias cda='cd $HOME/docs/android/projects'
+alias cdm='cd $HOME/music'
+alias cdp='cd $HOME/pics'
+alias cdpa='cd $HOME/pics/ai-outputs/'
+alias cdpp='cd $HOME/proj/personal/'
+alias chom='cd $HOME/proj/personal/homepage'
+alias lov='cd $HOME/proj/personal/lola'
+alias cdsw='cd $HOME/proj/personal/WheelAdvisor'
+alias cddm='cd $HOME/proj/suckless/dmenu'
+alias cdw='cd $HOME/proj/suckless/dwm'
+alias cdslo='cd $HOME/proj/suckless/slock'
+alias cdsl='cd $HOME/proj/suckless/slstatus'
+alias cdst='cd $HOME/proj/suckless/st'
+alias cdsta='cd $HOME/proj/suckless/stable-diffusion-webui'
+alias cdsu='cd $HOME/proj/suckless/surf'
+alias cds='cd $HOME/src/'
+alias cdsb='cd $HOME/src/build'
+alias cdsc='cd $HOME/src/comfyui/'
+alias cdo='cd $HOME/src/dotfiles'
 alias cdi='cd $HOME/src/installdrier'
 alias cdia='cd $HOME/src/installdrier/arch'
 alias cdib='cd $HOME/src/installdrier/deb'
-alias cdm='cd $HOME/music'
-alias cdd='cd $HOME/dl'
-alias cdp='cd $HOME/pics'
-alias cdrs='cd /srv/'
-alias cdng='cd /etc/nginx'
 alias czo='cd $HOME/zot/'
+alias cdpw='cd ${PASSWORD_STORE_DIR:-$HOME/.password-store}'
+alias cdng='cd /etc/nginx'
+alias cdrs='cd /srv/'
 
-# googoo aliases
-alias o.='o .'
-alias go.='go .'
-alias ogo.='ogo .'
-alias o/='o /'
-alias o/s='o /srv'
-alias go/='go /'
-alias go/s='go /srv'
-alias ogo/='ogo /'
-alias ogo/s='ogo /srv'
-
+# fzf aliases
 alias fzps='ps aux | tail +2 | fzf | tee /dev/stderr | awk '\''{print $2}'\'' | clipp'
 alias asf='alias | fzf'
 alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
+alias ffwin='hyprctl clients -j | jq '\''.[].pid'\'' | fzf --preview "hyprctl clients -j | jq '\''.[] | select(.pid == {}) | {class, title, workspace, xwayland}'\''"'
 alias pff='find ${PASSWORD_STORE_DIR:=$HOME/src/password-store/} -name "*.gpg" | sed -e "s@$PASSWORD_STORE_DIR/@@" -e '\''s/\.gpg$//'\'' | fzf | xargs pass show -c'
-
-alias -s zip='unzip -l'
-alias -s tar='tar tf'
+alias fzps='fzf --print0 | xargs -0I{}'
 
 alias dcb='docker build'
 alias dcbt='docker build -t'

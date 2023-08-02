@@ -1,13 +1,14 @@
 #!/bin/sh
 if [ "$MENUCMD" = "tofi" ]
 then
-	menucmd="tofi --width 10% --height 10% --padding-left 2%" 
+	menucmd="tofi --width 10% --height 13% --padding-left 2%" 
 elif [ "$MENUCMD" = "dmenu" ]
 then
-	menucmd="dmenu -g 2 -l 1"
+	menucmd="dmenu -g 2 -l 2"
 else
 	menucmd="fzf"
 fi
 
-choice="$(echo "poweroff\nreboot\nhibernate" | $menucmd)"
-test -z "$choice" || doas "$choice"
+choices="poweroff\nreboot\nhibernate\nsuspend"
+choice="$(printf "$choices" | $menucmd)"
+test -z "$choice" || systemctl "$choice"

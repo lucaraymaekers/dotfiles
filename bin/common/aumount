@@ -1,0 +1,102 @@
+#!/bin/sh
+
+tmp="$(mktemp)"
+test "$(id -u)" != "0" && sudo="sudo"
+
+die ()
+{
+	echo "$@" >&2
+}
+
+# Read one character
+read_char ()
+{
+	die -n ">"
+	old_stty_cfg=$(stty -g)
+	stty raw
+	dd ibs=1 count=${1:-1} 2> /dev/null
+	stty $old_stty_cfg
+	die ""
+}
+
+get_dev ()
+{
+	grep "^$1\." "$tmp" | cut -f 2- -d ' '
+}
+
+# mount the device with $1 as the choice
+mount ()
+{
+	dev="$(get_dev "$1")"
+	test -z "$dev" && exit 1
+
+	die "Mounting /dev/$dev on /media/$dev"
+	mkdir -p /media/$dev
+	$sudo mount /dev/$dev /media/$dev > /dev/null 2>&1 ||
+		return 1
+}
+
+# umount the device with $1 as the choice
+umount ()
+{
+	mountpoint="$(sed -n "${1}p" "$tmp" |
+		awk '{print $3}')"
+	test -z "$mountpoint" && exit 1
+
+	die "Unmounting $mountpoint"
+	$sudo umount "$mountpoint" ||
+		return 1
+}
+
+ejekt ()
+{
+	dev="$(get_dev "$1" | sed 's/.$//')"
+	test -z "$dev" && exit 1
+
+	die "Ejecting /dev/$dev"
+	$sudo eject /dev/$dev > /dev/null 2>&1 ||
+		return 1
+}
+
+# print lsblk, use $1 to print only devices with mountpoints or without
+pr_lsblk ()
+{
+	clear
+	lsblk -o name,size,type,mountpoint
+	die "───────────────────────────────────"
+	lsblk --ascii -o name,mountpoint |
+		grep '^.-' |
+		while read line
+	do
+		words="$(printf "$line" | wc -w)"
+		test $words -eq ${1:-1} && continue 
+		printf "%s\n" "$line"
+	done |
+		cut -f 2- -d "-" |
+		awk '{print NR ". " $0}' |
+		tee "$tmp" >&2
+}
+
+cleanup ()
+{
+	rm -f "$tmp"
+}
+
+trap cleanup EXIT INT
+
+die "m(ount) u(mount) (e)ject ?"
+choice="$(read_char)"
+
+case $choice in
+	"m") i=2; cmd=mount ;;
+	"u") i=1; cmd=umount ;;
+	"e") i=2; cmd=ejekt ;;
+	*) exit 1 ;;
+esac
+
+pr_lsblk $i
+choice="$(read_char)"
+printf "$choice" | grep -q "[0-9]" || exit 1
+$cmd $choice &&
+	die "Successful." ||
+	die "Failed."

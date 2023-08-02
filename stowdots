@@ -1,6 +1,7 @@
 #!/bin/sh
 
-trap "echo -e '\nbye'; exit 1" EXIT
+trap "exit 1" EXIT INT
+test "$(id -u)" != 0 && sudo=sudo
 
 die () {
 	echo "$@" 1>&2
@@ -9,20 +10,20 @@ die () {
 if ! stow --version > /dev/null 2>&1
 then
 	die "stow not installed or not found."
-	die "install stow?"
+	die "install stow? (arch)"
 	die -n ">"
 	test "y" = "$(head -n 1)" &&
-		doas pacman -Sy stow ||
+		$sudo pacman -Sy stow ||
 		exit 1
 fi
 if [ -n "${MACH:=$1}" ]
 then
 	die "I: stowing for $MACH"
 else
-	die "E: MACH not set" >&2
+	die "E: MACH not set"
 	die "Enter valid value for 'MACH'"
 	die "d(esktop) | s(erver) | l(aptop)"
-	echo -n ">" >&2
+	die -n ">"
 	read MACH
 fi
 
@@ -33,7 +34,7 @@ cd "$(dirname "$(realpath "$0")")" || exit 1
 case "$MACH" in
 	"desktop" | "d" | "laptop" | "l")
 		stow -d bin/ -t "$HOME/bin" -R common guiscripts menuscripts extra
-		stow -d config/ -t "$HOME/.config" -R essentials common extra X theme xdg hyprland
+		stow -d config/ -t "$HOME/.config" -R essentials common extra X theme hyprland
 		stow -d config/ -t "$HOME/" -R home
 		;;
 	"server" | "s")

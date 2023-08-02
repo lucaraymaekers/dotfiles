@@ -1,12 +1,5 @@
 #!/bin/sh
-ua="$(yt-dlp --dump-user-agent)"
-
-test -z "${url:=$1}" &&
-	url="$(cat /dev/stdin)"
-
-url="http://youtube.com/$(echo "$url" |
-	awk -F '/' '{print $NF}')"
-echo "url: $url" >&2
-
-curl -L -s -H "$ua" "$url" |
-	pup 'link[title=RSS] attr{href}'
+echo "url: $1" >&2
+curl -L -s "$1" |
+	pup 'link[title=RSS] attr{href}' |
+	tee /dev/stderr

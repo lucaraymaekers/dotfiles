@@ -142,13 +142,24 @@ ls.add_snippets("java", {
 })
 
 ls.add_snippets("sh", {
-	s("TD", t "THISDIR=$(dirname $(readlink -f \"$0\"))"),
+	s("TD", t "THISDIR=\"$(dirname \"$(readlink -f \"$0\")\")\""),
 	parse("fn", "$1 ()\n{\n\t$2\n}$0", {}),
+	-- Functions
+	parse("rchar",
+	[[
+	read_char ()
+	{
+		old_stty_cfg=$(stty -g)
+		stty raw -echo 
+		dd ibs=1 count=1 2> /dev/null
+		stty \$old_stty_cfg
+	}
+	]], {}),
 	parse("fdie",
 	[[
 	die ()
 	{
-		echo "\$1" >&2
+		echo "\$@" >&2
 	}
 	]], {}),
 	s("die", fmt(
