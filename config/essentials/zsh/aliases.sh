@@ -142,7 +142,7 @@ alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 
 # ssh
 alias sha='ssh-add'
-alias ssh-start='eval "$(ssh-agent)" && ssh-add'
+alias sshs='eval "$(ssh-agent)" && ssh-add'
 
 alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
 alias whatsmyip='curl -s "ifconfig.co"'
