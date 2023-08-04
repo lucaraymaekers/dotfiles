@@ -8,7 +8,8 @@ set searchurls.aur https://aur.archlinux.org/packages?O=0&K=%s
 set searchurls.aw https://wiki.archlinux.org/title/%s
 set searchurls.cnrtl http://www.cnrtl.fr/lexicographie/
 set searchurls.dhu https://hub.docker.com/search?q=%s
-set searchurls.g https://www.google.com/search?q=%s
+set searchurls.g https://www.qwant.com/?q=%s
+set searchurls.google https://www.qwant.com/?q=%s
 set searchurls.gm https://www.google.com/maps?q=%s
 set searchurls.gwi https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
 set searchurls.im https://www.imdb.com/find?q=%s
