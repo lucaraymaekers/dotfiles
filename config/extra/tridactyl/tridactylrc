@@ -1,62 +1,62 @@
-" General Settings
-set newtab https://www.duckduckgo.com
-set searchengine duckduckgo
-set searchurls.wi https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s
-set searchurls.g https://www.google.com/search?q=%s
-set searchurls.y https://www.youtube.com/results?search_query=%s
-set searchurls.gm https://www.google.com/maps?q=%s
-set searchurls.aw https://wiki.archlinux.org/title/%s
-set searchurls.aur https://aur.archlinux.org/packages?O=0&K=%s
-set searchurls.tw https://tweakers.net/zoeken/?keyword=%s
-set searchurls.im https://www.imdb.com/find?q=%s
+set newtab http://localhost:28669
+set searchengine qwant
+
+" Searchurls
 set searchurls.1x https://www.1377x.to/search/%s/1
 set searchurls.am https://www.amazon.com.be/s?k=%s
-set searchurls.pyp https://pypi.org/search/?q=%s
+set searchurls.aur https://aur.archlinux.org/packages?O=0&K=%s
+set searchurls.aw https://wiki.archlinux.org/title/%s
+set searchurls.cnrtl http://www.cnrtl.fr/lexicographie/
+set searchurls.dhu https://hub.docker.com/search?q=%s
+set searchurls.g https://www.qwant.com/?q=%s
+set searchurls.google https://www.qwant.com/?q=%s
+set searchurls.gm https://www.google.com/maps?q=%s
+set searchurls.gwi https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
+set searchurls.im https://www.imdb.com/find?q=%s
+set searchurls.lg https://libgen.gs/index.php?req=%s
 set searchurls.mc https://minecraft.fandom.com/wiki/%s
 set searchurls.mcf https://www.curseforge.com/minecraft/mc-mods/search?search=%s
 set searchurls.mcm https://modrinth.com/mods?q=%s
-set searchurls.dhu https://hub.docker.com/search?q=%s
-set searchurls.plu https://app.pluralsight.com/search/?q=%s
-set searchurls.ru https://rutracker.org/forum/tracker.php?nm=%s
-set searchurls.google https://www.google.com/search?q=
-set searchurls.googlelucky https://www.google.com/search?btnI=I'm+Feeling+Lucky&q=
-set searchurls.scholar https://scholar.google.com/scholar?q=
-set searchurls.googleuk https://www.google.co.uk/search?q=
-set searchurls.bing https://www.bing.com/search?q=
-set searchurls.duckduckgo https://duckduckgo.com/?q=
-set searchurls.yahoo https://search.yahoo.com/search?p=
-set searchurls.twitter https://twitter.com/search?q=
-set searchurls.wikipedia https://en.wikipedia.org/wiki/Special:Search/
-set searchurls.youtube https://www.youtube.com/results?search_query=
-set searchurls.amazon https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
-set searchurls.amazonuk https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
-set searchurls.startpage https://startpage.com/do/search?language=english&cat=web&query=
-set searchurls.github https://github.com/search?utf8=✓&q=
-set searchurls.searx https://searx.me/?category_general=on&q=
-set searchurls.cnrtl http://www.cnrtl.fr/lexicographie/
-set searchurls.osm https://www.openstreetmap.org/search?query=
 set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
-set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
+set searchurls.osm https://www.openstreetmap.org/search?query=
+set searchurls.plu https://app.pluralsight.com/search/?q=%s
+set searchurls.pyp https://pypi.org/search/?q=%s
 set searchurls.qwant https://www.qwant.com/?q=
-
+set searchurls.ru https://rutracker.org/forum/tracker.php?nm=%s
+set searchurls.tw https://tweakers.net/zoeken/?keyword=%s
+set searchurls.wi https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s
+set searchurls.y https://www.youtube.com/results?search_query=%s
 " Binds
+
 " vim macro:
-" Ibind gnp tabopen yy2pwwdtojRwinbblrwkro
+" yy2pwlrnjrpwitabbkiwin2j0
 bind J tabnext
 bind K tabprev
-" chat gpt
-bind gnc tabopen https://chat.openai.com/chat
+
 bind goc open https://chat.openai.com/chat
-bind gwc winopen https://chat.openai.com/chat
-" awesome pixel tutorials
-bind gnp tabopen https://github.com/Siilwyn/awesome-pixel-art#tutorials
+bind gnc winopen https://chat.openai.com/chat
+bind gpc tabopen https://chat.openai.com/chat
 bind gop open https://github.com/Siilwyn/awesome-pixel-art#tutorials
-bind gwp winopen https://github.com/Siilwyn/awesome-pixel-art#tutorials
-" transmission
-bind godb open http://debuc.com/
-bind godt open http://debuc.com:9091
-bind gods open http://debuc.com:5030
+bind gnp winopen https://github.com/Siilwyn/awesome-pixel-art#tutorials
+bind gpp tabopen https://github.com/Siilwyn/awesome-pixel-art#tutorials
+bind godb open http://debuc.com:32095
+bind gndb winopen http://debuc.com:32095
+bind gpdb tabopen http://debuc.com:32095
+bind godc open http://debuc.com:8384
+bind gndc winopen http://debuc.com:8384
+bind gpdc tabopen http://debuc.com:8384
 bind godj open http://debuc.com:8096
+bind gndj winopen http://debuc.com:8096
+bind gpdj tabopen http://debuc.com:8096
+bind gods open http://debuc.com:5030
+bind gnds winopen http://debuc.com:5030
+bind gpds tabopen http://debuc.com:5030
+bind godt open http://debuc.com:9091
+bind gndt winopen http://debuc.com:9091
+bind gpdt tabopen http://debuc.com:9091
+bind gody open http://debuc.com:9010
+bind gndy winopen http://debuc.com:9010
+bind gpdy tabopen http://debuc.com:9010
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl

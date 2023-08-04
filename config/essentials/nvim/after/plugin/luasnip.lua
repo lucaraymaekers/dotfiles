@@ -142,7 +142,7 @@ ls.add_snippets("java", {
 })
 
 ls.add_snippets("sh", {
-	s("TD", t "THISDIR=$(dirname $(readlink -f \"$0\"))"),
+	s("TD", t "THISDIR=\"$(dirname \"$(readlink -f \"$0\")\")\""),
 	parse("fn", "$1 ()\n{\n\t$2\n}$0", {}),
 	-- Functions
 	parse("rchar",

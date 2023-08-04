@@ -278,3 +278,11 @@ muttmail ()
 	die -n 'Press [Enter to login]'
 	read && mutt
 }
+
+resize ()
+{
+	test $# -lt 2 &&
+		printf "usage: %s <format> <file> [out]\n" "$0" >&2 &&
+		return 1
+	convert -resize $1^ -gravity center -crop $1+0+0 -- "$2" "${3:-$1}"
+}

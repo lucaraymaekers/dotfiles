@@ -5,7 +5,7 @@ local live_servers = {}
 function M.start_live_server()
 	if vim.fn.executable('lsof') == 0 then
 		print("Error: 'lsof' command not found")
-	elseif vim.fn.executable('lsof') == 0 then
+	elseif vim.fn.executable('live-server') == 0 then
 		print("Error: 'live-server' command not found")
 		return
 	end

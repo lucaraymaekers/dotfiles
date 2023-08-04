@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Simple Ass Fetch by futxlii
+
+red="$(printf '\033[31m')"
+green="$(printf '\033[32m')"
+blue="$(printf '\033[34m')"
+reset="$(printf '\033[0m')"
+
+for file in /etc/os-release /usr/lib/os-release
+do
+    [ -f "$file" ] && . "$file" && break
+done
+
+KERNEL="$(uname -r)"
+UPTIME="$(uptime -p)"; UPTIME="${UPTIME##up }"
+SHELL="$(basename "$SHELL")"
+
+cat <<EOF
+	${red}- ${blue}${ID:-"unknown"}
+	${red}- ${blue}$KERNEL
+	${red}- ${blue}$UPTIME
+	${red}- ${blue}$SHELL${reset}
+EOF

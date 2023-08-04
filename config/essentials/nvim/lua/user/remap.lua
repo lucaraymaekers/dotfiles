@@ -34,6 +34,8 @@ vim.keymap.set("c", "<C-a>", "<Home>", { noremap = true })
 vim.keymap.set("v", "J",  "<cmd>m '>+1<cr>gv=gv<cr>", { noremap = true })
 vim.keymap.set("v", "K", "<cmd>m '<-2<cr>gv=gv<cr>", { noremap = true })
 
+vim.keymap.set("n", "+", "<cmd>tabe .<cr>", { noremap = true })
+
 -- clipboard
 vim.keymap.set("n", "<Leader>y", "\"+y", { noremap = true })
 
