@@ -75,7 +75,7 @@ window#waybar.PCSX2 #window {
 }
 
 #workspaces button.active {
-	text-shadow: 1px 0px 1px @background;
+	text-shadow: 0px 1px 0px @color1;
 }
 
 #workspaces button:hover {
