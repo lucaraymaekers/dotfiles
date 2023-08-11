@@ -20,6 +20,8 @@ done
 test -z "$file" && exit 1
 pass show -c "$file" &&
 	if [ -n "$WAYLAND_DISPLAY" ] && cliphist list >/dev/null
-then
-	cliphist list | head -n 1 | cliphist delete
-fi
+	then
+		cliphist list | head -n 1 | cliphist delete
+	fi ||
+		exit 1
+notify-send "mpass" "copied <b>$choice</b>"
