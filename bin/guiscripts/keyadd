@@ -31,7 +31,15 @@ notify ()
 
 SSHFOLDER="$HOME/.ssh"
 
-if test -z "${key:=$1}"
+# Test if can connect to ssh-agent
+ssh-add -l > /dev/null 2>&1
+if [ $? -gt 1 ] # ignore if there are no identities
+then
+	notify "could not connect to agent."
+	exit 1
+fi
+
+if [ -z "${key:=$1}" ]
 then
 	key="$(find "$SSHFOLDER" -iname "*.pub" |
 		sed "s,$SSHFOLDER/,," | # Clean
