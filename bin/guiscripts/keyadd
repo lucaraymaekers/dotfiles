@@ -22,6 +22,13 @@ die ()
 	echo "$1" >&2
 }
 
+notify ()
+{
+	notify-send -t 1000 "keyadd" "$1"
+	die "$1"
+}
+
+
 SSHFOLDER="$HOME/.ssh"
 
 if test -z "${key:=$1}"
@@ -42,17 +49,19 @@ die "HOST: $HOST"
 
 if [ "$1" = "-d" ]
 then
-	ssh-add -d - < "$SSHFOLDER"/$key.pub &&
-		notify-send "keyadd" "deleted <b>$key</b>" ||
-		notify-send "keyadd" "could not delete."
-elif ! ssh-add -l | grep -q "$(ssh-keygen -lf "$SSHFOLDER"/$key)"
+	if ssh-add -d - < "$SSHFOLDER"/"$key".pub
+	then
+		notify "deleted <b>$key</b>"
+	else
+		notify "could not delete."
+	fi
+# check if key is already added
+elif ssh-add -l | grep -q "$(ssh-keygen -lf "$SSHFOLDER"/"$key")"
 then
-	die "adding: $key"
+	notify "key already added."
+else	
 	export PASSWORD="keys/$HOST/ssh/$key"
 	export SSH_ASKPASS="$0"
-	ssh-add - < "$SSHFOLDER"/$key &&
-		notify-send "keyadd" "added <b>$key</b>"
-else
-	die "key already added."
-	notify-send "keyadd" "key already added."
+	ssh-add - < "$SSHFOLDER"/"$key" &&
+		notify "added <b>$key</b>"
 fi
