@@ -1,0 +1,115 @@
+#!/bin/sh
+
+# prints on stderr
+log () { >&2 echo "$@"; }
+
+help () 
+{
+	 >&2 cat <<-EOF
+	  h         help
+	  l         clear output
+	  q         quit
+
+	  i         invert languages
+	  p         select primary
+	  s         select secondary
+	EOF
+}
+# returns available languages
+languages () {
+	cat <<-EOF
+	arabic
+	dutch
+	french
+	german
+	polish
+	english
+	portuguese
+	spanish
+	romanian
+	hebrew
+	swedish
+	italian
+	turkish
+	japanese
+	ukrainian
+	korean
+	chinese
+	czech
+	hungarian
+	danish
+	persian
+	greek
+	slovak
+	hindi
+	thai
+	EOF
+}
+
+# translates a word
+# $1: primary language
+# $2: secondary language
+# $3: word to translate
+translate ()
+{
+	curl -s "https://context.reverso.net/translation/$1-$2/$3" \
+	--compressed \
+	-H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0' \
+	-H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' \
+	-H 'Accept-Language: en-US,en;q=0.5' \
+	-H 'Accept-Encoding: gzip, deflate, br' |
+	pup 'a.link_highlighted em text{}' |
+	sed 's/.*/\L&/' |
+	sort | uniq | sed 's/.*/  &/'
+}
+
+# prints the current language
+current_language ()
+{
+	log "  current: $primary-$secondary"
+}
+
+select_language ()
+{
+	tmp="$(languages | fzf)"
+	[ "$tmp" ] && [ "$tmp" != "$primary" ] && [ "$tmp" != "$secondary" ] &&
+		eval "$1=\"$tmp\""
+	current_language
+}
+
+# set default languages
+primary=french
+secondary=dutch
+
+
+main ()
+{
+	current_language
+	while true
+	do
+		log -n '>'
+		read -r prompt 
+		test $? -eq 1 && exit 0 # quit on ctrl-d
+		case "$prompt" in
+			q) break ;;
+			l) clear ;;
+			i) tmp="$secondary"; secondary="$primary"; primary="$tmp"
+				current_language ;;
+			h) help ;; # TODO
+			p) select_language primary ;;
+			s) select_language secondary ;;
+			'') ;;
+			*) translate "$primary" "$secondary" "$prompt" ;;
+		esac
+	done
+}
+
+
+if  [ "$1" = "--help"  ] || [ "$1" = "-h" ]
+then
+	log "usage: trl"
+	help
+	exit
+fi
+
+main
