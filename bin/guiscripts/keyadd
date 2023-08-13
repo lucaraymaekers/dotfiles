@@ -35,7 +35,7 @@ SSHFOLDER="$HOME/.ssh"
 ssh-add -l > /dev/null 2>&1
 if [ $? -gt 1 ] # ignore if there are no identities
 then
-	notify "could not connect to agent."
+	notify "Could not connect to agent."
 	exit 1
 fi
 
@@ -50,26 +50,26 @@ else
 fi
 die "key: $key"
 
-test ! -f "$SSHFOLDER/$key" && exit 1
+[ ! -f "$SSHFOLDER/$key" ] && exit 1
 
-HOST=$(hostnamectl hostname | sed 's/forlure/fl/;s/montecristo/mc/')
-die "HOST: $HOST"
+HOST=$(hostnamectl hostname)
+die "host: $HOST"
 
 if [ "$1" = "-d" ]
 then
-	if ssh-add -d - < "$SSHFOLDER"/"$key".pub
+	if ssh-add -q -d - < "$SSHFOLDER"/"$key".pub 2> /dev/null
 	then
-		notify "deleted <b>$key</b>"
+		notify "Deleted <b>$key</b>"
 	else
-		notify "could not delete."
+		notify "Could not delete."
 	fi
 # check if key is already added
 elif ssh-add -l | grep -q "$(ssh-keygen -lf "$SSHFOLDER"/"$key")"
 then
-	notify "key already added."
+	notify "Key already added."
 else	
 	export PASSWORD="keys/$HOST/ssh/$key"
 	export SSH_ASKPASS="$0"
-	ssh-add - < "$SSHFOLDER"/"$key" &&
-		notify "added <b>$key</b>"
+	ssh-add -q - < "$SSHFOLDER"/"$key" &&
+		notify "Added <b>$key</b>."
 fi
