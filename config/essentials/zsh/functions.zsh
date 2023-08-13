@@ -76,7 +76,13 @@ ipc ()
    fi
 }
 
-calc () { echo "$@" | bc -l }
+calc () { echo "$@" | bc -l | numfmt --grouping; }
+
+psgrep ()
+{
+	[ $# -eq 0 ] && return 1
+	pgrep "$@" | xargs ps
+}
 
 unique () {
 	local f
