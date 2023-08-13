@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-	"modules-left": ["battery", "hyprland/workspaces", "mpd"],
+	"modules-left": ["battery", "hyprland/workspaces", "mpd", "hyprland/window"],
 	"modules-center": ["clock"],
 	"modules-right": ["custom/wireguard", "network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
 	"mpd": {
