@@ -8,10 +8,11 @@ reset="$(printf '\033[0m')"
 
 load ()
 {
-	for time in $(uptime | cut -f3- -d',' | cut -f2 -d':' | tr ',' ' ')
-	do
-		percent="$(echo "$time*100/$(nproc)" | bc)"
-		echo "${percent:-0}%"
+	# take everything after 'load average: ' then remove '0.' or '.' or ','
+	# from output, this multiplies by hundred, so we can divide an integer
+	# instead of a fraction (which dash can't do)
+	for time in $(uptime | sed -e 's/^.*load average://' -e 's/0\?\.\|,//g')
+	do printf "%s%%\n" "$((time/$(nproc)))"
 	done | xargs
 }
 
