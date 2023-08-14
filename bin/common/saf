@@ -3,7 +3,6 @@
 # Simple Ass Fetch by futxlii
 
 red="$(printf '\033[31m')"
-green="$(printf '\033[32m')"
 blue="$(printf '\033[34m')"
 reset="$(printf '\033[0m')"
 
