@@ -15,6 +15,8 @@ vim.keymap.set("i", "\\\\", "\\", { noremap = true })
 vim.keymap.set("n", "gb", "<cmd>buffers<cr>:buffer<Space>", { noremap = true })
 vim.keymap.set("n", "<Leader>q", "<cmd>q!<cr>", { noremap = true })
 vim.keymap.set("n", "<Leader>Q", "<cmd>qa!<cr>", { noremap = true })
+-- close all except focused buffer
+vim.keymap.set("n", "<leader>1", "<cmd>%bd|e#<cr>", { noremap = true })
 
 -- Windows
 vim.keymap.set("n", "<A-h>", "<C-W>h", { noremap = true })

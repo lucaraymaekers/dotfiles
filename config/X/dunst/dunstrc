@@ -30,10 +30,10 @@
     height = 80
 
     # Position the notification in the top right corner
-    origin = top-center
+    origin = right
 
     # Offset from the origin
-    offset = 0x10
+    offset = 10x10
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -87,7 +87,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 1
+    frame_width = 0
 
     # Defines color of the frame around the notification window.
     frame_color = "#969B95"
@@ -96,7 +96,7 @@
     # If value is greater than 0, separator_height will be ignored and a border
     # of size frame_width will be drawn around each notification instead.
     # Click events on gaps do not currently propagate to applications below.
-    gap_size = 2
+    gap_size = 4
 
     # Define a color for the separator.
     # possible values are:
@@ -118,11 +118,11 @@
 
     ### Text ###
 
-    font = mononoki nerd font mono 10
+    font = mononoki nerd font mono 11
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
-    line_height = 11
+    line_height = 7
 
     # Possible values are:
     # full: Allow a small subset of html markup in notifications:
@@ -158,7 +158,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "%b"
+	format = "[<u>%s</u>]\n%b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -181,13 +181,13 @@
     ignore_newline = no
 
     # Stack together notifications with the same content
-    stack_duplicates = false
+    stack_duplicates = true
 
     # Hide the count of stacked notifications with the same content
     hide_duplicate_count = false
 
     # Display indicators for URLs (U) and actions (A).
-    show_indicators = no
+    show_indicators = yes
 
     ### Icons ###
 
@@ -310,13 +310,13 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
-    background = "#d08770"
-    foreground = "#2E3541"
+    background = "#b48ead"
+    foreground = "#2e3440"
     frame_color = "#81a1c1"
     timeout = 6
 
 [urgency_normal]
-    background = "#b48ead"
+    background = "#81a1c1"
     foreground = "#2e3440"
     frame_color = "#2e3440"
     timeout = 5
@@ -324,9 +324,10 @@
     #default_icon = /path/to/icon
 
 [urgency_critical]
-    background = "#b48ead"
-    foreground = "#d8dee9"
+    background = "#d08770"
+    foreground = "#2e3440"
     frame_color = "#81a1c1"
+	format = "[<u>%s</u>]\n<b>%b</b>"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
     #default_icon = /path/to/icon

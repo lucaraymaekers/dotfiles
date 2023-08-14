@@ -19,8 +19,8 @@ notify-send "ytclipo" "<b>downloading</b> $inp"
 yt-dlp "$inp" \
 	--restrict-filenames \
 	-f "b" \
-	-S "res:720" \
+	-S "res:1080" \
 	-P "$HOME/vids/youtube/" \
-	-o "%(title)s.%(ext)s"
+	-o "%(channel)s - %(title)s.%(ext)s"
 notify-send "ytclipo" "<b>ytclipo</b><br>finished downloading."
 echo "$inp" >> /tmp/ytclipo_history

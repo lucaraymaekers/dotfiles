@@ -5,9 +5,9 @@ then
 	clear
 	if [ "/dev/tty1" = "$TTY" ]
 	then
-		startw > /dev/null 2>&1
+		exec startw > /dev/null 2>&1
 	else
-		startx > /dev/null 2>&1
+		exec startx > /dev/null 2>&1
 	fi
 	exit
 fi

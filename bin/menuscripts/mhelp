@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-OPTIONS="/tmp/dmh_options.txt"
 
 if [ "$MENUCMD" = "tofi" ]
 then
@@ -16,18 +15,15 @@ fi
 
 test -z "$program" && exit 1
 
-if $program --help > "$OPTIONS"
-then
-    option="$(grep "^ *-[-a-zA-Z0-9]* " "$OPTIONS" |
-		tr -s ' ' |
-		sort |
-		uniq |
-		column -l 2 -t |
-		$menucmd |
-		awk '{print $1}')"
-fi
+option="$($program --help |
+	# Parse options
+	grep "^ *-[-a-zA-Z0-9]* " |
+	tr -s ' ' |
+	sort | uniq |
+	column -l 2 -t |
+	$menucmd |
+	awk '{print $1}')"
 
 test -z "$option" && exit 1
 
-rm -f "$OPTIONS"
 setsid $program $option

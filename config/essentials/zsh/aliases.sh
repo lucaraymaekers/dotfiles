@@ -128,6 +128,7 @@ alias xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HD
 alias d='du -d 0 -h'
 alias dud='du .* * -d 0 -h 2>/dev/null | sort -h'
 alias df='df -h'
+alias diff='diff -u --color'
 alias shred='shred -uz'
 alias lsblk='lsblk -o name,type,fsused,fsavail,size,fstype,label,mountpoint'
 alias floc='doas find / -type "f" 2> /dev/null | grep'
@@ -181,7 +182,7 @@ alias wf='doas wipefs -a'
 alias dmci="doas make clean install"
 alias rmd='rm -f *.{orig,rej}'
 alias cdzot='mkdir -p /tmp/zottesite && cd /tmp/zottesite'
-alias gdate="date +%y%m%d_%H%M%S"
+alias gdate='date +%y_%m_%d-%T'
 alias tpid='tail -f /dev/null --pid'
 
 alias vbm='vboxmanage'

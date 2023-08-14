@@ -60,3 +60,11 @@ bind gpdy tabopen http://debuc.com:9010
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
+
+modeindicatormodes.normal true
+set modeindicatormodes.insert true
+set modeindicatormodes.input true
+set modeindicatormodes.ignore false
+set modeindicatormodes.ex true
+set modeindicatormodes.hint true
+set modeindicatormodes.visual true

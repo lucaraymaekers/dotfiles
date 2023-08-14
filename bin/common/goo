@@ -18,6 +18,6 @@ arduino15"
 for dir in $exclude; do
     dirs="$dirs -name \"$dir\" -o "
 done
-cmd="find ${2:-$HOME} \(${dirs} -false \) -prune -o -type ${1:-f} -mindepth 1 -print"
+cmd="find ${dest:-$HOME} \(${dirs} -false \) -prune -o -type ${1:-f} -mindepth 1 -print"
 
 eval "$cmd" 2>/dev/null

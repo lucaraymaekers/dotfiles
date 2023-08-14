@@ -22,9 +22,24 @@ die ()
 	echo "$1" >&2
 }
 
+notify ()
+{
+	notify-send -t 1000 "keyadd" "$1"
+	die "$1"
+}
+
+
 SSHFOLDER="$HOME/.ssh"
 
-if test -z "${key:=$1}"
+# Test if can connect to ssh-agent
+ssh-add -l > /dev/null 2>&1
+if [ $? -gt 1 ] # ignore if there are no identities
+then
+	notify "Could not connect to agent."
+	exit 1
+fi
+
+if [ -z "${key:=$1}" ]
 then
 	key="$(find "$SSHFOLDER" -iname "*.pub" |
 		sed "s,$SSHFOLDER/,," | # Clean
@@ -35,24 +50,26 @@ else
 fi
 die "key: $key"
 
-test ! -f "$SSHFOLDER/$key" && exit 1
+[ ! -f "$SSHFOLDER/$key" ] && exit 1
 
-HOST=$(hostnamectl hostname | sed 's/forlure/fl/;s/montecristo/mc/')
-die "HOST: $HOST"
+HOST=$(hostnamectl hostname)
+die "host: $HOST"
 
 if [ "$1" = "-d" ]
 then
-	ssh-add -d - < "$SSHFOLDER"/$key.pub &&
-		notify-send "$0" "deleted <b>$key</b>" ||
-		notify-send "$0" "could not delete."
-elif ! ssh-add -l | grep -q "$(ssh-keygen -lf "$SSHFOLDER"/$key)"
+	if ssh-add -q -d - < "$SSHFOLDER"/"$key".pub 2> /dev/null
+	then
+		notify "Deleted <b>$key</b>"
+	else
+		notify "Could not delete."
+	fi
+# check if key is already added
+elif ssh-add -l | grep -q "$(ssh-keygen -lf "$SSHFOLDER"/"$key")"
 then
-	die "adding: $key"
+	notify "Key already added."
+else	
 	export PASSWORD="keys/$HOST/ssh/$key"
 	export SSH_ASKPASS="$0"
-	ssh-add - < "$SSHFOLDER"/$key &&
-		notify-send "$0" "added <b>$key</b>"
-else
-	die "key already added."
-	notify-send "$0" "key already added."
+	ssh-add -q - < "$SSHFOLDER"/"$key" &&
+		notify "Added <b>$key</b>."
 fi

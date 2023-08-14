@@ -39,23 +39,30 @@ nnn() { test -z "$NNNLVL" && /usr/bin/nnn "$@" || exit }
 ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
 
 # googoo aliases
-ff () { goo f "$1" | fzf }
-fd () { goo d "$1" | fzf }
-fdf () { goo f "$1" | fzf | xargs -I {} dirname "{}" }
+_googoo_fzf_opt ()
+{
+	if [ "$1" ]
+	then
+		[ -d "$1" ] && dest="$1" || opt="-q $1"
+	fi
+}
 o ()
 {
-	f="$(ff $1)"
+	_googoo_fzf_opt "$1"
+	f="$(goo f "dest" | fzf $opt)"
 	test "$1" && shift
-	test -n "$f" && $EDITOR $@ "$f"
+	test -f "$f" && $EDITOR $@ "$f"
 }
 go ()
 {
-	d="$(fd $1)"
+	_googoo_fzf_opt "$1"
+	d="$(goo d "$dest" | fzf $opt)"
 	test -d "$d" && cd "$d"
 }
 ogo ()
 {
-	d="$(fdf $1)"
+	_googoo_fzf_opt "$1"
+	d="$(dirname "$(goo f "$dest")" | fzf $opt)"
 	test -d "$d" && cd "$d"
 }
 
@@ -69,7 +76,13 @@ ipc ()
    fi
 }
 
-calc () { echo "$@" | bc -l }
+calc () { echo "$@" | bc -l | numfmt --grouping; }
+
+psgrep ()
+{
+	[ $# -eq 0 ] && return 1
+	pgrep "$@" | xargs ps
+}
 
 unique () {
 	local f
