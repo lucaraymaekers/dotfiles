@@ -7,6 +7,15 @@ green="$(printf '\033[32m')"
 blue="$(printf '\033[34m')"
 reset="$(printf '\033[0m')"
 
+load ()
+{
+	for time in $(uptime | cut -f3- -d',' | cut -f2 -d':' | tr ',' ' ')
+	do
+		percent="$(echo "$time*100/$(nproc)" | bc)"
+		echo "${percent:-0}%"
+	done | xargs
+}
+
 for file in /etc/os-release /usr/lib/os-release
 do
     [ -f "$file" ] && . "$file" && break
@@ -19,6 +28,6 @@ SHELL="$(basename "$SHELL")"
 cat <<EOF
 	${red}- ${blue}${ID:-"unknown"}
 	${red}- ${blue}$KERNEL
-	${red}- ${blue}$UPTIME
+	${red}- ${blue}$UPTIME ($(load))
 	${red}- ${blue}$SHELL${reset}
 EOF
