@@ -15,6 +15,8 @@ then
 	alias ogo/='ogo /'
 	alias ogo/s='ogo /srv'
 
+	alias calc='bc <<<'
+
 	if [ "$WAYLAND_DISPLAY" ]
 	then
 		alias -g clipp='wl-copy -n'
@@ -145,7 +147,6 @@ alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 # ssh
 alias sha='ssh-add'
 alias sshs='eval "$(ssh-agent)" && ssh-add'
-
 alias vidlen='ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i'
 alias whatsmyip='curl -s "ifconfig.co"'
 alias icognito='unset HISTFILE'
