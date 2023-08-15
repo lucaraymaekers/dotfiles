@@ -54,14 +54,20 @@ o()
 go()
 {
 	_googoo_fzf_opt "$1"
-	d="$(goo d "$dest" | fzf $opt)"
-	test -d "$d" && cd "$d"
+	cd "$(goo d "$dest" | fzf $opt)"
 }
 ogo()
 {
 	_googoo_fzf_opt "$1"
-	d="$(dirname "$(goo f "$dest")" | fzf $opt)"
-	test -d "$d" && cd "$d"
+	cd "$(dirname "$(goo f "$dest")" | fzf $opt)"
+}
+dgo()
+{
+	cd "$(goo d | fzf --filter "$@" | head -n 1)"
+}
+open()
+{
+	$EDITOR "$(goo f | fzf --filter "$@" | head -n 1)"
 }
 
 ipc() 
