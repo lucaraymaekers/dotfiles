@@ -121,13 +121,13 @@ RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(par
 
 setopt prompt_subst
 parse_git_remote() {
-	b="$(git branch -v 2> /dev/null | grep "^*" | sed 's/.\+\[\([^ ]\+\).*$/\1/')"
+	b="$(git branch -v 2>/dev/null | grep "^*" | cut -f2 -d'[' | cut -f1 -d' ')"
 	if [ "$b" = "behind" ]
 	then
-		echo -n "↓ "
+		printf "↓ "
 	elif [ "$b" = "ahead" ]
 	then
-		echo -n "↑ "
+		printf "↑ "
 	fi
 }
 parse_git_branch() {
