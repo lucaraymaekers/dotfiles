@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-die ()
+die()
 {
 	echo "$@" >&2
 }
@@ -39,34 +39,34 @@ nnn() { test -z "$NNNLVL" && /usr/bin/nnn "$@" || exit }
 ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
 
 # googoo aliases
-_googoo_fzf_opt ()
+_googoo_fzf_opt()
 {
 	if [ "$1" ]
 	then
 		[ -d "$1" ] && dest="$1" || opt="-q $1"
 	fi
 }
-o ()
+o()
 {
 	_googoo_fzf_opt "$1"
 	f="$(goo f "$dest" | fzf $opt)"
 	test "$1" && shift
 	test -f "$f" && $EDITOR $@ "$f"
 }
-go ()
+go()
 {
 	_googoo_fzf_opt "$1"
 	d="$(goo d "$dest" | fzf $opt)"
 	test -d "$d" && cd "$d"
 }
-ogo ()
+ogo()
 {
 	_googoo_fzf_opt "$1"
 	d="$(dirname "$(goo f "$dest")" | fzf $opt)"
 	test -d "$d" && cd "$d"
 }
 
-ipc () 
+ipc() 
 {
    if [[ "$(ip link show eno1 | awk -F, 'NR=1 {print $3}')" == "UP" ]]
    then
@@ -76,22 +76,20 @@ ipc ()
    fi
 }
 
-calc () { echo "$@" | bc -l | numfmt --grouping; }
-
-psgrep ()
+psgrep()
 {
 	[ $# -eq 0 ] && return 1
 	pgrep "$@" | xargs ps
 }
 
-unique () {
+unique() {
 	local f
 	f="$(mktemp)"
 	awk '!x[$0]++' "$1" > "$f"
 	mv "$f" "$1"
 }
 
-clip () { 
+clip() { 
 	if [ "$WAYLAND_DISPLAY" ]
 	then
 		echo -n "$@" | wl-copy
@@ -100,7 +98,7 @@ clip () {
 	fi
 }
 
-unzipp () {
+unzipp() {
     file=$1
     shift
     unzip $file $@ || exit 1
@@ -108,18 +106,18 @@ unzipp () {
 }
 
 # fix long waiting time
-__git_files () { 
+__git_files() { 
     _wanted files expl 'local files' _files     
 }
 
-esc () {
+esc() {
 	$EDITOR "$(which $1)"
 }
 
-delfile () {
+delfile() {
 	curl "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"
 }
-upfile () {
+upfile() {
 	curl -F "file=@\"$1\"" ${2:-https://upfast.cronyakatsuki.xyz}
 }
 
@@ -177,7 +175,7 @@ function git_develop_branch() {
 }
 
 # gpg backup
-gpg_backup ()
+gpg_backup()
 {
 	gpg --export-secret-keys --armor > private.asc
 	gpg --export --armor > public.asc
@@ -186,7 +184,7 @@ gpg_backup ()
 	shred -uz {public,private,trust}.asc
 }
 
-gpg_import ()
+gpg_import()
 {
 	tar xf $1
 	shred -uz $1
@@ -196,29 +194,29 @@ gpg_import ()
 	shred -uz {public,private,trust}.asc
 }
 
-ngenable ()
+ngenable()
 {
 	ln -sf /etc/nginx/sites-available/$1 /etc/nginx/sites-enabled/
 }
 
-vbsr ()
+vbsr()
 {
 	vboxmanage snapshot "$1" restore "$2" &&
 		vboxmanage startvm "$1" ||
 		vboxmanage controlvm "$1" poweroff
 }
-vbsrr ()
+vbsrr()
 {
 	vbsr "$1" "$2"
 	sleep 3
 	vbsr "$1" "$2"
 }
-vbst ()
+vbst()
 {
 	vboxmanage snapshot "$1" take "$2"
 }
 
-pacsize ()
+pacsize()
 {
 	if test -n "$1"; then
 		packages="$@"
@@ -232,7 +230,7 @@ pacsize ()
 		expac '%m %n' - |
 		numfmt --to=iec-i --suffix=B --format="%.2f"
 }
-pkbs ()
+pkbs()
 {
 	pkgfile -b "$1" | tee /dev/stderr | doas pacman -S -
 }
@@ -247,7 +245,7 @@ mime-default ()
 	die "Done."
 }
 
-addedkeys () {
+addedkeys() {
 	find ~/.ssh -iname "*.pub" | while read key
 	do 
 		local fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null)" 
@@ -258,7 +256,7 @@ addedkeys () {
 	done | sed "s,$HOME/.ssh/,,"
 }
 
-fpass () {
+fpass() {
 	find $HOME/.password-store -type f -not -path ".git" |
 		grep "\.gpg$" |
 		sed "s,$HOME/.password-store/,,;s,\.gpg$,," |
@@ -266,22 +264,22 @@ fpass () {
 		xargs pass show -c
 }
 
-oclip ()
+oclip()
 {
 	printf "\033]52;c;$(echo -n "$@" | base64)\a"
 }
 
-sms ()
+sms()
 {
 	ssh phone sendmsg "$1" "'$2'"
 }
 
-trcp ()
+trcp()
 {
 	scp "$1" db:/media/basilisk/downloads/transmission/torrents/
 }
 
-muttmail ()
+muttmail()
 {
 	die -n "email set: "
 	ls $HOME/.config/mutt/configs |
@@ -292,7 +290,7 @@ muttmail ()
 	read && mutt
 }
 
-resize ()
+resize()
 {
 	test $# -lt 2 &&
 		printf "usage: %s <format> <file> [out]\n" "$0" >&2 &&
