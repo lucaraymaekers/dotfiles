@@ -1,9 +1,7 @@
 #!/bin/zsh
 
-die()
-{
-	echo "$@" >&2
-}
+log() { >&2 printf '%s' "$@"; }
+logn() { >&2 printf '%s\n' "$@"; }
 
 awnk() {
 	awk "{print \$$1}"
