@@ -29,6 +29,12 @@ window#waybar.hidden {
 	opacity: 0.2;
 }
 
+tooltip {
+	background: @background;
+	color: @foreground;
+	border: 2px solid @color0;
+}
+
 window#waybar.termite #window,
 window#waybar.Firefox #window,
 window#waybar.Navigator #window,
@@ -37,17 +43,21 @@ window#waybar.PCSX2 #window {
 	background: @color7;
 }
 
-#mpd, #battery,
-#custom-wireguard, #network, #pulseaudio, #temperature, #cpu, #custom-memory {
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	border-radius: 26px;
+.modules-right * {
+	padding: 0 16px;
+}
+
+.modules-right {
+	margin-right: 2px;
+}
+.modules-left {
+	margin-left: 2px;
 }
 
 #workspaces, #mpd, #battery, #clock,
 #custom-wireguard, #network, #pulseaudio, #temperature, #cpu, #custom-memory, #tray {
-	border: solid @background 2px;
+	border: solid @background;
+	border-width: 2px 2px 2px 0;
 	margin-top: 4px;
 	margin-bottom: 2px;
 	transition: none;
@@ -60,8 +70,7 @@ window#waybar.PCSX2 #window {
 }
 
 #workspaces {
-	margin-left: 12px;
-	border-radius: 26px;
+	border: solid @background 2px;
 	background: @color3;
 }
 
@@ -94,30 +103,27 @@ window#waybar.PCSX2 #window {
 }
 
 #clock {
-	margin-top: 4px;
-	margin-bottom: 2px;
-	margin-left: 8px;
-	padding-left: 16px;
-	padding-right: 16px;
-	border-radius: 26px;
+	border: solid @color4 2px;
+	padding: 0 16px;
 	color: @color3;
 	background: @background;
-	border-color: @color4;
 }
 
 #window {
-	padding-left: 16px;
-	color: @color4;
+	margin-left: 16px;
+	padding: 0;
+	color: @color5;
 }
 
 #custom-wireguard {
 	color: @color5;
-	border-color: @color8;
+	border: 2px solid @color8;
 	background: @background;
 }
 
 #network {
 	color: @background;
+	border-left: 2px solid @background;
 	background: @color5;
 }
 
@@ -137,20 +143,13 @@ window#waybar.PCSX2 #window {
 }
 
 #custom-memory {
-	margin-left: 8px;
-	margin-right: 12px;
-	padding-left: 16px;
-	padding-right: 16px;
-	border-radius: 26px;
+	padding: 0 16px;
 	color: @background;
 	background: @color5;
 }
 
 #tray {
-	border: none;
-	margin-right: 12px;
-	color: @foreground;
-	background: transparent;
+	all: initial;
 }
 
 #tray > .needs-attention {
