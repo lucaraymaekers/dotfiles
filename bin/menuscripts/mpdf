@@ -1,22 +1,10 @@
 #!/bin/sh
 
-if [ "$MENUCMD" = "tofi" ]
-then
-	menucmd="tofi --width 30% --height 30% --matching-algorithm normal --prompt-text pdf:"
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	menucmd="dmenu -l 10 -g 1 -x -i -p pdf:" 
-else
-	menucmd="fzf"
-fi
-
-tmp="/tmp/dmpdf"
-find ${1:-$HOME/docs $HOME/dl} 2> /dev/null | grep -E ".+\.pdf" | sort > "$tmp"
-choice="$(sed "s|^$HOME|\~| ; s|\([^/]\)[^/]*/|\1/|g" "$tmp" | 
-		awk '{printf "%s %s\n", NR ":", $0}' | 
-		$menucmd |
-		grep -o "^[0-9]\+:" |
-		cut -f 1 -d :)"
-test -z "$choice" && exit 1
+tmp="/tmp/mpdf"
+choice="$(find ${1:-$HOME/docs $HOME/dl} -iname "*.pdf" 2> /dev/null | sort |
+	tee "$tmp" |
+	sed "s|^$HOME|\~| ; s|\([^/]\)[^/]*/|\1/|g" |
+	commander -x -n)"
 file="$(sed -n "${choice}p" "$tmp")"
+[ -r "$file" ] || exit 1
 zathura "$file" &
