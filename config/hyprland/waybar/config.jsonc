@@ -26,7 +26,6 @@
 		"separate-outputs": true,
 	},
 	"pulseaudio": {
-		"tooltip": false,
 		"scroll-step": 5,
 		"format": "{icon} {volume:3}%",
 		"format-icons": {
@@ -54,7 +53,6 @@
 		"format-disconnected": "",
 	},
 	"cpu": {
-		"tooltip": false,
 		"format": " {usage:2}%",
 		"interval": 3,
 	},
