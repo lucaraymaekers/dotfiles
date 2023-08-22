@@ -77,7 +77,6 @@ window#waybar.PCSX2 #window {
 #workspaces button {
 	transition: none;
 	background: transparent;
-	font-size: 16px;
 	color: @background;
 }
 
