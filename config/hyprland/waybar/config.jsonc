@@ -4,15 +4,15 @@
 	"modules-center": ["clock"],
 	"modules-right": ["custom/wireguard", "network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
 	"mpd": {
-		"tooltip": false,
 		"format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
 		"artist-len": 24,
 		"format-disconnected": "s",
-		"format-stopped": "s",
+		"format-stopped": "",
 		"state-icons": {
 			"playing": "",
 			"paused": "",
 		},
+		"tooltip-format": "{songPosition}/{queueLength} ({volume}%)",
 		"on-click": "mpc toggle",
 		"on-scroll-up": "mpc volume +5",
 		"on-scroll-down": "mpc volume -5",
