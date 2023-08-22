@@ -149,8 +149,8 @@ window#waybar.PCSX2 #window {
 	background: @color5;
 }
 
-#tray {
-	all: initial;
+#tray * {
+	padding: unset;
 }
 
 #tray > .needs-attention {
