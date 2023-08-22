@@ -55,3 +55,11 @@ export PASSWORD_STORE_CLIP_TIME=5
 # export VIMINIT="source ~/.config/vim/vimrc"
 # export fpath=($XDG_CONFIG_HOME/zsh/completion/ $fpath)
 # export CUDA_CACHE_PATH="$XDG_CONFIG_HOME"/nv
+
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:#e5e9f0,hl:#88c0d0
+	--color=pointer:blue
+	--color=gutter:#2e3440
+    --color=fg+:#5e81ac,hl+:#d08770
+    --color=info:#b48ead,prompt:#bf6069,pointer:#b48dac
+    --color=marker:#a3be8b,spinner:#ebcb8b,header:#a3be8b'
