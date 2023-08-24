@@ -20,7 +20,7 @@ nvf() {
 	local match="$(grep -m1 "$1$" "$cache" 2> /dev/null)"
 	if test ! -f "$match"
 	then
-		die "resetting cache..."
+		logn "resetting cache..."
 		match="$(goo | tee "$cache" | grep -m 1 "$1$" 2> /dev/null)"
 		# # Alternative:
 		# match="$(goo | grep -m 1 "$1" 2> /dev/null | tee -a | "$cache")"
@@ -29,7 +29,7 @@ nvf() {
 	then
 		$EDITOR "$match" && return
 	else
-		die "no match." && return 1
+		logn "no match." && return 1
 	fi
 }
 
@@ -249,12 +249,12 @@ pkbs()
 
 mime-default ()
 {
-	die "Setting '$1' as default for its mimetypes"
+	logn "Setting '$1' as default for its mimetypes"
 	grep "MimeType=" /usr/share/applications/"$1" |
 		cut -d '=' -f 2- |
 		tr ';' '\n' |
 		xargs -I {} xdg-mime default "$1" "{}"
-	die "Done."
+	logn "Done."
 }
 
 addedkeys() {
@@ -293,12 +293,12 @@ trcp()
 
 muttmail()
 {
-	die -n "email set: "
+	log "email set: "
 	ls $HOME/.config/mutt/configs |
 		fzf |
 		tee /dev/stderr |
 		xargs -I {} ln -sf "$HOME/.config/mutt/configs/{}" $HOME/.config/mutt/muttrc
-	die -n 'Press [Enter to login]'
+	log 'Press [Enter to login]'
 	read && mutt
 }
 
@@ -309,3 +309,5 @@ resize()
 		return 1
 	convert -resize $1^ -gravity center -crop $1+0+0 -- "$2" "${3:-$1}"
 }
+
+rln() { ln -s "$(readlink -f "$1")" "$2"; }
