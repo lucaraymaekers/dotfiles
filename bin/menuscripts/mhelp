@@ -1,29 +1,18 @@
 #!/usr/bin/env sh
 
-if [ "$MENUCMD" = "tofi" ]
-then
-	program="$(tofi-run --prompt-text "program: ")"
-	menucmd="tofi --width 50% --height 30% --matching-algorithm normal --prompt-text $program:"
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	program="$(dmenu_path | dmenu -l 4 -g 5 -p "program:")" 
-	menucmd="dmenu -l 20 -g 1 -x -i -p $program:" 
-else
-	program="$(dmenu_path | fzf)"
-	menucmd="fzf"
-fi
+program="$(commander -r -c -d)"
 
-test -z "$program" && exit 1
+[ "$program" ] || exit 1
 
-option="$($program --help |
+option="$("$program" --help |
 	# Parse options
 	grep "^ *-[-a-zA-Z0-9]* " |
 	tr -s ' ' |
 	sort | uniq |
 	column -l 2 -t |
-	$menucmd |
+	commander -l -x -c -d |
 	awk '{print $1}')"
 
-test -z "$option" && exit 1
+[ "$option" ] || exit 1
 
-setsid $program $option
+setsid "$program" "$option"

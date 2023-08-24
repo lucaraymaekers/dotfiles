@@ -1,17 +1,8 @@
 #!/bin/sh
 
-if [ -z "$MENUCMD" ]
-then
-	menucmd="fzf"
-elif [ "$MENUCMD" = "tofi" ]
-then
-	menucmd='tofi --width 700 --height 300 --prompt-text Appimage:'
-else
-	menucmd="dmenu -x -l 10 -g 1 -p Appimage:"
-fi
-
 dest="$XDG_DATA_HOME"/appimages
 appimage="$(find "$dest" -type f -printf "%f\n" |
 	sed 's/\.[Aa]pp[Ii]mage$//g' |
-	$menucmd)"
+	commander -x -l -p "Appimage:")"
+[ "$appimage" ] || exit 1
 setsid "$dest/${appimage:-NOSEL}"*

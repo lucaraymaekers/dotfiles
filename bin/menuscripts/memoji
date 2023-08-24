@@ -7,36 +7,27 @@
 
 if [ "$WAYLAND_DISPLAY" ]
 then
-	copycmd="wl-copy"
+	alias copycmd="wl-copy"
 else
-	copycmd="xclip -sel c"
-fi
-if [ "$MENUCMD" = "tofi" ]
-then
-	menucmd="tofi --width 30% --height 30% --matching-algorithm normal --prompt-text Emoji:"
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	menucmd="dmenu -l 20 -g 1 -x -i -p Emoji:" 
-else
-	menucmd="fzf --prompt Emoji:"
+	alias copycmd="xclip -sel c"
 fi
 set -e
 
 case "$1" in
 	"list")
 		data=$(sed '0,/^__DATA__$/d' "$0")
-		echo -n "$data"
+		printf "%s" "$data"
 		;;
 	"copy")
 		input=$(tee | cut -f 1 -d ' ')
-		if [ ! -z "$input" ]
+		if [ "$input" ]
 		then
 			notify-send "dmemoji" "$input <b>copied!</b>"
-			echo -n "$input" | $copycmd
+			printf "%s" "$input" | copycmd
 		fi
 		;;
 	"")
-		sh $0 list | $menucmd | sh $0 copy
+		sh "$0" list | commander -p "Emoji:" -l -x | sh "$0" copy
 		;;
 esac
 

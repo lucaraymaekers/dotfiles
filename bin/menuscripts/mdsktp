@@ -1,21 +1,8 @@
 #!/bin/sh
 # Searches through .desktop files and prompt to launch them via dmenu
-if [ "$MENUCMD" = "tofi" ]
-then
-	menucmd="tofi"
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	menucmd="dmenu -g 1 -i" 
-else
-	menucmd="fzf"
-fi
 
-choice="$(find ~/.local/share/applications \
-    -maxdepth 1 \
-    -type f \
-    -not -iname "wine-extension*" -a -iname "*.desktop" \
-    -printf "%f\n" |
-	cut -d. -f1 |
-	$menucmd)"
-test -z "$choice" && exit 1
+choice="$(find ~/.local/share/applications -maxdepth 1 -type f -not -iname "wine-extension*" |
+	awk '/\/[^.\/]+\.desktop/ {print $(NF-1)}' |
+	commander -s -d -x -c)"
+[ "$choice" ] || exit 1
 gtk-launch "$choice" 

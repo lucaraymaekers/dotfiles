@@ -8,7 +8,7 @@ choice="$(find -L $dirs 2> /dev/null |
 	grep '^.\+\.\(webm\|mp4\|mpeg\|mkv\)$' |
 	sort | tee "$tmp" |
 	sed "s#^$HOME#\~#;s#\([^/]\)[^/]*/#\1/#g" |
-	commander -n -x)"
+	commander -d -n -x)"
 
 file="$(sed -n "${choice}p" "$tmp")"
 [ -r "$file" ] || exit 1

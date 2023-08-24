@@ -1,23 +1,13 @@
 #!/bin/sh
 
-if [ "$MENUCMD" = "tofi" ]
-then
-	menucmd="tofi --width 5% --height 10% --prompt-text" 
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	menucmd="dmenu -g 2 -l 1 -p"
-else
-	menucmd="fzf --prompt"
-fi
-
 while true
 do 
 	volume="$(mpc volume | awk '{print $2}' | cut -f1 -d'%')"
-	choice="$(echo "plus\nmin" |
-		$menucmd "$volume" |
+	choice="$(printf "plus\nmin\n" |
+		commander -d -c -p "$volume" |
 		sed 's/plus/+/;s/min/-/')"
-	test -z "$choice" && break
-	nb="$($menucmd "$volume$choice" < /dev/null)"
-	test -z "$nb" && break
+	[ "$choice" ] || break
+	nb="$(commander -c -p "$volume$choice" -i)"
+	[ "$nb" ] || break
 	mpc volume "$choice$nb"
 done

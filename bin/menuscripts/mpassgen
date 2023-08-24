@@ -1,46 +1,21 @@
 #!/usr/bin/env sh
 
-input ()
-{
-	# menu prompt for output
-	if [ "$MENUCMD" = "tofi" ]
-	then
-		inp="$(tofi --prompt-text "$1 " </dev/null)"
-	elif [ "$MENUCMD" = "dmenu" ]
-	then
-		inp="$(dmenu -p "$1" < /dev/null)"
-	else
-		echo -n "$1" >&2
-		read inp
-	fi
-	echo $inp
-}
-# menu select long
-if [ "$MENUCMD" = "tofi" ]
-then
-	menucmd="tofi --prompt login:"
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	menucmd="dmenu -l 10 -g 1 -x -i -p login:" 
-else
-	menucmd="fzf"
-fi
+input () { commander -c -i -p "$1"; }
 
-choice="$(echo "multiline\nsingle" | $MENUCMD)"
-test -z "${choice}" && exit 1
+choice="$(printf "multiline\nsingle\n" | commander -c -d)"
+[ "$choice" ] || exit 1
 
 password="$(input "name:")"
-test -z "${password}" && exit 1
+[ "$password" ] || exit 1
 
-if [ "${choice}" = "multiline" ]
+if [ "$choice" = "multiline" ]
 then
-	login="$(ls -1 ${PASSWORD_STORE_DIR:=$HOME/.password-store}/e-mails |
-		sed 's/\.gpg$//' | 
-		$menucmd)"
-    test -z "${login}" && exit 1
+	login="$(find "${PASSWORD_STORE_DIR:=$HOME/.password-store}"/e-mails -type f -maxdepth 1 -iname "*.gpg" -printf "%f\n" |
+		sed 's/\.gpg$//' | commander -c -d -p 'login:')"
+    [ "$login" ] || exit 1
     url="$(input "url:")"
-    test -z "${url}" && exit 1
-    echo "${password}\nlogin: ${login}\nurl: ${url}" |
+    [ "$url" ] || exit 1
+    printf "%s\nlogin: %s\nurl: %s\n" "${password}" "${login}" "${url}" |
 		pass insert -mf "${password}"
     pass generate -ci "${password}"
 else

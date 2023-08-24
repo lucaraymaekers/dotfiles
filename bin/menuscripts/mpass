@@ -1,25 +1,27 @@
 #!/usr/bin/env sh
 store="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
-lscmd="ls --group-directories-first"
-if [ "$MENUCMD" = "tofi" ]
-then
-	menucmd="tofi --prompt pass:"
-elif [ "$MENUCMD" = "dmenu" ]
-then
-	menucmd="dmenu -l 4 -g 2 -i -p pass:" 
-else
-	menucmd="fzf --prompt pass:"
-fi
+
+# list passwords, group directories first
+list_pswds()
+{
+	find "$1" \
+		-maxdepth 1 -mindepth 1 \
+		-not -name '.*' -type d -printf "%y\t%f\n" -o \
+		-not -name '.*' -not -type d -printf "%y\t%f\n" |
+		sort -k1 -k2 |
+		cut -f 2 | sed 's/\.gpg$//'
+}
+
 while [ -d "$store/$file" ]
 do
-	choice="$($lscmd "$store/$file" | sed 's/\.gpg$//'| $menucmd)"
-	[ "$choice" ] || break
-	file="$file/$choice"
+	choice="$(list_pswds "$store/$file" | commander -c -d)"
+	[ "$choice" ] || exit 1
+	[ -z "$file" ] && file="$choice" || file="$file/$choice"
 done
-test -z "$file" && exit 1
+[ "$file" ] || exit 1
 
 pass show -c "$file" || exit 1
-notify-send -t 1000 "mpass" "copied <b>$choice</b>"
+notify-send -t 1000 "mpass" "copied <b>$file</b>"
 
 [ "$WAYLAND_DISPLAY" ] && cliphist list >/dev/null && # on wayland and cliphist is running
 	cliphist list | head -n 1 | cliphist delete
