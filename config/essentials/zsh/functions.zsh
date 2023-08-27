@@ -3,17 +3,10 @@
 log() { >&2 printf '%s' "$@"; }
 logn() { >&2 printf '%s\n' "$@"; }
 
-awnk() {
-	awk "{print \$$1}"
-}
-
 vmp() {
     col -b | \
     vim -MR \
     -c 'set ft=man nolist nonu nornu'
-}
-vimh() {
-	vim -c "help $1" -c 'call feedkeys("\<c-w>o")'
 }
 nvf() {
 	local cache="$HOME/.cache/nvf"
@@ -61,14 +54,17 @@ ogo()
 	_googoo_fzf_opt "$1"
 	cd "$(dirname "$(goo f "$dest" | fzf $opt)")"
 }
-dgo()
-{
-	cd "$(goo d | fzf --filter "$@" | head -n 1)"
-}
-open()
-{
-	$EDITOR "$(goo f | fzf --filter "$@" | head -n 1)"
-}
+
+# Onelineres
+awnk() { awk "{print \$$1}"; }
+vimh() { vi -c "help $1" -c 'call feedkeys("\<c-w>o")'; }
+dgo() { cd "$(goo d ~ | fzf --filter "$@" | head -n 1)"; }
+open() { $EDITOR "$(goo f ~ | fzf --filter "$@" | head -n 1)"; }
+pkbs() { pkgfile -b "$1" | tee /dev/stderr | doas pacman -S -; }
+oclip() { printf "\033]52;c;$(echo -n "$@" | base64)\a"; }
+sms() { ssh phone sendmsg "$1" "'$2'"; }
+trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
+rln() { ln -s "$(readlink -f "$1")" "$2"; }
 
 ipc() 
 {
@@ -125,7 +121,8 @@ upfile() {
 	curl -F "file=@\"$1\"" ${2:-https://upfast.cronyakatsuki.xyz}
 }
 
-sgd () {
+# git
+sgd() {
 	d="$PWD"
 	find $HOME/src -maxdepth 1 -mindepth 1 -type d |
 		while read -r dir
@@ -242,10 +239,6 @@ pacsize()
 		expac '%m %n' - |
 		numfmt --to=iec-i --suffix=B --format="%.2f"
 }
-pkbs()
-{
-	pkgfile -b "$1" | tee /dev/stderr | doas pacman -S -
-}
 
 mime-default ()
 {
@@ -276,21 +269,6 @@ fpass() {
 		xargs pass show -c
 }
 
-oclip()
-{
-	printf "\033]52;c;$(echo -n "$@" | base64)\a"
-}
-
-sms()
-{
-	ssh phone sendmsg "$1" "'$2'"
-}
-
-trcp()
-{
-	scp "$1" db:/media/basilisk/downloads/transmission/torrents/
-}
-
 muttmail()
 {
 	log "email set: "
@@ -309,5 +287,3 @@ resize()
 		return 1
 	convert -resize $1^ -gravity center -crop $1+0+0 -- "$2" "${3:-$1}"
 }
-
-rln() { ln -s "$(readlink -f "$1")" "$2"; }
