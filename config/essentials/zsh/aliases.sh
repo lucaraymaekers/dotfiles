@@ -5,10 +5,13 @@
 if [ $SHELL = "/bin/zsh" ]
 then
 	# googoo aliases
+	alias o~='o $HOME'
 	alias o/='o /'
 	alias o/s='o /srv'
+	alias go~='go $HOME'
 	alias go/='go /'
 	alias go/s='go /srv'
+	alias ogo~='ogo $HOME'
 	alias ogo/='ogo /'
 	alias ogo/s='ogo /srv'
 
@@ -134,8 +137,10 @@ alias sxt='sxiv -t'
 alias wgsh='wget --quiet --show-progress'
 alias wgc='wgsh "$(clipo)"'
 alias ss4='ss -tln4p'
+alias mdb='mariadb -u admin -ppass admindb'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
 alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
+alias tmux='tmux a || tmux'
 
 # ssh
 alias sha='ssh-add'
