@@ -113,7 +113,7 @@ main()
 				pre_cmd()
 				{
 					max_height="$(get_height 8)"
-					max_width="$(get_width 48)"
+					max_width="$(get_width 64)"
 
 					tee "$tmp"
 
