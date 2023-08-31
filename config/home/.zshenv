@@ -58,7 +58,7 @@ export PASSWORD_STORE_CLIP_TIME=5
 
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=fg:#e5e9f0,hl:#88c0d0
-	--color=pointer:blue
+	--color=pointer:#6d96a5
 	--color=gutter:#2e3440
     --color=fg+:#81a1c1,hl+:#ebcb8b
     --color=info:#b48ead,prompt:#bf6069,pointer:#b48dac
