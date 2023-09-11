@@ -42,7 +42,7 @@ fi
 if grep -qi "debian\|ubuntu" /etc/os-release 2> /dev/null
 then
 	alias aptup='apt update && apt upgrade -y'
-	alias ufwd='echo y | ufw delete "$(ufw status numbered | tail -n +5 | fzf | cut -f2 -d'\''['\'' | cut -f1 -d'\'']'\'')" > /dev/null 2>&1 && >&2 echo "deleted."'
+	alias ufwd='while echo y | ufw delete "$(ufw status numbered | tail -n +5 | fzf | cut -f2 -d'\''['\'' | cut -f1 -d'\'']'\'')" > /dev/null 2>&1 && >&2 echo "deleted."; do :; done'
 fi
 
 # Programs
