@@ -14,15 +14,12 @@ read_char ()
 	die -n ">"
 	old_stty_cfg=$(stty -g)
 	stty raw
-	dd ibs=1 count=${1:-1} 2> /dev/null
-	stty $old_stty_cfg
+	dd ibs=1 count=1 2> /dev/null
+	stty "$old_stty_cfg"
 	die ""
 }
 
-get_dev ()
-{
-	grep "^$1\." "$tmp" | cut -f 2- -d ' '
-}
+get_dev () { grep "^$1\." "$tmp" | cut -f 2- -d ' '; }
 
 # mount the device with $1 as the choice
 mount ()
@@ -31,16 +28,15 @@ mount ()
 	test -z "$dev" && exit 1
 
 	die "Mounting /dev/$dev on /media/$dev"
-	mkdir -p /media/$dev
-	$sudo mount /dev/$dev /media/$dev > /dev/null 2>&1 ||
+	mkdir -p /media/"$dev"
+	$sudo mount /dev/"$dev" /media/"$dev" > /dev/null 2>&1 ||
 		return 1
 }
 
 # umount the device with $1 as the choice
 umount ()
 {
-	mountpoint="$(sed -n "${1}p" "$tmp" |
-		awk '{print $3}')"
+	mountpoint="$(sed -n "${1}p" "$tmp" | awk '{print $3}')"
 	test -z "$mountpoint" && exit 1
 
 	die "Unmounting $mountpoint"
@@ -54,7 +50,7 @@ ejekt ()
 	test -z "$dev" && exit 1
 
 	die "Ejecting /dev/$dev"
-	$sudo eject /dev/$dev > /dev/null 2>&1 ||
+	$sudo eject /dev/"$dev" > /dev/null 2>&1 ||
 		return 1
 }
 
@@ -66,10 +62,10 @@ pr_lsblk ()
 	die "───────────────────────────────────"
 	lsblk --ascii -o name,mountpoint |
 		grep '^.-' |
-		while read line
+		while read -r line
 	do
-		words="$(printf "$line" | wc -w)"
-		test $words -eq ${1:-1} && continue 
+		words="$(printf "%s" "$line" | wc -w)"
+		test "$words" -eq "${1:-1}" && continue 
 		printf "%s\n" "$line"
 	done |
 		cut -f 2- -d "-" |
@@ -77,10 +73,7 @@ pr_lsblk ()
 		tee "$tmp" >&2
 }
 
-cleanup ()
-{
-	rm -f "$tmp"
-}
+cleanup () { rm -f "$tmp"; }
 
 trap cleanup EXIT INT
 
@@ -94,9 +87,13 @@ case $choice in
 	*) exit 1 ;;
 esac
 
-pr_lsblk $i
+pr_lsblk "$i"
 choice="$(read_char)"
-printf "$choice" | grep -q "[0-9]" || exit 1
-$cmd $choice &&
-	die "Successful." ||
+printf "%s" "$choice" | grep -q "[0-9]" || exit 1
+
+if $cmd "$choice"
+then
+	die "Successful."
+else
 	die "Failed."
+fi
