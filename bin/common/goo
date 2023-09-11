@@ -7,7 +7,7 @@ exclude="
 .git
 site-packages
 objects
-instances
+.minecraft/saves
 discord
 Steam
 ?eclipse
