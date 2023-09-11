@@ -29,6 +29,7 @@ export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
 export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
 export RANDFILE="$XDG_CACHE_HOME"/rnd
+export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
 
 export XINITRC="$XDG_CONFIG_HOME/x11"/xinitrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
@@ -42,6 +43,7 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # export _JAVA_AWT_WM_NONREPARENTING=1
 # export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
