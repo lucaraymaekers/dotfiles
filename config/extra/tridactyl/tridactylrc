@@ -15,9 +15,11 @@ set searchurls.gwi https://wiki.gentoo.org/index.php?title=Special%3ASearch&prof
 set searchurls.im https://www.imdb.com/find?q=%s
 set searchurls.lg https://libgen.gs/index.php?req=%s
 set searchurls.mc https://minecraft.fandom.com/wiki/%s
-set searchurls.mcf https://www.curseforge.com/minecraft/mc-mods/search?search=%s
-set searchurls.mcm https://modrinth.com/mods?q=%s
+set searchurls.cfg https://www.curseforge.com/minecraft/mc-mods/search?search=%s
+set searchurls.mdr https://modrinth.com/mods?q=%s
 set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
+set searchurls.mcf https://minecraft.fandom.com/wiki/%s
+set searchurls.mcfc https://minecraft.fandom.com/wiki/%s#Crafting
 set searchurls.osm https://www.openstreetmap.org/search?query=
 set searchurls.plu https://app.pluralsight.com/search/?q=%s
 set searchurls.pyp https://pypi.org/search/?q=%s
