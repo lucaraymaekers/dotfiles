@@ -1,32 +1,43 @@
 #!/bin/sh
-if [ "$(id -u)" -ne 0 ]
-then
-	echo "Please run as root." >&2
-	exit 1
-fi
 
-if ! which pptpsetup > /dev/null 2>&1
-then
-	echo "Please install pptpsetup..." >&2
-	exit 1
-fi
+die() { printf "%s\n" "$@"; exit 1; }
 
-name="ehb_tunnel"
-ip="193.190.238.38"
-read -p "username: " username
-stty -echo # disable terminal output
-read -p "password: " password
-stty echo
-echo
+[ "$(id -u)" -ne 0 ] && die "Please run as root."
 
-pptpsetup \
-	--create "$name" \
-	--server "$ip" \
-	--username "$username" \
-	--password "$password" \
-	--encrypt &&
-	cat >&2 <<EOF
-Created tunnel: $name
-activate it with
-# pon ehb_tunnel debug dump logfd 2 nodetach
+. /etc/os-release
+case "$ID" in 
+	"arch") pacman -Sy --noconfirm python-libcharon strongswan ;;
+	"debian") apt install strongswan libcharon-extra-plugins libcharon-extauth-plugins ;;
+	*) die "Distro is '%s'.\n" "$ID" ;;
+esac
+
+read_line() { >&2 printf "%s" "$@"; head -n 1; }
+
+email="$(read_line "email: ")"
+password="$(read_line "password: ")"
+
+>&2 printf "%s\n" "/etc/ipsec.conf"
+
+cat <<EOF | tee -a /etc/ipsec.conf
+conn EHB-VPN
+        keyexchange=ikev2
+        dpdaction=clear
+        auto=add
+        dpdaction=hold
+        closeaction=hold
+        dpddelay=300s
+        eap_identity=$email
+        leftauth=eap-mschapv2
+        left=%defaultroute
+        leftsourceip=%config
+        right=vpn.student.ehb.be
+        rightauth=pubkey
+        rightsubnet=0.0.0.0/0
+        rightid= %any
+        type=tunnel
 EOF
+
+>&2 printf "%s\n" "/etc/ipsec.secrets"
+
+printf "%s : EAP \"%s\"\n" "$email" "$password" |
+	tee -a /etc/ipsec.secrets
