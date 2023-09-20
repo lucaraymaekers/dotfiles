@@ -8,8 +8,10 @@ check ()
 	do
 		print_dir "$2/$dir"
 		cd "$2/$dir" || continue
-		git pull 2> /dev/null | tr -d '\n'
-		echo
+		git pull > /dev/null 2>&1 &&
+			printf 'Up to date.' ||
+			printf 'Couldn'\''t update.'
+		printf '\n'
 	done
 }
 
