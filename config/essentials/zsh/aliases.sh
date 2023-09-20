@@ -243,7 +243,7 @@ alias cdrs='cd /srv/'
 # fzf aliases
 alias ppj='cd ~/proj/personal/"$(find ~/proj/personal -mindepth 1 -maxdepth 1 -type d -printf "%f\n"| fzf)"'
 alias fil='$EDITOR ~/docs/filios/"$(find ~/docs/filios -type f -printf "%f\n" | fzf)"'
-alias cfg='find -L ~/src/dotfiles -type f | fzf | xargs -r $EDITOR'
+alias cfg='find -L ~/src/dotfiles -type f 2> /dev/null | fzf | xargs -r $EDITOR'
 alias fzps='ps aux | tail +2 | fzf | tee /dev/stderr | awk '\''{print $2}'\'' | clipp'
 alias asf='alias | fzf'
 alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
