@@ -60,9 +60,9 @@ awnk() { awk "{print \$$1}"; }
 vimh() { vi -c "help $1" -c 'call feedkeys("\<c-w>o")'; }
 dgo() { cd "$(goo d ~ | fzf --filter "$@" | head -n 1)"; }
 open() { $EDITOR "$(goo f ~ | fzf --filter "$@" | head -n 1)"; }
-pkbs() { pkgfile -b "$1" | tee /dev/stderr | doas pacman -S -; }
+pkbs() { doas pacman -Sy "$(pkgfile -b "$1" | tee /dev/stderr)"; }
 oclip() { printf "\033]52;c;$(echo -n "$@" | base64)\a"; }
-sms() { ssh phone sendmsg "$1" "'$2'"; }
+sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
 
