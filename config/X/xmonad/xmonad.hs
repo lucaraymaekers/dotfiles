@@ -244,7 +244,7 @@ defaults = ewmh def {
         , ("M-S-<L>",   CWS.shiftToPrev >> CWS.prevWS)
         , ("M-m",       spawn "emacs")
         -- launch firefox
-        , ("M-b",       spawn "firefox")
+        , ("M-b",       spawn "$BROWSER")
         -- take screenshots
         , ("M-s",       spawn "maim ~/pictures/screenshot-$(date +%y%m%d_%H_%M_%S).png")
         , ("M-C-s",   spawn "maim -i $(xdotool getactivewindow) ~/pictures/screenshot-$(date +%y%m%d_%H_%M_%S).png")
