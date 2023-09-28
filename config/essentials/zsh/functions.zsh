@@ -32,6 +32,7 @@ ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
 # googoo aliases
 _googoo_fzf_opt()
 {
+	unset dest opt
 	if [ "$1" ]
 	then
 		[ -d "$1" ] && dest="$1" || opt="-q $1"
@@ -99,9 +100,7 @@ clip() {
 }
 
 unzipp() {
-    file=$1
-    shift
-    unzip $file $@ || exit 1
+	unzip -- "$(readlink -f -- "$1")" || return 1
     rm $file
 }
 
