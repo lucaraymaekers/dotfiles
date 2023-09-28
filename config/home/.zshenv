@@ -2,7 +2,7 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-export BROWSER="firefox"
+export BROWSER="librewolf"
 export VIEWER="zathura"
 export PLAYER="mpv"
 
@@ -69,3 +69,4 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$XDG_CONFIG_HOME/cargo/bin:$PATH"
 export PATH="$PATH:./node_modules/.bin"
+export PATH="$PATH:$HOME/.dotnet/tools"
