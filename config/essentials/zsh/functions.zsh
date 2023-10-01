@@ -66,6 +66,7 @@ oclip() { printf "\033]52;c;$(echo -n "$@" | base64)\a"; }
 sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
+getgit() { git clone git@db:"$1"; }
 
 ipc() 
 {
