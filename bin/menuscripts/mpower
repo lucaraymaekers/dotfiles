@@ -1,8 +1,11 @@
 #!/bin/sh
-choice="$(printf 'poweroff
+choice="$(
+cat <<EOF | commander -c
+poweroff
 suspend
 hibernate
 reboot
-' | commander -c)"
+EOF
+)"
 
 [ "$choice" ] && systemctl "$choice"
