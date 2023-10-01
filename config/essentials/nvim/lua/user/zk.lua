@@ -1,5 +1,6 @@
 local home = vim.fn.expand("~/docs/zk")
-require('telekasten').setup({
+
+require("telekasten").setup({
 	home         = home,
 	take_over_my_home = true,
 	auto_set_filetype = true,
@@ -65,8 +66,8 @@ require('telekasten').setup({
 			template_new_note = home .. "/" .. "templates/new_note.md",
 			new_note_filename = "title",
 		},
-		dotNetEssentials = {
-			home = home .. "/" .. "dotNetEssentials",
+		NETEssentials = {
+			home = home .. "/" .. "NETEssentials",
 			template_new_note = home .. "/" .. "templates/new_note.md",
 			new_note_filename = "title",
 		},
@@ -88,21 +89,21 @@ require('telekasten').setup({
 	}
 })
 
-vim.keymap.set("n", "<leader>z", "<cmd>Telekasten panel<cr>")
-vim.keymap.set("n", "<leader>zb", "<cmd>Telekasten show_backlinks<cr>")
-vim.keymap.set("n", "<leader>zz", "<cmd>Telekasten follow_link<cr>")
-vim.keymap.set("n", "<leader>zN", "<cmd>Telekasten new_templated_note<cr>")
-vim.keymap.set("n", "<leader>zT", "<cmd>Telekasten goto_today<cr>")
-vim.keymap.set("n", "<leader>zW", "<cmd>Telekasten goto_thisweek<cr>")
-vim.keymap.set("n", "<leader>zd", "<cmd>Telekasten find_daily_notes<cr>")
-vim.keymap.set("n", "<leader>zf", "<cmd>Telekasten find_notes<cr>")
-vim.keymap.set("n", "<leader>zg", "<cmd>Telekasten search_notes<cr>")
-vim.keymap.set("n", "<leader>zm", "<cmd>Telekasten browse_media<cr>")
-vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<cr>")
-vim.keymap.set("n", "<leader>zp", "<cmd>Telekasten preview_img<cr>")
-vim.keymap.set("n", "<leader>zr", "<cmd>Telekasten rename_note<cr>")
-vim.keymap.set("n", "<leader>zs", "<cmd>Telekasten switch_vault<cr>")
-vim.keymap.set("n", "<leader>zS", "<cmd>Telekasten search_notes<cr>")
-vim.keymap.set("n", "<leader>zt", "<cmd>Telekasten panel<cr>")
-vim.keymap.set("n", "<leader>zw", "<cmd>Telekasten find_weekly_notes<cr>")
-vim.keymap.set("n", "<leader>z#", "<cmd>Telekasten show_tags<cr>")
+vim.keymap.set("n", "<leader>z", require("telekasten").panel)
+vim.keymap.set("n", "<leader>zb", require("telekasten").show_backlinks)
+vim.keymap.set("n", "<leader>zz", require("telekasten").follow_link)
+vim.keymap.set("n", "<leader>zN", require("telekasten").new_templated_note)
+vim.keymap.set("n", "<leader>zT", require("telekasten").goto_today)
+vim.keymap.set("n", "<leader>zW", require("telekasten").goto_thisweek)
+vim.keymap.set("n", "<leader>zd", require("telekasten").find_daily_notes)
+vim.keymap.set("n", "<leader>zf", require("telekasten").find_notes)
+vim.keymap.set("n", "<leader>zg", require("telekasten").search_notes)
+vim.keymap.set("n", "<leader>zm", require("telekasten").browse_media)
+vim.keymap.set("n", "<leader>zn", require("telekasten").new_note)
+vim.keymap.set("n", "<leader>zp", require("telekasten").preview_img)
+vim.keymap.set("n", "<leader>zr", require("telekasten").rename_note)
+vim.keymap.set("n", "<leader>zs", require("telekasten").switch_vault)
+vim.keymap.set("n", "<leader>zS", require("telekasten").search_notes)
+vim.keymap.set("n", "<leader>zt", require("telekasten").panel)
+vim.keymap.set("n", "<leader>zw", require("telekasten").find_weekly_notes)
+vim.keymap.set("n", "<leader>z#", require("telekasten").show_backlinks)

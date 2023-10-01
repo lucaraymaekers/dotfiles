@@ -49,7 +49,7 @@ return require('packer').startup(function(use)
 	use('ojroques/vim-oscyank', {branch = "main"})
 	use("potamides/pantran.nvim")
 	use('alx741/vinfo')
-	use('github/copilot.vim')
+	-- use('github/copilot.vim')
 
 	-- objects
 	use('michaeljsmith/vim-indent-object')
@@ -65,7 +65,9 @@ return require('packer').startup(function(use)
 	use('hrsh7th/cmp-nvim-lsp-signature-help')
 	use('alvan/vim-closetag')
 
+	-- debugging
 	use('mfussenegger/nvim-dap')
+	use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 
 	-- java
 	use('mfussenegger/nvim-jdtls')

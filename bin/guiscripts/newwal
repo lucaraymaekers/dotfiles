@@ -10,8 +10,8 @@ res="1920x1080"
 # if no (valid) argument, use find any image with $res resolution
 # and take a random one
 test -f "${wal:=$(realpath "$1")}" ||
-	wal="$(find "$walls" -type f |
-		xargs identify |
+	wal="$(find "$walls" -type f -print0 |
+		xargs -0 identify |
 		grep "$res" |
 		awk '{print $1}' |
 		shuf -n 1)"

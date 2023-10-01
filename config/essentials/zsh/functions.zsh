@@ -32,6 +32,7 @@ ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
 # googoo aliases
 _googoo_fzf_opt()
 {
+	unset dest opt
 	if [ "$1" ]
 	then
 		[ -d "$1" ] && dest="$1" || opt="-q $1"
@@ -99,9 +100,7 @@ clip() {
 }
 
 unzipp() {
-    file=$1
-    shift
-    unzip $file $@ || exit 1
+	unzip -- "$(readlink -f -- "$1")" || return 1
     rm $file
 }
 
@@ -243,10 +242,9 @@ pacsize()
 mime-default ()
 {
 	logn "Setting '$1' as default for its mimetypes"
-	grep "MimeType=" /usr/share/applications/"$1" |
-		cut -d '=' -f 2- |
-		tr ';' '\n' |
-		xargs -I {} xdg-mime default "$1" "{}"
+	grep "MimeType=" /usr/share/applications/"$1".desktop |
+		cut -d '=' -f 2- | tr ';' '\0' |
+		xargs -0I{} xdg-mime default "$1".desktop "{}"
 	logn "Done."
 }
 

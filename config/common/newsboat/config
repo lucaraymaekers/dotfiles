@@ -1,4 +1,4 @@
-browser firefox
+browser linkhandler
 
 # from contrib
 color background          color15    default
@@ -29,5 +29,3 @@ bind-key a toggle-article-read
 
 show-keymap-hint no
 swap-title-and-hints yes
-
-browser linkhandler

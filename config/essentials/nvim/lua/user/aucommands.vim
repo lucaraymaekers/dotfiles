@@ -8,7 +8,6 @@ augroup END
 " terminal specific layout
 augroup neovim_terminal autocmd! 
 	autocmd TermOpen * startinsert 
-	autocmd TermOpen * :GitGutterBufferDisable
 	autocmd TermOpen * :set nonumber norelativenumber signcolumn=no
 	autocmd TermOpen * nnoremap <buffer> <C-c> i<C-c> 
 augroup END
