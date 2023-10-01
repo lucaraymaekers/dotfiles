@@ -3,6 +3,6 @@ choice="$(printf 'poweroff
 suspend
 hibernate
 reboot
-' | commander -c -d)"
+' | commander -c)"
 
 [ "$choice" ] && systemctl "$choice"
