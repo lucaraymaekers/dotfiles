@@ -241,6 +241,7 @@ alias czo='cd ~/zot/'
 alias cdpw='cd ${PASSWORD_STORE_DIR:-~/.password-store}'
 alias cdng='cd /etc/nginx'
 alias cdrs='cd /srv/'
+alias god='cd "$(find . -mindepth 1 -maxdepth 1 -type d | fzf)"'
 
 # fzf aliases
 alias ppj='cd ~/proj/personal/"$(find ~/proj/personal -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | fzf)"'
@@ -269,6 +270,7 @@ alias sshdb='ssh -t db "tmux a || tmux"'
 alias dbsmu='rsync -aPz db:/media/basilisk/music/ /media/kilimanjaro/music'
 
 # oh-my-zsh git aliases
+alias gitdotf='GIT_WORK_TREE=~/src/dotfiles/ GIT_DIR=~/src/dotfiles/.git'
 alias gmod='git status --short | sed '\''/^\s*M/!d;s/^\s*M\s*//'\'' | fzf | xargs $EDITOR'
 alias g='git'
 alias ga='git add'
