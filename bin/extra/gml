@@ -52,9 +52,13 @@ steam()
 	291550 brawlhalla
 	1712840 tiny tina
 	105600 terraria
+	kill
 EOF
 	)"
-	[ "$choice" ] && setsid steam steam://rungameid/"$choice"
+	case "$choice" in
+		kill) pkill steam ;;
+		*) setsid steam steam://rungameid/"$choice" ;;
+	esac
 	exit
 }
 
