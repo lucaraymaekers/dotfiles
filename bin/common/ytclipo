@@ -18,6 +18,7 @@ notify-send "ytclipo" "<b>downloading</b> $inp"
 
 yt-dlp "$inp" \
 	--restrict-filenames \
+	--embed-chapters \
 	-f "b" \
 	-S "res:1080" \
 	-P "$HOME/vids/youtube/" \
