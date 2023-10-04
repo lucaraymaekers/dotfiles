@@ -1,6 +1,13 @@
 #!/bin/sh
 
-usage() { >&2 printf "usage: supd\nusage: supd <prefix> <dir>"; exit 1; }
+usage() {
+	>&2 cat <<-EOF
+	usage: supd
+	       supd <prefix> <dir>
+		   stdout | supd <prefix>
+	EOF
+	exit 1
+}
 
 check ()
 {
@@ -12,8 +19,8 @@ check ()
 			printf 'Up to date.' ||
 			printf 'Couldn'\''t update.'
 		printf ' '
-		git status --short 2> /dev/null | head -n1 | awk '{print $1 " "}'
-		printf '\n'
+		printf '%s\n' "$(git status --short 2> /dev/null |
+			awk 'NR==1 {print $1}')"
 	done
 }
 
@@ -21,6 +28,10 @@ if [ "$#" -eq 0 ]
 then
 	dirs="installdrier dotfiles password-store"
 	prefix="$HOME/src"
+elif [ ! -t 0 ]
+then
+	prefix="$1"
+	dirs="$(cat)"
 else
 	prefix="$1"
 	shift || usage
