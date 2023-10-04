@@ -1,0 +1,13 @@
+#!/bin/sh
+
+pass="$(
+	find "${PASSWORD_STORE_DIR:=~/src/password-store/}" -name "*.gpg" |
+	sed -e "s@$PASSWORD_STORE_DIR/@@" -e 's/\.gpg$//' |
+	commander -x -c)"
+[ "$pass" ] || exit 1
+
+login="$(pass show "$pass" | awk '/^login:/ {print $2}')"
+password="$(pass show "$pass" | head -n 1)"
+
+printf '%s\t%s\n' "$login" "$password" |
+	ydotool type -f -
