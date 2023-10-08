@@ -1,6 +1,14 @@
 #!/bin/sh
+notif() { notify-send -t 1000 "pomo" "$1"; sleep 1; }
+
+for msg in "three" "two" "one"
+do notif "$msg"
+done
+
 while true
-do
+
+do 
+	notif "<b>START</b>"
 	date +%R
 	sleep 20m
 	notify-send -u critical -t 5000 "pomodoro" "BREAK TIME"
