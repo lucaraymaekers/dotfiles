@@ -2,7 +2,7 @@
 	"layer": "top",
 	"modules-left": ["battery", "hyprland/workspaces", "mpd", "hyprland/window"],
 	"modules-center": ["clock"],
-	"modules-right": ["custom/wireguard", "network", "pulseaudio", "temperature", "cpu", "custom/memory", "tray"],
+	"modules-right": ["custom/wireguard", "network", "pulseaudio", "temperature", "cpu", "custom/memory", "bluetooth", "tray"],
 	"mpd": {
 		"format": "{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
 		"artist-len": 24,
@@ -66,6 +66,15 @@
 		"format": "{:%R}",
 		"format-alt": "{:(%T) %A %d %B}",
 		"interval": 1,
+	},
+	"bluetooth": {
+		"format": "",
+		"format-disabled": "",
+		"format-connected": "",
+		"format-on": "",
+		"tooltip-format": "{controller_alias}\t{controller_address}",
+		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
 	},
 	"tray": {
 		"spacing": 5,

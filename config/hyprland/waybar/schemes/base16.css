@@ -51,11 +51,12 @@ window#waybar.PCSX2 #window {
 	margin-right: 2px;
 }
 .modules-left {
-	margin-left: 2px;
+	margin-left: 3px;
 }
 
-#workspaces, #mpd, #battery, #clock,
-#custom-wireguard, #network, #pulseaudio, #temperature, #cpu, #custom-memory, #tray {
+#workspaces, #mpd, #battery, 
+#clock,
+#custom-wireguard, #network, #pulseaudio, #temperature, #cpu, #custom-memory, #bluetooth, #tray {
 	border: solid @background;
 	border-width: 2px 2px 2px 0;
 	margin-top: 4px;
@@ -67,6 +68,9 @@ window#waybar.PCSX2 #window {
 	color: @color6;
 	background: @background;
 	border-color: @color4;
+	border-width: 2px;
+	padding: 0 12px;
+	margin-right: 16px;
 }
 
 #workspaces {
@@ -146,6 +150,11 @@ window#waybar.PCSX2 #window {
 	padding: 0 16px;
 	color: @background;
 	background: @color5;
+}
+
+#bluetooth {
+	color: @color6;
+	background: @color8;
 }
 
 #tray * {
