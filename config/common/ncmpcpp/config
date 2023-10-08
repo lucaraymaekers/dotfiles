@@ -445,7 +445,7 @@
 ##
 ## Note: You can define startup screen by choosing screen from the list above.
 ##
-startup_screen = browser
+# startup_screen = browser
 #
 ##
 ## Note: You can define startup slave screen by choosing screen from the list
@@ -508,7 +508,7 @@ startup_screen = browser
 #
 #media_library_sort_by_mtime = no
 #
-enable_window_title = no
+# enable_window_title = no
 #
 ##
 ## Note: You can choose default search mode for search engine. Available modes
@@ -595,4 +595,11 @@ enable_window_title = no
 #window_border_color = green
 #
 #active_window_border = red
-#
+
+startup_screen = browser
+enable_window_title = no
+visualizer_data_source = "~/.config/mpd/mpd.fifo"
+visualizer_output_name = "fifo"
+visualizer_in_stereo = "yes"
+visualizer_type = "spectrum"
+visualizer_look = "+|"
