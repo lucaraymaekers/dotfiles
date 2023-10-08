@@ -19,8 +19,11 @@ check ()
 			printf 'Up to date.' ||
 			printf 'Couldn'\''t update.'
 		printf ' '
-		printf '%s\n' "$(git status --short 2> /dev/null |
-			awk 'NR==1 {print $1}')"
+		printf '%s %s\n' "$(git status --short 2> /dev/null |
+			awk 'NR==1 {print $1}')" "$(git branch -v 2>/dev/null |
+			grep '^\*' | cut -f2 -d'[' | cut -f1 -d' ' |
+			sed 's/ahead/↑/;s/behind/↓/;s/\*//')"
+
 	done
 }
 
