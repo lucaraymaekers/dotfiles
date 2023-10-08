@@ -9,5 +9,7 @@ pass="$(
 login="$(pass show "$pass" | awk '/^login:/ {print $2}')"
 password="$(pass show "$pass" | head -n 1)"
 
-printf '%s\t%s\n' "$login" "$password" |
-	ydotool type -f -
+if [ "$login" ]
+then printf '%s\t%s\n' "$login" "$password" | ydotool type -f -
+else printf '%s\n' "$password" | ydotool type -f -
+fi
