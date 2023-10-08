@@ -76,6 +76,16 @@ require("telekasten").setup({
 			template_new_note = home .. "/" .. "templates/new_note.md",
 			new_note_filename = "title",
 		},
+		ScalingNetworks = {
+			home = home .. "/" .. "ScalingNetworks",
+			template_new_note = home .. "/" .. "templates/new_note.md",
+			new_note_filename = "title",
+		},
+		RoutingSwitchingEssentials = {
+			home = home .. "/" .. "RoutingSwitchingEssentials",
+			template_new_note = home .. "/" .. "templates/new_note.md",
+			new_note_filename = "title",
+		},
 		SoftwareDesign2 = {
 			home = home .. "/" .. "SoftwareDesign2",
 			template_new_note = home .. "/" .. "templates/new_note.md",
