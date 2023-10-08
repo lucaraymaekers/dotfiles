@@ -206,6 +206,10 @@ ls.add_snippets("javascript", {
 	{ i(1), rep(1), i(0) })),
 })
 
+ls.add_snippets("cs", {
+	parse("cw", "Console.WriteLine($1);$0"),
+})
+
 ls.add_snippets("telekasten", {
 	--link
 	s("ln", fmt(
