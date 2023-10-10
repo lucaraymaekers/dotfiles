@@ -27,8 +27,18 @@ compinit
 # Source files
 . $ZDOTDIR/functions.zsh
 . $ZDOTDIR/aliases.sh
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+local PLUGPATH
+for file in /etc/os-release /usr/lib/os-release
+do [ -f "$file" ] && . "$file" && break
+done
+case "${ID:=unknown}" in
+	debian|ubuntu) PLUGPATH=/usr/share/ ;;
+	*) PLUGPATH=/usr/share/zsh/plugins ;;
+esac
+echo $PLUGPATH
+. $PLUGPATH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. $PLUGPATH/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 bindkey -v
 bindkey -a cs change-surround
