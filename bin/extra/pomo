@@ -1,5 +1,5 @@
 #!/bin/sh
-notif() { notify-send -t "${2:-1000}" "pomo" "$1"; sleep 1; }
+notif() { notify-send -t 1000 -w "pomo" "$1"; }
 
 for msg in "three" "two" "one"
 do notif "$msg"
@@ -9,10 +9,8 @@ done
 # $2: msg for notification
 ring_ring()
 {
-	time="$(($1*1000*60))"
 	date '+%R B'
-	notif "$time" "$2"
-	sleep "$time"s
+	notify-send -w "$(($1*1000*60))" -u critical "pomo" "$2"
 }
 
 i="${1-0}"
