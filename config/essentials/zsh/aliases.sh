@@ -213,6 +213,7 @@ alias cfd='$EDITOR config.def.h'
 # /# quick cdjV}k:!sort -t "'" -k 2
 alias cdl='cd ~/dl'
 alias cdoc='cd ~/docs'
+alias czk='cd ~/docs/zk'
 alias cda='cd ~/docs/android/projects'
 alias csv='cd ~/docs/school/Vakken'
 alias cdm='cd ~/music'
@@ -246,8 +247,9 @@ alias god='cd "$(find . -mindepth 1 -maxdepth 1 -type d | fzf)"'
 # fzf aliases
 alias ppj='cd ~/proj/personal/"$(find ~/proj/personal -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | fzf)"'
 alias ppjs='cd ~/proj/personal/scripts/"$(find ~/proj/personal/scripts -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | fzf)"'
-alias fil='$EDITOR ~/docs/filios/"$(find ~/docs/filios -type f -printf "%f\n" | fzf)"'
-alias cfg='find -L ~/src/dotfiles -type f 2> /dev/null | fzf | xargs -r $EDITOR'
+alias escr='edit_in_dir ~/proj/personal/scripts/'
+alias fil='edit_in_dir ~/docs/filios/'
+alias cfg='edit_in_dir ~/src/dotfiles'
 alias fzps='ps aux | tail +2 | fzf | tee /dev/stderr | awk '\''{print $2}'\'' | clipp'
 alias asf='alias | fzf'
 alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"

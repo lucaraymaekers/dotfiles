@@ -286,3 +286,9 @@ resize()
 		return 1
 	convert -resize $1^ -gravity center -crop $1+0+0 -- "$2" "${3:-$1}"
 }
+
+edit_in_dir() { 
+	file="$1/$(goo f "$1" | sed "s@^$1@@" | fzf)"
+	[ -f "$file" ] || return 1
+	$EDITOR "$file"
+}
