@@ -1,6 +1,0 @@
-#!/bin/sh
-choice="$(mpc listall | commander -c -l -d -x)"
-[ "$choice" ] || exit 1
-mpc insert "$choice" || exit 1
-mpc next 2> /dev/null
-mpc play 2> /dev/null

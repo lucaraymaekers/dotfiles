@@ -1,0 +1,16 @@
+#!/bin/sh
+
+ips="192.168.178.79 192.168.178.52 10.7.0.1 none"
+
+for ip in $ips
+do ping -i .2 -c 1 "$ip" > /dev/null 2>&1 && break 
+done
+
+if [ "$ip" = "none" ]
+then
+	>&2 printf 'No ip.\n'
+	exit 1
+fi
+
+sed -i "/Host db/,/^$/s/.*HostName.*/\tHostname $ip/" "$HOME"/.ssh/config
+>&2 printf 'Done: %s \n' "$ip"

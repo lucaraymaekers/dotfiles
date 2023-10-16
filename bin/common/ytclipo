@@ -2,19 +2,20 @@
 
 # argument ($1) -> clipboard -> stdin
 if [ "$WAYLAND_DISPLAY" ]
-then
-	paste="$(wl-paste)"
-else
-	paste="$(xclip -o -sel c)"
+then paste() { wl-paste; }
+elif [ "$TERMUX_VERSION" ]
+then paste() { termux-clipboard-get; }
+else paste() { xclip -o -sel c; }
 fi
-test -z "${inp:=${1:-$paste}}" &&
-	inp="$(cat /dev/stdin)"
+
+inp="$1"
+[ "${inp:=$(paste)}" ] || inp="$(cat /dev/stdin)"
 
 # take last link from clipboard
 # works when link is from yt-local
 inp="https://youtu.be/$(echo "$inp" | sed 's/.*\(.\{11\}\)$/\1/')"
-echo "inp: ${inp}" 1>&2
-notify-send "ytclipo" "<b>downloading</b> $inp"
+>&2 printf "inp: %s\n" "$inp"
+notify-send "ytclipo" "<b>downloading</b> $inp" || :
 
 yt-dlp "$inp" \
 	--restrict-filenames \
@@ -23,5 +24,4 @@ yt-dlp "$inp" \
 	-S "res:1080" \
 	-P "$HOME/vids/youtube/" \
 	-o "%(channel)s - %(title)s.%(ext)s"
-notify-send "ytclipo" "<b>ytclipo</b><br>finished downloading."
-echo "$inp" >> /tmp/ytclipo_history
+notify-send "ytclipo" "<b>ytclipo</b><br>finished downloading." || :
