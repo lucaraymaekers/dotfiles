@@ -32,14 +32,14 @@ minecraft()
 				-mindepth 1 -maxdepth 1 \
 				-type d \
 				-printf "%f\n"
-							) | commander -d -c -s)"
+			) | commander -d -c -s)"
 
-							[ -z "$world" ] && exit 1
+			[ -z "$world" ] && exit 1
 
-							if [ "$world" = 'none' ]
-							then setsid multimc -l "$instance" > /dev/null 2>&1
-							else setsid multimc -l "$instance" -w "$world" > /dev/null 2>&1
-							fi
+			if [ "$world" = 'none' ]
+			then setsid multimc -l "$instance" > /dev/null 2>&1
+			else setsid multimc -l "$instance" -w "$world" > /dev/null 2>&1
+			fi
 
 		fi
 }
@@ -47,24 +47,27 @@ minecraft()
 steam()
 {
 	choice="$(
-	cat <<-EOF | column -t -l 2 | commander -d -x -c | awk '{printf $1}'
-	274190 broforce
-	291550 brawlhalla
-	1712840 tiny tina
-	105600 terraria
-	kill
-EOF
-	)"
+		cat <<-EOF |
+		274190 broforce
+		291550 brawlhalla
+		1712840 tiny tina
+		105600 terraria
+		kill
+		EOF
+		column -t -l 2 | commander -d -x -c | awk '{printf $1}')"
+
 	case "$choice" in
 		kill) pkill steam ;;
+		"") ;;
 		*) setsid steam steam://rungameid/"$choice" ;;
 	esac
 	exit
 }
 
 eval "$(
-	cat <<-EOF | commander -c -w 9 -y 2
+	cat <<-EOF | commander -c -w 9 -y 3
 	minecraft
 	steam
+	lutris
 	EOF
 )"
