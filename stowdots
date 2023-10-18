@@ -34,7 +34,7 @@ cd "$(dirname "$(realpath "$0")")" || exit 1
 case "$MACH" in
 	"desktop" | "d" | "laptop" | "l")
 		stow -d bin/ -t "$HOME/bin" -R common guiscripts menuscripts extra
-		stow -d config/ -t "$HOME/.config" -R essentials common extra X theme hyprland
+		stow -d config/ -t "$HOME/.config" -R essentials common extra X theme wayland
 		stow -d config/ -t "$HOME/" -R home
 		;;
 	"server" | "s")
