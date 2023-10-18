@@ -56,6 +56,11 @@ require("telekasten").setup({
 			template_new_note = home .. "/" .. "templates/new_note.md",
 			new_note_filename = "title",
 		},
+		SoftwareDesign = {
+			home = home .. "/" .. "SoftwareDesign",
+			template_new_note = home .. "/" .. "templates/new_note.md",
+			new_note_filename = "title",
+		},
 		BusinessCommunication = {
 			home = home .. "/" .. "BusinessCommunication",
 			template_new_note = home .. "/" .. "templates/new_note.md",
@@ -86,8 +91,8 @@ require("telekasten").setup({
 			template_new_note = home .. "/" .. "templates/new_note.md",
 			new_note_filename = "title",
 		},
-		SoftwareDesign2 = {
-			home = home .. "/" .. "SoftwareDesign2",
+		SoftwareDesignAndQualityAssurance = {
+			home = home .. "/" .. "SoftwareDesignAndQualityAssurance",
 			template_new_note = home .. "/" .. "templates/new_note.md",
 			new_note_filename = "title",
 		},
