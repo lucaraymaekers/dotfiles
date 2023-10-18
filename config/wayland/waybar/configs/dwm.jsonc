@@ -9,7 +9,7 @@
 		"interval": "once",
 	},
 	"custom/status": { 
-		"exec": "/home/aluc/.config/waybar/status.sh",
+		"exec": "~/.config/waybar/scripts/status.sh",
 		"format": " {} ",
 		"interval": 1
 	}

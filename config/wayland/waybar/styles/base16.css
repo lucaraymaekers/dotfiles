@@ -10,7 +10,7 @@
 /* https://github.com/jakehamilton/dotfiles */
 /* Amazing I love it :))) */
 
-@import "colors.css";
+@import "styles/colors/colors.css";
 
 * {
 	border: none;
