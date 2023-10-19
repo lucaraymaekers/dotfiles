@@ -1,16 +1,16 @@
 #!/usr/bin/env sh
 
-program="$(commander -r -c -d)"
+program="$(commander -rcd)"
 
 [ "$program" ] || exit 1
 
 option="$("$program" --help |
 	# Parse options
-	grep "^ *-[-a-zA-Z0-9]* " |
+	grep -- "^ *-[-a-zA-Z0-9]* " |
 	tr -s ' ' |
 	sort | uniq |
 	column -l 2 -t |
-	commander -l -x -c -d |
+	commander -lxcd |
 	awk '{print $1}')"
 
 [ "$option" ] || exit 1
