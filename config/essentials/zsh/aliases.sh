@@ -206,8 +206,8 @@ alias esl='$EDITOR ~/proj/suckless/slock/config.def.h'
 alias esls='$EDITOR ~/proj/suckless/slstatus/config.def.h'
 alias ehy='$EDITOR ~/.config/hypr/hyprland.conf'
 alias ehyb='$EDITOR ~/.config/hypr/binds.conf'
-alias ewbj='$EDITOR ~/src/dotfiles/config/hyprland/waybar/config.jsonc'
-alias ewbs='$EDITOR ~/src/dotfiles/config/hyprland/waybar/style.css'
+alias ewbj='$EDITOR ~/.config/waybar/config.jsonc'
+alias ewbs='$EDITOR ~/.config/waybar/style.css'
 alias cfd='$EDITOR config.def.h'
 # /# quick cdjV}k:!sort -t "'" -k 2
 alias cdl='cd ~/dl'
