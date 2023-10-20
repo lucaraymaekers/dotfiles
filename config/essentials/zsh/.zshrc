@@ -2,7 +2,7 @@
 
 if [ "$(id -u)" -ne 0 ]
 then
-	clear
+	[ "${TTY%%tty*}" = '/dev/' ] && clear
 	case "${TTY#/dev/tty}" in
 		1) exec startdwl > /dev/null 2>&1 ;;
 		2) exec startx > /dev/null 2>&1 ;;
@@ -27,7 +27,6 @@ compinit
 . $ZDOTDIR/functions.zsh
 . $ZDOTDIR/aliases.sh
 
-local PLUGPATH
 for file in /etc/os-release /usr/lib/os-release
 do [ -f "$file" ] && . "$file" && break
 done
