@@ -4,9 +4,9 @@ if [ "$(id -u)" -ne 0 ]
 then
 	clear
 	case "${TTY#/dev/tty}" in
-		1) exec startw > /dev/null 2>&1 ;;
+		1) exec startdwl > /dev/null 2>&1 ;;
 		2) exec startx > /dev/null 2>&1 ;;
-		3) exec startdwl > /dev/null 2>&1 ;;
+		3) exec startw > /dev/null 2>&1 ;;
 		*) false ;;
 	esac && exit
 fi
