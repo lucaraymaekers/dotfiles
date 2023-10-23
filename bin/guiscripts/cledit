@@ -1,0 +1,5 @@
+#!/bin/sh
+tmp="$(mktemp)"
+wl-paste > "$tmp" 
+viedit "$tmp" && wl-copy -n < "$tmp"
+shred -uz "$tmp"
