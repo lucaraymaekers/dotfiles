@@ -102,7 +102,7 @@ clip() {
 
 unzipp() {
 	unzip -- "$(readlink -f -- "$1")" || return 1
-    rm $file
+    rm -- "$1"
 }
 
 # fix long waiting time
