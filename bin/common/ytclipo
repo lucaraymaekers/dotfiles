@@ -15,7 +15,7 @@ inp="$1"
 # works when link is from yt-local
 inp="https://youtu.be/$(echo "$inp" | sed 's/.*\(.\{11\}\)$/\1/')"
 >&2 printf "inp: %s\n" "$inp"
-notify-send "ytclipo" "<b>downloading</b> $inp" || :
+notify-send "ytclipo" "downloading <i>$inp</i>" || :
 
 yt-dlp "$inp" \
 	--restrict-filenames \
@@ -24,4 +24,4 @@ yt-dlp "$inp" \
 	-S "res:1080" \
 	-P "$HOME/vids/youtube/" \
 	-o "%(channel)s - %(title)s.%(ext)s"
-notify-send "ytclipo" "<b>ytclipo</b><br>finished downloading." || :
+notify-send "ytclipo" "finished downloading." || :

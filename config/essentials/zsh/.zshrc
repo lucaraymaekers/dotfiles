@@ -1,15 +1,14 @@
 #!/bin/zsh
 
-if [[ "/dev/tty1" = "$TTY" || "/dev/tty2" = "$TTY" ]] && [[ "$(id -u)" -ne 0 ]]
+if [ "$(id -u)" -ne 0 ]
 then
-	clear
-	if [ "/dev/tty1" = "$TTY" ]
-	then
-		exec startw > /dev/null 2>&1
-	else
-		exec startx > /dev/null 2>&1
-	fi
-	exit
+	[ "${TTY%%tty*}" = '/dev/' ] && clear
+	case "${TTY#/dev/tty}" in
+		1) exec startdwl > /dev/null 2>&1 ;;
+		2) exec startx > /dev/null 2>&1 ;;
+		3) exec startw > /dev/null 2>&1 ;;
+		*) false ;;
+	esac && exit
 fi
 
 autoload -U select-word-style

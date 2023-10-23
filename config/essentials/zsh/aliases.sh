@@ -186,6 +186,7 @@ alias cdzot='mkdir -p /tmp/zottesite && cd /tmp/zottesite'
 alias gdate='date +%y_%m_%d-%T'
 alias tpid='tail -f /dev/null --pid'
 alias pwdcp='pwd | clipp'
+alias gw="grep -ri"
 
 alias vbm='vboxmanage'
 alias vbls='vbm list vms'
