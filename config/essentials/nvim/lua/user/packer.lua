@@ -43,6 +43,8 @@ return require('packer').startup(function(use)
 	use('tpope/vim-vinegar')
 	use('m4xshen/autoclose.nvim')
 
+	use('christoomey/vim-tmux-navigator')
+
 	-- utils
 	use('godlygeek/tabular')
 	use('renerocksai/calendar-vim')
