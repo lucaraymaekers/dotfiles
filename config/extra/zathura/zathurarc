@@ -5,10 +5,13 @@ map   [fullscreen]              i            zoom in
 map   [fullscreen]              o            zoom out
 
 # normal mappings
-map   r                         reload
-map   R                         rotate
-map   i                         zoom in
-map   o                         zoom out
+map		r				reload
+map		R				rotate
+map		i				zoom in
+map		o				zoom out
+map		f				toggle_fullscreen
+map		x				toggle_statusbar
+map		X				toggle_index
 
 set   font                      "monospace bold 11"
 set   adjust-open               "best-fit"
