@@ -77,7 +77,8 @@ end, { noremap = true })
 vim.keymap.set("n", "<Leader>P", "<cmd>PackerSync<cr>", { noremap = true })
 
 -- spelling
-vim.keymap.set("n", "<Leader><C-s>", "<cmd>setlocal spell!<cr>", { noremap = true })
+vim.keymap.set("n", "<C-s>s", "<cmd>setlocal spell!<cr>", { noremap = true })
+vim.keymap.set("n", "<C-s>g", "z=1<cr><cr>", { noremap = true })
 
 -- -- open terminal in file's parent director
 -- -- this needs to be asynchrous

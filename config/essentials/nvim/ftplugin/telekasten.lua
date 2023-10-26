@@ -24,3 +24,4 @@ vim.keymap.set("n", "<LocalLeader>y", require("telekasten").yank_notelink)
 vim.keymap.set("n", "<Return>", require("telekasten").follow_link)
 
 vim.keymap.set("i", "<LocalLeader>l", "<esc>I[<esc>A]()<left><C-r>+<esc>A")
+vim.keymap.set("n", "<LocalLeader>l", "I[[<esc>A]]<esc>")

@@ -213,7 +213,8 @@ ls.add_snippets("cs", {
 
 ls.add_snippets("telekasten", {
 	--link
-	s("ln", fmt(
+	parse("ln", "[[$0]]", {}),
+	s("cln", fmt(
 	[[
 	[{}]({}){}
 	]],

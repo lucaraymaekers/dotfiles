@@ -48,52 +48,52 @@ require("telekasten").setup({
 		},
 		BusinessEnglish = {
 			home = home .. "/" .. "BusinessEnglish",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		DataEssentials = {
 			home = home .. "/" .. "DataEssentials",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		SoftwareDesign = {
 			home = home .. "/" .. "SoftwareDesign",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		BusinessCommunication = {
 			home = home .. "/" .. "BusinessCommunication",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		AIEssentials = {
 			home = home .. "/" .. "AIEssentials",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		NETEssentials = {
 			home = home .. "/" .. "NETEssentials",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		iTalent = {
 			home = home .. "/" .. "iTalent",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		ScalingNetworks = {
 			home = home .. "/" .. "ScalingNetworks",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		RoutingSwitchingEssentials = {
 			home = home .. "/" .. "RoutingSwitchingEssentials",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		SoftwareDesignAndQualityAssurance = {
 			home = home .. "/" .. "SoftwareDesignAndQualityAssurance",
-			template_new_note = home .. "/" .. "templates/new_note.md",
+			template_new_note = home .. "/" .. "templates/school.md",
 			new_note_filename = "title",
 		},
 		C = {
