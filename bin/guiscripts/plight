@@ -1,0 +1,5 @@
+#!/bin/sh
+
+light $1 $2
+light="$(light -G)"
+printf '%s\n' "${light%.*}" > ~/.config/wob/pipe

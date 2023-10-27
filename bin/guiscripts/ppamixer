@@ -1,0 +1,5 @@
+#!/bin/sh
+pamixer $1 $2
+volume="$(pamixer --get-volume)"
+>&2 printf "volume: %s\n" "$volume"
+printf '%s\n' "$volume" > ~/.config/wob/pipe

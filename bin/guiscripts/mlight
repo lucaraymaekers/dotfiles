@@ -1,0 +1,10 @@
+#!/bin/sh
+light="$(light -G)"
+light="$(printf '30
+60
+90' | commander -c -w 6 -y 3 -p "(${light%.*})")"
+[ "$light" ] || exit 1
+light -S "$light"
+
+[ -p ~/.config/wob/pipe ] && 
+	printf '%s\n' "$light" > ~/.config/wob/pipe
