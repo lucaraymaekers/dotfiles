@@ -118,7 +118,7 @@ delfile() {
 	curl "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"
 }
 upfile() {
-	curl -F "file=@\"$1\"" ${2:-https://upfast.cronyakatsuki.xyz}
+	curl -F "file=@\"$1\"" ${2:-https://0x0.st}
 }
 
 # git
