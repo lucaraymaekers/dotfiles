@@ -5,30 +5,19 @@
 # If this file includes emojis below "__DATA__" it is generated.
 # This file was generated: 2022-04-21 12:38:03+00:00
 
-if [ "$WAYLAND_DISPLAY" ]
-then
-	alias copycmd="wl-copy"
-else
-	alias copycmd="xclip -sel c"
-fi
 set -e
 
 case "$1" in
-	"list")
-		data=$(sed '0,/^__DATA__$/d' "$0")
-		printf "%s" "$data"
-		;;
+	"list") printf "%s" "$(sed '0,/^__DATA__$/d' "$0")" ;;
 	"copy")
 		input=$(tee | cut -f 1 -d ' ')
 		if [ "$input" ]
 		then
 			notify-send "dmemoji" "$input <b>copied!</b>"
-			printf "%s" "$input" | copycmd
+			printf "%s" "$input" | clipp
 		fi
 		;;
-	"")
-		sh "$0" list | commander -p "Emoji:" -l -x | sh "$0" copy
-		;;
+	"") sh "$0" list | commander -p "Emoji:" -l -x | sh "$0" copy ;;
 esac
 
 exit
