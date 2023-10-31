@@ -17,18 +17,13 @@ then
 
 	alias calc='bc <<<'
 
-	if [ "$WAYLAND_DISPLAY" ]
-	then
-		alias -g clipp='wl-copy -n'
-		alias -g clipo='wl-paste -n'
-	else
+	if [ -z "$WAYLAND_DISPLAY" ]
+    then
 		if which devour > /dev/null 2>&1  
 		then
 			alias mpv='devour mpv'
 			alias zathura='devour zathura'
 		fi
-		alias -g clipp='xclip -selection clipboard -r'
-		alias -g clipo='xclip -o -selection clipboard -r'
 	fi
 	alias clipic='clipo > /tmp/pic.png'
 
