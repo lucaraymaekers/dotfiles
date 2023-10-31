@@ -7,7 +7,7 @@ then
 	>&2 cat <<-EOF
 	usage:
 	    supd                              Update dirs in current dir
-	    ls ~/projects | supd              Update dirs read from stdin
+	    ... | supd                        Update dirs read from stdin
 	    supd -h                           Show help
 	EOF
 	exit
