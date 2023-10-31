@@ -45,13 +45,20 @@ return require('packer').startup(function(use)
 
 	use('christoomey/vim-tmux-navigator')
 
-	-- utils
-	use('godlygeek/tabular')
-	use('renerocksai/calendar-vim')
-	use('ojroques/vim-oscyank', {branch = "main"})
-	use("potamides/pantran.nvim")
-	use('alx741/vinfo')
-	-- use('github/copilot.vim')
+    -- utils
+    use('godlygeek/tabular')
+    use('renerocksai/calendar-vim')
+    use('ojroques/vim-oscyank', {branch = "main"})
+    use("potamides/pantran.nvim")
+    use('alx741/vinfo')
+    use('sheerun/vim-polyglot')
+    -- use('github/copilot.vim')
+    --
+    use {
+        'https://gitlab.com/itaranto/plantuml.nvim',
+        tag = '*',
+        config = function() require('plantuml').setup() end
+    }
 
 	-- objects
 	use('michaeljsmith/vim-indent-object')
