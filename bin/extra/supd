@@ -17,9 +17,10 @@ fi
 
 for dir in $dirs
 do
-	printf '%s:' "$dir" | >&2 sed "s#$HOME#~#"
 	(
 	cd "$dir" || return
+    git rev-parse > /dev/null 2>&1 || return
+	printf '%s:' "$dir" | >&2 sed "s#$HOME#~#"
     git "${1:-fetch}" > /dev/null 2>&1 &&
         printf ' o' ||
         printf ' x'
