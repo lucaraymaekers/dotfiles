@@ -19,15 +19,20 @@ for dir in $dirs
 do
 	(
 	cd "$dir" || return
+    # is git dir
     git rev-parse > /dev/null 2>&1 || return
 	printf '%s:' "$dir" | >&2 sed "s#$HOME#~#"
-    git "${1:-fetch}" > /dev/null 2>&1 &&
-        printf ' o' ||
+    if git "${1:-fetch}" > /dev/null 2>&1
+    then
+        printf ' o'
+    else
         printf ' x'
+        return
+    fi
     # Show remote state
-    printf '%s %s\n' "$(git status --short 2> /dev/null |
-        awk 'NR==1 {print $1}')" "$(git branch -v 2>/dev/null |
-        awk -F '[][]' '/^\*/ {print $2}')" |
-        sed 's/ahead/↑ /;s/behind/↓ /;s/[^↓↑]*/ /g'
+    printf ' %s %s\n' "$(git status --short 2> /dev/null |
+        awk 'NR==1 {print "(" $1 ")"}')" "$(git branch -v 2>/dev/null |
+        awk -F '[][]' '/^\*/ {print $2}' |
+        sed 's/ahead/↑ /;s/behind/↓ /;s/[^↓↑]*/ /g')"
 	)
 done

@@ -295,15 +295,3 @@ edit_in_dir() {
 	[ -f "$file" ] || return 1
 	$EDITOR "$file"
 }
-
-nextddl()
-{
-	local date
-	deadlines="$HOME/docs/filios/deadlines"
-	date="$(grep '^#' "$deadlines" |
-		sort -t '/' -k 3 -k 2 -k 1 -n |
-		sed -n "${1:-1}p" |
-		sed 's@/@.@g')"
-	sed -n "/$date/,/^#\|^$/p" "$deadlines" |
-		head -n -1
-}
