@@ -71,7 +71,7 @@ ls.add_snippets(languages[language], {
 		</body>
 	</html>
 	]],
-	{i(1, "title"), rep(2), i(0)})),
+	{i(1, "title"), rep(1), i(0)})),
 	parse("sty",
 	[[
 	<link rel="stylesheet" type="text/css" href="$1">$0
