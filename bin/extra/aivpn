@@ -33,9 +33,3 @@ ssh vm "rasdial \"vpn.student.ehb.be\""
 ssh -f -N \
 	-L 2222:10.2.160.41:22 \
 	vm
-
-ssh -t \
-	-L 8188:localhost:8188 \
-	vm \
-	ssh -N -L 8188:localhost:8188 luca@10.2.160.41
-logn "[8188], [2222]"
