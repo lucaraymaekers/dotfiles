@@ -1,4 +1,6 @@
 #!/bin/sh
-[ "$WAYLAND_DISPLAY" ] &&
-    wl-copy -n ||
-    xclip -selection clipboard -r
+[ "$1" = "-p" ] && arg='primary'
+if [ "$WAYLAND_DISPLAY" ]
+then wl-copy -n $1
+else xclip -selection "${arg:-clipboard}" -r
+fi
