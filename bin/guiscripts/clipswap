@@ -1,0 +1,4 @@
+#!/bin/sh
+paste="$(clipo)"
+clipo -p | clipp
+printf '%s' "$paste" | clipp -p
