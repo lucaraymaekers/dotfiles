@@ -273,13 +273,10 @@ muttmail()
 	local config
 	local mail
 	config="$HOME/.config/mutt"
-
 	mail="$(find "$config"/configs -type f -printf '%f\n' | fzf)"
 	[ "$mail" ] || return 1
-	logn "$mail"
 	ln -sf "$config/configs/$mail" "$config"/muttrc
-	log 'Press [Enter] to login.'
-	head -n 1 && mutt
+	mutt
 }
 
 resize()
