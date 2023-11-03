@@ -23,7 +23,7 @@
 		"interval": 10,
 	},
 	"hyprland/window": {
-		"format": "{}",
+		"format": " {}",
 		"separate-outputs": true,
 	},
 	"pulseaudio": {
