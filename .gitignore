@@ -21,8 +21,3 @@ config/hyprland/waybar/colors.css
 config/old/vim/plugged/
 config/old/vim/viminfo*
 config/theme/gtk-3.0/bookmarks
-config/extra/emacs/auto-save-list/
-config/extra/emacs/config.el
-config/extra/emacs/elpaca/
-config/extra/emacs/projectile-bookmarks.eld
-config/extra/emacs/recentf
