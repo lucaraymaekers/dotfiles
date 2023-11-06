@@ -27,6 +27,7 @@ xmodmap -e "keycode 135 = Super_L"
 xautolock -time 5 -locker slock &
 gammastep -m randr &
 slstatus &
+emacs --daemon &
 eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
 unclutter --timeout 3 --jitter 50 -b
 exec startdwm

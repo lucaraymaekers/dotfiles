@@ -10,6 +10,7 @@ swaybg -i ~/pics/wallpaper &
 wl-paste --watch cliphist store &
 swayidle 300 locker &
 keyadd id_rsa &
+emacs --daemon &
 
 pkill -f "tail -f $HOME/.config/wob/pipe"
 WOBCONFIG="$HOME"/.config/wob

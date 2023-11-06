@@ -265,6 +265,7 @@ alias czo='cd ~/zot/'
 alias cdpw='cd ${PASSWORD_STORE_DIR:-~/.password-store}'
 alias cdng='cd /etc/nginx'
 alias cdrs='cd /srv/'
+alias cdv='cd ~/vids'
 alias god='cd "$(find . -mindepth 1 -maxdepth 1 -type d | fzf)"'
 
 # fzf aliases
@@ -272,7 +273,6 @@ alias ppj='cd ~/proj/personal/"$(find ~/proj/personal -mindepth 1 -maxdepth 1 -t
 alias ppjs='cd ~/proj/personal/scripts/"$(find ~/proj/personal/scripts -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | fzf)"'
 alias scr='edit_in_dir ~/proj/personal/scripts/'
 alias fil='edit_in_dir ~/docs/filios/'
-alias cfg='edit_in_dir ~/src/dotfiles'
 alias fzps='ps aux | tail +2 | fzf | tee /dev/stderr | awk '\''{print $2}'\'' | clipp'
 alias asf='alias | fzf'
 alias fzh="tac $HISTFILE | fzf | tee /dev/stderr | clipp"
@@ -300,6 +300,7 @@ alias dbsmu='rsync -aPz db:/media/basilisk/music/ /media/kilimanjaro/music'
 
 # oh-my-zsh git aliases
 alias config='GIT_WORK_TREE=~/src/dotfiles/ GIT_DIR=~/src/dotfiles/.git'
+alias cfg='$EDITOR ~/src/dotfiles/"$(config git ls-files | fzf || exit)"'
 alias gmod='git status --short | sed '\''/^\s*M/!d;s/^\s*M\s*//'\'' | fzf | xargs $EDITOR'
 alias g='git'
 alias ga='git add'
