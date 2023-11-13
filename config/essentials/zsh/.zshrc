@@ -30,7 +30,6 @@ zstyle ':completion:*:*:*:*:messages' format '%F{purple}-- %d --%f'
 zstyle ':completion:*:*:*:*:warnings' format '%F{red}-- no matches found --%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 # show a 'ls -a' like outptut when listing files
-zstyle ':completion:*' file-list all
 zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # Group completions by categories

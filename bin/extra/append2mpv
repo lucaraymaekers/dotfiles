@@ -1,0 +1,30 @@
+#!/bin/sh
+IPC="/tmp/mpvsocket"
+
+die () { >&2 printf '%s\n' "$@"; exit 1; }
+append_to_mpv()
+{
+    file="$(readlink -f "$1")"
+    if [ ! -r "$file" ]
+    then
+        >&2 printf '%s\n' "'$file' not found"
+        return
+    fi
+
+    echo '{ "command":   ["loadfile", "'"$file"'", "append"] }' |
+        socat - "$IPC"
+}
+
+[ -S "$IPC" ] || die "$IPC is not a socket or doesn't exist"
+which socat > /dev/null || exit 1
+
+
+if [ -t 0 ]
+then
+    append_to_mpv "$1"
+else
+    while read -r file
+    do
+        append_to_mpv "$file"
+    done
+fi

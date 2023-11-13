@@ -23,5 +23,5 @@ yt-dlp "$inp" \
 	-f "b" \
 	-S "res:1080" \
 	-P "$HOME/vids/youtube/" \
-	-o "%(channel)s - %(title)s.%(ext)s"
+	-o "%(channel)s/%(title)s.%(ext)s"
 notify-send "ytclipo" "finished downloading." || :

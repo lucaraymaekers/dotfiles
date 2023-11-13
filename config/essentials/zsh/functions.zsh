@@ -242,10 +242,17 @@ pacsize()
 
 mime-default ()
 {
-	logn "Setting '$1' as default for its mimetypes"
-	grep "MimeType=" /usr/share/applications/"$1".desktop |
+    local mime
+    [ "${mime:=$1}" ] ||
+        mime="$(find /usr/share/applications/ -iname '*.desktop' -printf '%f\n' |
+            sed 's/\.desktop$//' |
+            fzf)"
+
+	logn "Setting '$mime' as default for its mimetypes"
+    [ "$mime" ] || exit 1
+	grep "MimeType=" /usr/share/applications/"$mime".desktop |
 		cut -d '=' -f 2- | tr ';' '\0' |
-		xargs -0I{} xdg-mime default "$1".desktop "{}"
+		xargs -0I{} xdg-mime default "$mime".desktop "{}"
 	logn "Done."
 }
 

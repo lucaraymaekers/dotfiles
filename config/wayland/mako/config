@@ -24,6 +24,6 @@ default-timeout=0
 default-timeout=2000
 group-by=category
 
-[app-name=gurk]
+[summary=lolaa]
 # 45887 = 70%
 on-notify=exec paplay --volume=45887 ~/.local/share/sounds/ring1.ogg
