@@ -285,6 +285,11 @@ alias pff='find ${PASSWORD_STORE_DIR:=~/src/password-store/} -name "*.gpg" | sed
 alias fzps='fzf --print0 | xargs -0I{}'
 alias ytdl='yt-dlp --restrict-filenames --embed-chapters -f "b" -S "res:1080" -P "$HOME/vids/youtube/" -o "%(channel)s/%(title)s.%(ext)s"'
 
+# emacs aliases
+alias emacsd='emacs --daemon'
+alias emacsdbg='emacs --debug-init'
+alias e='emacsclient -c -a "emacs"'
+
 # docker aliases
 alias dcb='docker build'
 alias dcbt='docker build -t'
