@@ -299,3 +299,8 @@ edit_in_dir() {
 	[ -f "$file" ] || return 1
 	$EDITOR "$file"
 }
+
+to_webm()
+{
+    ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm
+}
