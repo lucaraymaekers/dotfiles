@@ -21,4 +21,5 @@ then
 fi
 (tail -f "$WOBCONFIG"/pipe | wob) &
 
-$TERMINAL -e tmux a || $TERMINAL tmux &
+# $TERMINAL -e tmux a || $TERMINAL tmux &
+emacsclient -c -a 'emacs' &
