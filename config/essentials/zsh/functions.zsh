@@ -14,7 +14,7 @@ nvf() {
 	if test ! -f "$match"
 	then
 		logn "resetting cache..."
-		match="$(goo | tee "$cache" | grep -m 1 "$1$" 2> /dev/null)"
+		match="$(goo f "$HOME" | tee "$cache" | grep -m 1 "$1$" 2> /dev/null)"
 		# # Alternative:
 		# match="$(goo | grep -m 1 "$1" 2> /dev/null | tee -a | "$cache")"
 	fi
