@@ -4,3 +4,4 @@ pass="$(find "$PASSWORD_STORE_DIR"/keys/otp -name "*.gpg" -printf '%f\n' |
     commander -c)"
 [ "$pass" ] || exit 1
 pass otp -c keys/otp/"$pass"
+notify-send -t 1000 "mpass" "copied <b>$pass</b>"
