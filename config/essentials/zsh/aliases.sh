@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 # s/alias \([^-]\)/alias -g \1
 
 # Zsh specific aliases
