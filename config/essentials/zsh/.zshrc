@@ -67,7 +67,7 @@ zle -N add-surround surround
 zle -N change-surround surround
 
 # Source files
-. $ZDOTDIR/functions.zsh
+. $ZDOTDIR/functions.sh
 . $ZDOTDIR/aliases.sh
 
 for file in /{etc,usr/lib}/os-release
