@@ -284,6 +284,7 @@ alias ffwin='hyprctl clients -j | jq '\''.[].pid'\'' | fzf --preview "hyprctl cl
 alias pff='find ${PASSWORD_STORE_DIR:=~/src/password-store/} -name "*.gpg" | sed -e "s@$PASSWORD_STORE_DIR/@@" -e '\''s/\.gpg$//'\'' | fzf | xargs pass show -c'
 alias fzps='fzf --print0 | xargs -0I{}'
 alias ytdl='yt-dlp --restrict-filenames --embed-chapters -f "b" -S "res:1080" -P "$HOME/vids/youtube/" -o "%(channel)s/%(title)s.%(ext)s"'
+alias ytplay='mpv "$(ytlink)"'
 
 # emacs aliases
 alias emacsd='emacs --daemon'

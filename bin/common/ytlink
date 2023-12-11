@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# convert to youtube.com/path url
+# works for:
+# - 'youtu.be/watch?v=xxxxxx'
+# - 'https://piped.video/watch?v=xxxxx'
+
+inp="$1"
+[ "${inp:=$(clipo)}" ] || inp="$(cat /dev/stdin)"
+
+# remove util scheme
+inp="${inp#*//}"
+inp="https://youtube.com/${inp#*/}"
+printf "%s" "$inp"

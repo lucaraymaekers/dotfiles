@@ -1,23 +1,6 @@
 #!/bin/sh
 
-# argument ($1) -> clipboard -> stdin
-if [ "$WAYLAND_DISPLAY" ]
-then paste() { wl-paste; }
-elif [ "$TERMUX_VERSION" ]
-then paste() { termux-clipboard-get; }
-else paste() { xclip -o -sel c; }
-fi
-
-inp="$1"
-[ "${inp:=$(paste)}" ] || inp="$(cat /dev/stdin)"
-
-# remove util scheme
-inp="${inp#*//}"
-# convert to youtube.com/path url
-# works for:
-# - 'youtu.be/watch?v=xxxxxx'
-# - 'https://piped.video/watch?v=xxxxx'
-inp="https://youtube.com/${inp#*/}"
+inp="$(ytlink)"
 >&2 printf "inp: %s\n" "$inp"
 notify-send "ytclipo" "downloading <i>$inp</i>" || :
 
