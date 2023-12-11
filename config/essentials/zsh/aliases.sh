@@ -1,6 +1,9 @@
 #!/bin/sh
 # s/alias \([^-]\)/alias -g \1
 
+# The most important one
+alias vi='emacsclient -nw'
+
 # Zsh specific aliases
 if [ $SHELL = "/bin/zsh" ]
 then
