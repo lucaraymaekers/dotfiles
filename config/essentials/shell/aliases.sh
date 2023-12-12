@@ -224,8 +224,8 @@ alias vb='vbm startvm'
 
 # quick config
 alias ez='$EDITOR ${ZDOTDIR:-~}/.zshrc'
-alias eza='$EDITOR ${ZDOTDIR}/aliases.sh'
-alias ezf='$EDITOR ${ZDOTDIR}/functions.zsh'
+alias eza='$EDITOR $HOME/.config/shell/aliases.sh'
+alias ezf='$EDITOR $HOME/.config/shell/functions.sh'
 alias eto='$EDITOR ~/sync/TODO'
 alias edw='$EDITOR ~/proj/suckless/dwm/config.def.h'
 alias edm='$EDITOR ~/proj/suckless/dmenu/config.def.h'

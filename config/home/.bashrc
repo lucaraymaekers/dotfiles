@@ -6,4 +6,5 @@ bold="\[\033[1m\]"
 reset="\[\033[0m\]"
 PS1="${color1}${bold} [\\u${reset}@${color2}${bold}\\h]${reset} \\w "
 HISTFILE=
-. $HOME/.config/zsh/aliases.sh
+. $HOME/.config/shell/aliases.sh 
+. $HOME/.config/shell/functions.sh

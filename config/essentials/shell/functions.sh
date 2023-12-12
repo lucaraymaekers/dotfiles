@@ -188,7 +188,7 @@ gpg_backup()
 {
     # $1: option
     # $2: output file (without .asc)
-    gpg_command() {gpg "$1" --armor > "$2".asc ; }
+    gpg_command() { gpg "$1" --armor > "$2".asc; }
     gpg_command --export-secret-keys "private"
     gpg_command --export "public"
     gpg_command --export-ownertrust "trust"
