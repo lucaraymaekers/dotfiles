@@ -3,5 +3,10 @@
 [user]
 	email = raymaekers.luca@gmail.com
 	name = Raymaekers Luca
+	signingkey = 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
 [push]
-	autoSetupRemote = true
+	autosetupremote = true
+[pull]
+	rebase = false
+[commit]
+	gpgsign = true

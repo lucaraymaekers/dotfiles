@@ -110,7 +110,7 @@ __git_files() {
 }
 
 esc() {
-	$EDITOR "$(which $1)"
+	eval "$EDITOR '$(which $1)'"
 }
 
 delfile() {

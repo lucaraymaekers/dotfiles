@@ -153,7 +153,7 @@ command_not_found_handler () {
 }
 
 # prompt
-PS1=' %B%(#.%F{1}.%F{13})%n%b%f@%B%F{6}%m%b%f %3~ '
+PS1=' %K{16}%B%(#.%F{1}.%F{13})%n%b%f@%B%F{6}%m%b%f %3~%k '
 RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
 
 setopt prompt_subst
