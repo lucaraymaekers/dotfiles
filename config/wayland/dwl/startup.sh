@@ -10,6 +10,7 @@ swaybg -i ~/pics/wallpaper &
 wl-paste --watch cliphist store &
 swayidle 300 locker &
 keyadd id_rsa &
+emacs --daemon &
 
 pkill -f "tail -f $HOME/.config/wob/pipe"
 WOBCONFIG="$HOME"/.config/wob
@@ -20,4 +21,5 @@ then
 fi
 (tail -f "$WOBCONFIG"/pipe | wob) &
 
-$TERMINAL -e tmux a || $TERMINAL tmux &
+# $TERMINAL -e tmux a || $TERMINAL tmux &
+emacsclient -c -a 'emacs' &

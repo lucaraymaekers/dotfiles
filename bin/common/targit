@@ -1,6 +1,5 @@
 #!/bin/sh
-pwd=$(pwd)
 root="$(git rev-parse --show-toplevel)"
 cd "$root" || exit 1
-file="$(basename "$root" | sed 's/^\.//').tar.gz"
-tar czf "$pwd/$file" $(git ls-files)
+file="${root##*/}".tar.gz
+tar czf "$file" $(git ls-files)

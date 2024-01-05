@@ -2,9 +2,10 @@
 
 while true
 do
+    dir="$(printf '%s' "$PWD" | sed "s#^$HOME#\~#;s#\([^/]\)[^/]*/#\1/#g")"
 	file=$(find . -maxdepth 1 -mindepth 1 -not -name '.*' -printf '%y\t%f\n' |
 		sort -k 1 -k 2 | cut -f 2- |
-		commander -xcd -p "$PWD>")
+		commander -xc -p "$dir")
 
 	[ "$file" ] || break
 	[ ! -e "$file" ] && continue

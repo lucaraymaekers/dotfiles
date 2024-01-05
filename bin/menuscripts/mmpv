@@ -1,0 +1,8 @@
+#!/bin/sh
+# Have an mpv instance that works with a socket somewhat globally
+socket="/tmp/mpvsocket"
+# Start mpv in idle if socket is not getting listened to
+nc -zvU "$socket" || setsid mpv --input-ipc-server=/tmp/mpvsocket --idle &
+file="$(PLAYER='echo' mmedia video)"
+[ "$file" ] || exit 1
+echo '{ "command":   ["loadfile", "'"$file"'", "append-play"] }' | nc -U /tmp/mpvsocket

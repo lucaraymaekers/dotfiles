@@ -39,6 +39,7 @@ export IMAGE="imv"
 # env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 # env = WLR_NO_HARDWARE_CURSORS,1
 
-while true;
-do dwl -s "$HOME"/.config/dwl/startup.sh
+while true
+do
+    dwl -s "$HOME"/.config/dwl/startup.sh
 done

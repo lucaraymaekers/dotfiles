@@ -1,1 +1,20 @@
-styles/nord.css
+* {
+	border: none;
+	border-radius: 0;
+	font-family: monospace;
+	font-size: 14px;
+	min-height: 16px;
+}
+
+window#waybar, #workspaces button.active  {
+	background-color: #4c566a;
+}
+
+#workspaces button, #custom-layout, #custom-status {
+	background-color: #2e3440;
+}
+
+#workspaces button {
+	padding: 0 2px;
+	margin: 0;
+}

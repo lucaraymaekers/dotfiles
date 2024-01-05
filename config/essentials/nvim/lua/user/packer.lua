@@ -42,7 +42,7 @@ return require('packer').startup(function(use)
 	use('ojroques/vim-oscyank', { branch = "main" })
 	use("potamides/pantran.nvim")
 	use('alx741/vinfo')
-	use('sheerun/vim-polyglot')
+	-- use('sheerun/vim-polyglot') TODO: fix error conflicting with telekasten
 	-- use('github/copilot.vim')
 	--
 	use {

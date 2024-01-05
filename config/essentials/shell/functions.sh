@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 log() { >&2 printf '%s' "$@"; }
 logn() { >&2 printf '%s\n' "$@"; }
@@ -9,12 +9,12 @@ vmp() {
     -c 'set ft=man nolist nonu nornu'
 }
 nvf() {
-	local cache="$HOME/.cache/nvf"
-	local match="$(grep -m1 "$1$" "$cache" 2> /dev/null)"
+	cache="$HOME/.cache/nvf"
+	match="$(grep -m1 "$1$" "$cache" 2> /dev/null)"
 	if test ! -f "$match"
 	then
 		logn "resetting cache..."
-		match="$(goo | tee "$cache" | grep -m 1 "$1$" 2> /dev/null)"
+		match="$(goo f "$HOME" | tee "$cache" | grep -m 1 "$1$" 2> /dev/null)"
 		# # Alternative:
 		# match="$(goo | grep -m 1 "$1" 2> /dev/null | tee -a | "$cache")"
 	fi
@@ -26,8 +26,8 @@ nvf() {
 	fi
 }
 
-nnn() { test -z "$NNNLVL" && /usr/bin/nnn "$@" || exit }
-ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit }
+nnn() { test -z "$NNNLVL" && /usr/bin/nnn "$@" || exit; }
+ranger() { test -z "$RANGER_LEVEL" && /usr/bin/ranger "$@" || exit; }
 
 # googoo aliases
 _googoo_fzf_opt()
@@ -62,7 +62,7 @@ vimh() { vi -c "help $1" -c 'call feedkeys("\<c-w>o")'; }
 dgo() { cd "$(goo d ~ | fzf --filter "$@" | head -n 1)"; }
 open() { $EDITOR "$(goo f ~ | fzf --filter "$@" | head -n 1)"; }
 pkbs() { doas pacman -Sy "$(pkgfile -b "$1" | tee /dev/stderr)"; }
-oclip() { printf "\033]52;c;$(echo -n "$@" | base64)\a"; }
+oclip() { printf "\033]52;c;$(printf '%s' "$@" | base64)\a"; }
 sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
@@ -70,7 +70,7 @@ getgit() { git clone git@db:"$1"; }
 
 ipc() 
 {
-   if [[ "$(ip link show eno1 | awk -F, 'NR=1 {print $3}')" == "UP" ]]
+   if [ "$(ip link show eno1 | awk -F, 'NR=1 {print $3}')" = "UP" ]
    then
         doas ip link set eno1 down
     else
@@ -85,7 +85,6 @@ psgrep()
 }
 
 unique() {
-	local f
 	f="$(mktemp)"
 	awk '!x[$0]++' "$1" > "$f"
 	mv "$f" "$1"
@@ -111,7 +110,7 @@ __git_files() {
 }
 
 esc() {
-	$EDITOR "$(which $1)"
+	eval "$EDITOR '$(which $1)'"
 }
 
 delfile() {
@@ -152,16 +151,16 @@ ginit()
 # Returns current branch
 git_current_branch()
 {
-	command git rev-parse --git-dir &>/dev/null || return
+	command git rev-parse --git-dir > /dev/null 2>&1 || return
 	git branch --show-current
 }
 
 # Check if main exists and use instead of master
 git_main_branch()
 {
-  command git rev-parse --git-dir &>/dev/null || return
-  local ref
-  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default}; do
+  command git rev-parse --git-dir > /dev/null 2>&1 || return
+  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk,mainline,default}
+  do
     if command git show-ref -q --verify $ref; then
       echo ${ref:t}
       return
@@ -172,10 +171,11 @@ git_main_branch()
 
 # Check for develop and similarly named branches
 function git_develop_branch() {
-  command git rev-parse --git-dir &>/dev/null || return
-  local branch
-  for branch in dev devel development; do
-    if command git show-ref -q --verify refs/heads/$branch; then
+  command git rev-parse --git-dir > /dev/null 2>&1 || return
+  for branch in dev devel development
+  do
+    if command git show-ref -q --verify refs/heads/$branch
+    then
       echo $branch
       return
     fi
@@ -186,11 +186,14 @@ function git_develop_branch() {
 # gpg backup
 gpg_backup()
 {
-	gpg --export-secret-keys --armor > private.asc
-	gpg --export --armor > public.asc
-	gpg --export-ownertrust --armor > trust.asc
-	tar czf gpg_backup.tar.gz {public,private,trust}.asc
-	shred -uz {public,private,trust}.asc
+    # $1: option
+    # $2: output file (without .asc)
+    gpg_command() { gpg "$1" --armor > "$2".asc; }
+    gpg_command --export-secret-keys "private"
+    gpg_command --export "public"
+    gpg_command --export-ownertrust "trust"
+    tar -czvf gpg_backup.tar.gz public.asc private.asc trust.asc
+    shred -uz public.asc private.asc trust.asc
 }
 
 gpg_import()
@@ -200,7 +203,7 @@ gpg_import()
 	gpg --import public.asc
 	gpg --import-ownertrust trust.asc
 	gpg --import private.asc
-	shred -uz {public,private,trust}.asc
+	shred -uz public.asc private.asc trust.asc
 }
 
 ngenable()
@@ -242,17 +245,23 @@ pacsize()
 
 mime-default ()
 {
-	logn "Setting '$1' as default for its mimetypes"
-	grep "MimeType=" /usr/share/applications/"$1".desktop |
+    [ "${mime:=$1}" ] ||
+        mime="$(find /usr/share/applications/ -iname '*.desktop' -printf '%f\n' |
+            sed 's/\.desktop$//' |
+            fzf)"
+
+	logn "Setting '$mime' as default for its mimetypes"
+    [ "$mime" ] || exit 1
+	grep "MimeType=" /usr/share/applications/"$mime".desktop |
 		cut -d '=' -f 2- | tr ';' '\0' |
-		xargs -0I{} xdg-mime default "$1".desktop "{}"
+		xargs -0I{} xdg-mime default "$mime".desktop "{}"
 	logn "Done."
 }
 
 addedkeys() {
 	find ~/.ssh -iname "*.pub" | while read key
 	do 
-		local fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null)" 
+		fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null)" 
 		if ssh-add -l | grep -q "$fingerprint"
 		then
 		echo "$key"
@@ -270,8 +279,6 @@ fpass() {
 
 muttmail()
 {
-	local config
-	local mail
 	config="$HOME/.config/mutt"
 	mail="$(find "$config"/configs -type f -printf '%f\n' | fzf)"
 	[ "$mail" ] || return 1
@@ -291,4 +298,9 @@ edit_in_dir() {
 	file="$1/$(goo f "$1" | sed "s@^$1@@" | fzf)"
 	[ -f "$file" ] || return 1
 	$EDITOR "$file"
+}
+
+to_webm()
+{
+    ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm
 }

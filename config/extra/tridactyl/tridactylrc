@@ -1,5 +1,5 @@
 set newtab http://localhost:28669
-set searchengine duckduckgo
+set searchengine ""
 
 " Searchurls
 set searchurls.1x https://www.1377x.to/search/%s/1

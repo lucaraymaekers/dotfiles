@@ -1,11 +1,11 @@
 #!/bin/sh
 
-regex='(((https?|gopher|gemini|ftps?|git)://|www\.)[a-zA-Z0-9.]*[:;a-zA-Z0-9./+@$&%?$\#=_~-]*)|(magnet:\?xt=urn:btih:[a-zA-Z0-9]*)'
-url="$(tr -d '\n' | grep -Eo "$regex" | dmenu -x -c -g 1 -l 10)"
+regex='(((file|https?|gopher|gemini|ftps?|git)://|www\.)[a-zA-Z0-9.]*[:;a-zA-Z0-9./+@$&%?$\#=_~-]*)|(magnet:\?xt=urn:btih:[a-zA-Z0-9]*)'
+url="$(tr -d '\n' | grep -Eo "$regex" | tac | commander -cl)"
 [ -z "$url" ] && exit 1
 
 case $1 in
-	'c') echo -n "$url" | xclip -sel c -r ;;
+	'c') printf '%s' "$url" | xclip -sel c -r ;;
 	'o') linkhandler "$url" ;;
 	*) echo "no option" ;;
 esac

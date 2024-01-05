@@ -15,24 +15,67 @@ autoload -U select-word-style
 autoload -z edit-command-line
 zle -N edit-command-line
 zstyle ':compinstall' filename '/home/aluc/.zshrc'
+
+### Completion
+# cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$ZDOTDIR/zcompcache"
+
+# completers
+zstyle ':completion:*' completer _extensions _complete
+
+# format
+zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D%d --%f'
+zstyle ':completion:*:*:*:*:messages' format '%F{purple}-- %d --%f'
+zstyle ':completion:*:*:*:*:warnings' format '%F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+# show a 'ls -a' like outptut when listing files
+zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# Group completions by categories
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
+
+zstyle ':completion:*' squeeze-slashes true
+
+# Prefer completing for an option (think cd -)
+zstyle ':completion:*' complete-options true
+
+# keep prefix when completing
+zstyle ':completion:*' keep-prefix true
+
+# ui
 zstyle ':completion:*' menu select
-autoload -Uz compinit
+# Move around using h j k l in completion menu
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect '^xg' clear-screen
+# interactive mode
+bindkey -M menuselect '^xi' vi-insert
+bindkey -M menuselect '^xh' accept-and-hold                # Hold
+bindkey -M menuselect '^xn' accept-and-infer-next-history  # Next
+bindkey -M menuselect '^xu' undo                           # Undo
+
+autoload -Uz compinit; compinit
+
 autoload -Uz surround
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
-compinit
 
 # Source files
-. $ZDOTDIR/functions.zsh
-. $ZDOTDIR/aliases.sh
+. $XDG_CONFIG_HOME/shell/functions.sh
+. $XDG_CONFIG_HOME/shell/aliases.sh
 
 for file in /{etc,usr/lib}/os-release
 do [ -f "$file" ] && . "$file" && break
 done
 case "${ID:=unknown}" in
 	debian|ubuntu) PLUGPATH=/usr/share/ ;;
-	unknown) PLUGPATH=$HOME/.config/zsh/plugins ;;
+	unknown) PLUGPATH=$ZDOTDIR/plugins ;;
 	*) PLUGPATH=/usr/share/zsh/plugins ;;
 esac
 . $PLUGPATH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -102,15 +145,16 @@ function osc7 {
 add-zsh-hook -Uz chpwd osc7
 command_not_found_handler () {
 	if [[ -o interactive ]] && isTextFile "$1"
-	then
-		"$EDITOR" "$1"
-	else
-		echo "zsh: command not found: $1" >&2
+	then "$EDITOR" "$1"
+	else echo "zsh: command not found: $1" >&2
 	fi
 }
 
+# automatic ls after cd
+add-zsh-hook -Uz chpwd (){[ "$PWD" != "$HOME" ] && ls -a; }
+
 # prompt
-PS1=' %B%(#.%F{1}.%F{13})[%n%b%f@%B%F{6}%m]%b%f %3~ '
+PS1=' %K{16}%B%(#.%F{1}.%F{13})%n%b%f@%B%F{6}%m%b%f %3~%k '
 RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
 
 setopt prompt_subst

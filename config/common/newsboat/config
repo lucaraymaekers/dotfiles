@@ -18,14 +18,18 @@ highlight article "\\[[0-9]+\\]" color10 default bold
 highlight article "\\[image\\ [0-9]+\\]" color10 default bold
 highlight feedlist "^─.*$" color6 color0 bold
 
-bind-key j next all
-bind-key k prev all
+bind-key j next
+bind-key k prev
 bind-key h quit
+bind-key h set-tag feedlist # return back to tags from 'selected tag' view
 bind-key l open
 bind-key g home
 bind-key G end
 bind-key U show-urls
 bind-key a toggle-article-read
+
+# Set home to tags
+run-on-startup set-tag
 
 show-keymap-hint no
 swap-title-and-hints yes

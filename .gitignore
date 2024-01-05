@@ -5,11 +5,12 @@ config/common/mpd/pid
 config/common/mpv/playfile.txt
 config/common/mpv/watch_later/*
 config/essentials/gnupg/*
+config/essentials/nvim/lazy-lock.json
 config/essentials/nvim/lua/.luarc.json
 config/essentials/nvim/plugin/
 config/essentials/nvim/spell/
-config/essentials/zsh/.zcompdump
 config/essentials/zsh/histfile
+config/essentials/zsh/zcompcache/
 config/extra/jftui/settings
 config/extra/jftui/watch_later/*
 config/extra/mutt/muttrc
@@ -21,3 +22,4 @@ config/hyprland/waybar/colors.css
 config/old/vim/plugged/
 config/old/vim/viminfo*
 config/theme/gtk-3.0/bookmarks
+/config/essentials/zsh/.zcompdump

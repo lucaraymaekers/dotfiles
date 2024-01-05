@@ -1,6 +1,6 @@
 #!/bin/zsh
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="emacsclient -nw -q"
+export VISUAL="emacsclient -nw -q"
 
 export BROWSER="librewolf"
 export VIEWER="zathura"

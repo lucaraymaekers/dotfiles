@@ -47,8 +47,8 @@ prompt() {
         r) read -rp "remove torrent: #"; send -t "$REPLY" -r; k=0 ;;
         o) read -rp "load magnet: ";     send -a "$REPLY"; k=0 ;;
         m) 
-			read -rp "move torrent: " torrent
-			read -rp "destination folder: "
+			read -rp "move torrent: #" torrent
+			read -rp "destination folder: /downloads/"
 			send -t "$torrent" --move "/downloads/$REPLY"
 			;;
         j) ((j==${#t[@]}))||((k=k>=j?k:++k,j=j<${#t[@]}?++j:j)) ;;
