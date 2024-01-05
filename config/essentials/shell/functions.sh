@@ -63,6 +63,7 @@ dgo() { cd "$(goo d ~ | fzf --filter "$@" | head -n 1)"; }
 open() { $EDITOR "$(goo f ~ | fzf --filter "$@" | head -n 1)"; }
 pkbs() { doas pacman -Sy "$(pkgfile -b "$1" | tee /dev/stderr)"; }
 oclip() { printf "\033]52;c;$(printf '%s' "$@" | base64)\a"; }
+oclipp() { printf "]52;c$(cat | base64)"; }
 sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
