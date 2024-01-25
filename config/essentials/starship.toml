@@ -1,0 +1,30 @@
+'$schema' = "https://starship.rs/config-schema.json"
+
+# Inserts a blank line between shell prompts
+add_newline = false
+format = '\[$username[@](bold blue)$hostname\] $all'
+
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❮](red)"
+vimcmd_symbol = "[❮](green)"
+
+[username]
+style_root = "bold red"
+style_user = "bold blue"
+format = "[$user]($style)"
+show_always = true
+disabled = false
+
+[hostname]
+ssh_only = false
+style = "bold teal"
+format = "[$hostname]($style)"
+
+[directory]
+truncation_length = 4
+style = "bold lavender"
+
+[cmd_duration]
+min_time = 500
