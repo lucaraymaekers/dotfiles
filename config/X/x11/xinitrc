@@ -25,6 +25,7 @@ feh --no-fehbg --bg-scale ~/pics/wallpaper
 setxkbmap us -option ctrl:swapcaps,altwin:menu_win -variant colemak
 # xautolock -locker slock &
 gammastep -m randr &
+dunst &
 slstatus &
 emacs --daemon &
 eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"

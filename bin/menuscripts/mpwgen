@@ -2,7 +2,7 @@
 
 input () { commander -c -i -p "$1"; }
 
-choice="$(printf "multiline\nsingle\n" | commander -c -d)"
+choice="$(printf "multiline\nsingle\n" | commander -c)"
 [ "$choice" ] || exit 1
 
 password="$(input "name:")"
@@ -11,7 +11,7 @@ password="$(input "name:")"
 if [ "$choice" = "multiline" ]
 then
 	login="$(find "${PASSWORD_STORE_DIR:=$HOME/.password-store}"/e-mails -type f -maxdepth 1 -iname "*.gpg" -printf "%f\n" |
-		sed 's/\.gpg$//' | commander -c -d -p 'login:')"
+		sed 's/\.gpg$//' | commander -c -p 'login:')"
     [ "$login" ] || exit 1
     url="$(input "url:")"
     [ "$url" ] || exit 1

@@ -17,7 +17,7 @@ case "$1" in
 			printf "%s" "$input" | clipp
 		fi
 		;;
-	"") sh "$0" list | commander -p "Emoji:" -x -w 44 -y 10 -c | sh "$0" copy ;;
+	"") sh "$0" list | commander -p "Emoji:" -xlc | sh "$0" copy ;;
 esac
 
 exit

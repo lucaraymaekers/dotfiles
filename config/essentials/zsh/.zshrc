@@ -4,8 +4,8 @@ if [ "$(id -u)" -ne 0 ]
 then
 	[ "${TTY%%tty*}" = '/dev/' ] && clear
 	case "${TTY#/dev/tty}" in
-		1) exec startdwl > /dev/null 2>&1 ;;
-		2) exec startx > /dev/null 2>&1 ;;
+		1) exec startx > /dev/null 2>&1 ;;
+		2) exec startdwl > /dev/null 2>&1 ;;
 		3) exec startw > /dev/null 2>&1 ;;
 		*) false ;;
 	esac && exit
@@ -14,73 +14,69 @@ fi
 autoload -U select-word-style
 autoload -z edit-command-line
 zle -N edit-command-line
-zstyle ':compinstall' filename '/home/aluc/.zshrc'
-
-### Completion
-# cache
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "$ZDOTDIR/zcompcache"
-
-# completers
-zstyle ':completion:*' completer _extensions _complete
-
-# format
-zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D%d --%f'
-zstyle ':completion:*:*:*:*:messages' format '%F{purple}-- %d --%f'
-zstyle ':completion:*:*:*:*:warnings' format '%F{red}-- no matches found --%f'
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-# show a 'ls -a' like outptut when listing files
-zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
-
-# Group completions by categories
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
-
-zstyle ':completion:*' squeeze-slashes true
-
-# Prefer completing for an option (think cd -)
-zstyle ':completion:*' complete-options true
-
-# keep prefix when completing
-zstyle ':completion:*' keep-prefix true
-
-# ui
-zstyle ':completion:*' menu select
-# Move around using h j k l in completion menu
-zmodload zsh/complist
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect '^xg' clear-screen
-# interactive mode
-bindkey -M menuselect '^xi' vi-insert
-bindkey -M menuselect '^xh' accept-and-hold                # Hold
-bindkey -M menuselect '^xn' accept-and-infer-next-history  # Next
-bindkey -M menuselect '^xu' undo                           # Undo
-
-autoload -Uz compinit; compinit
-
 autoload -Uz surround
 zle -N delete-surround surround
 zle -N add-surround surround
 zle -N change-surround surround
 
-# Source files
+### Source files
 . $XDG_CONFIG_HOME/shell/functions.sh
 . $XDG_CONFIG_HOME/shell/aliases.sh
+# . $XDG_CONFIG_HOME/zsh/prompt.zsh
+# . $XDG_CONFIG_HOME/zsh/comp.zsh
+# . $XDG_CONFIG_HOME/zsh/plugins.zsh
 
-for file in /{etc,usr/lib}/os-release
-do [ -f "$file" ] && . "$file" && break
-done
-case "${ID:=unknown}" in
-	debian|ubuntu) PLUGPATH=/usr/share/ ;;
-	unknown) PLUGPATH=$ZDOTDIR/plugins ;;
-	*) PLUGPATH=/usr/share/zsh/plugins ;;
-esac
-. $PLUGPATH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. $PLUGPATH/zsh-autosuggestions/zsh-autosuggestions.zsh
+### Programs
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
 
+### Plugins
+[ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
+plug "kutsan/zsh-system-clipboard"
+plug "xPMo/zsh-toggle-command-prefix"
+plug "zap-zsh/completions"
+plug "zap-zsh/vim"
+plug "zsh-users/zsh-autosuggestions"
+plug "zsh-users/zsh-completions"
+plug "chivalryq/git-alias"
+plug "zap-zsh/fzf"
+plug "zdharma-continuum/fast-syntax-highlighting"
+plug "zsh-users/zsh-history-substring-search"
+plug "MichaelAquilina/zsh-you-should-use"
+
+# Substring search settings
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=blue,fg=black,bold"
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,bold'
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+# Zsh System keyboard settings
+if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
+    ZSH_SYSTEM_CLIPBOARD_METHOD="xsc"
+else
+    ZSH_SYSTEM_CLIPBOARD_METHOD="wlc"
+fi
+
+
+# Add nnn shell level to prompt
+[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1"
+
+# cd on nnn quiting
+nnn_cd ()
+{
+    if ! [ -z "$NNN_PIPE" ]; then
+        printf "%s\0" "0c${PWD}" > "${NNN_PIPE}" !&
+    fi
+}
+
+trap nnn_cd EXIT
+
+# Check if in tmux and if a venv directory exists activate the python environment
+if [ ! -z "$TMUX" ] && [ -d "./env" ]; then
+    . ./env/bin/activate
+fi
+
+### Keybinds
 bindkey -v
 bindkey -a cs change-surround
 bindkey -a ds delete-surround
@@ -98,20 +94,21 @@ bindkey "^Xa" _expand_alias
 bindkey "^Xe" edit-command-line
 bindkey "^[." insert-last-word
 bindkey "^['" quote-line
+## Move around using h j k l in completion menu
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect '^xg' clear-screen
+## interactive mode
+bindkey -M menuselect '^xi' vi-insert
+bindkey -M menuselect '^xh' accept-and-hold                # Hold
+bindkey -M menuselect '^xn' accept-and-infer-next-history  # Next
+bindkey -M menuselect '^xu' undo                           # Undo
 
-isTextFile()
-{
-	[ -f "$1" ] &&
-		# will execute the file, I'd rather not have an error message
-		[ ${1::2} != "./" ] &&
-		[ ${1::1} != "/" ] &&
-		! type "$1" > /dev/null &&
-		# is text file?
-		file -b --mime-type "$1" | grep -q "^text/" ||
-		return 1
-}
-
-# rehash hook
+### Hooks
+## rehash hook
 zshcache_time="$(date +%s%N)"
 autoload -Uz add-zsh-hook
 rehash_precmd() {
@@ -123,7 +120,7 @@ rehash_precmd() {
     fi
   fi
 }
-# window title hooks
+## window title hooks
 add-zsh-hook -Uz precmd rehash_precmd
 set_wt_action () {
 	print -n "\e]0;$1\a\033[0m"
@@ -133,66 +130,16 @@ set_wt () {
 	print -Pn "\e]0;%n@%m on %~\a"
 }
 add-zsh-hook -Uz precmd set_wt
-function osc7 {
-    local LC_ALL=C
-    export LC_ALL
+## automatic ls after cd
+add-zsh-hook -Uz chpwd (){[ "$PWD" != "$HOME" ] && ls -a; }
 
-    setopt localoptions extendedglob
-    input=( ${(s::)PWD} )
-    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
-    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
-}
-add-zsh-hook -Uz chpwd osc7
-command_not_found_handler () {
-	if [[ -o interactive ]] && isTextFile "$1"
-	then
-		"$EDITOR" "$1"
-	else
-		echo "zsh: command not found: $1" >&2
-	fi
-}
-
-# prompt
-PS1=' %K{16}%B%(#.%F{1}.%F{13})%n%b%f@%B%F{6}%m%b%f %3~%k '
-RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
-
-setopt prompt_subst
-parse_git_remote() {
-	git branch -v 2> /dev/null |
-		awk -F '[][]' '/^\*/ {print $2}' |
-		sed 's/ahead/↑ /;s/behind/↓ /;s/[^↓↑]*/ /g'
-}
-parse_git_branch() {
-    git symbolic-ref --short HEAD 2> /dev/null || git rev-parse --short HEAD 2> /dev/null
-}
-parse_git_status() {
-	git status --short 2> /dev/null | head -n1 | awk '{print $1 " "}'
-}
-
-# Completion
-_dotnet_zsh_complete()
-{
-  local completions=("$(dotnet complete "$words")")
-
-  # If the completion list is empty, just continue with filename selection
-  if [ -z "$completions" ]
-  then
-    _arguments '*::arguments: _normal'
-    return
-  fi
-
-  # This is not a variable assignment, don't remove spaces!
-  _values = "${(ps:\n:)completions}"
-}
-compdef _dotnet_zsh_complete dotnet
-
-export REPORTTIME=2
-export TIMEFMT="-> %*E"
-# override built-in time command
-alias time='/usr/bin/time'
+### Variables
+## Run menuscripts with fzf
 export MENUCMD='fzf'
+## vi mode escape fix
+export KEYTIMEOUT=1
 
-# Options
+### Options
 setopt correct 
 setopt nonomatch 
 setopt autocd

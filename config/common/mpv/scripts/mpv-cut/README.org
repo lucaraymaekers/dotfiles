@@ -1,0 +1,20 @@
+[[https://github.com/familyfriendlymikey/mpv-cut][mpv-cut]]
+
+* Files
+|------------+---------------|
+| file       | what          |
+|------------+---------------|
+| ~config.lua~ | configuration |
+| ~.book~      | bookmarks     |
+| ~.list~      | backup        |
+|------------+---------------|
+
+* Actions
+|---+--------------------------------------------|
+| ~c~ | START/END cut                              |
+| ~C~ | cancel cut                                 |
+| ~a~ | cycle actions                              |
+| ~i~ | bookmark timestamp to ~.list~ (+add chapter) |
+| ~-~ | decrement channel
+| ~=~ | increment channel                          |
+

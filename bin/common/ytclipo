@@ -2,7 +2,7 @@
 
 inp="$(ytlink)"
 >&2 printf "inp: %s\n" "$inp"
-# notify-send "ytclipo" "downloading <i>$inp</i>" || :
+notify-send "ytclipo" "downloading <i>$inp</i>" || :
 
 yt-dlp "$inp" \
 	--restrict-filenames \
@@ -11,4 +11,4 @@ yt-dlp "$inp" \
 	-S "res:1080" \
 	-P "$HOME/vids/youtube/" \
 	-o "%(channel)s/%(title)s.%(ext)s"
-# notify-send "ytclipo" "finished downloading." || :
+notify-send "ytclipo" "finished downloading." || :
