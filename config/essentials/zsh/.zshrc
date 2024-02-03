@@ -22,8 +22,8 @@ zle -N change-surround surround
 ### Source files
 . $XDG_CONFIG_HOME/shell/functions.sh
 . $XDG_CONFIG_HOME/shell/aliases.sh
+. $XDG_CONFIG_HOME/zsh/comp.zsh
 # . $XDG_CONFIG_HOME/zsh/prompt.zsh
-# . $XDG_CONFIG_HOME/zsh/comp.zsh
 # . $XDG_CONFIG_HOME/zsh/plugins.zsh
 
 ### Programs
@@ -34,11 +34,9 @@ eval "$(zoxide init zsh)"
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 plug "kutsan/zsh-system-clipboard"
 plug "xPMo/zsh-toggle-command-prefix"
-plug "zap-zsh/completions"
 plug "zap-zsh/vim"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-completions"
-plug "chivalryq/git-alias"
 plug "zap-zsh/fzf"
 plug "zdharma-continuum/fast-syntax-highlighting"
 plug "zsh-users/zsh-history-substring-search"
@@ -107,21 +105,6 @@ bindkey -M menuselect '^xh' accept-and-hold                # Hold
 bindkey -M menuselect '^xn' accept-and-infer-next-history  # Next
 bindkey -M menuselect '^xu' undo                           # Undo
 
-### Hooks
-## rehash hook
-zshcache_time="$(date +%s%N)"
-autoload -Uz add-zsh-hook
-rehash_precmd() {
-  if [[ -a /var/cache/zsh/pacman ]]; then
-    local paccache_time="$(date -r /var/cache/zsh/pacman +%s%N)"
-    if (( zshcache_time < paccache_time )); then
-      rehash
-      zshcache_time="$paccache_time"
-    fi
-  fi
-}
-## window title hooks
-add-zsh-hook -Uz precmd rehash_precmd
 set_wt_action () {
 	print -n "\e]0;$1\a\033[0m"
 }

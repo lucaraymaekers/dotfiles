@@ -2,24 +2,22 @@
 
 # Inserts a blank line between shell prompts
 add_newline = false
-format = '\[$username[@](bold blue)$hostname\] $all'
-
+format = ' [\[$username@$hostname\]](bg:#000000) $all'
+right_format = """$status"""
 
 [character]
-success_symbol = "[❯](green)"
-error_symbol = "[❮](red)"
-vimcmd_symbol = "[❮](green)"
+format = ' [❯](bold bright-yellow) '
 
 [username]
 style_root = "bold red"
-style_user = "bold blue"
-format = "[$user]($style)"
+style_user = "bold purple"
+format = "[$user]($style bg:#000000)"
 show_always = true
 disabled = false
 
 [hostname]
 ssh_only = false
-style = "bold teal"
+style = "bold cyan bg:#000000"
 format = "[$hostname]($style)"
 
 [directory]
@@ -28,3 +26,7 @@ style = "bold lavender"
 
 [cmd_duration]
 min_time = 500
+
+[status]
+format = '($status)'
+disabled = false

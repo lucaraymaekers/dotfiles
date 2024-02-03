@@ -1,49 +1,54 @@
-# ### Completion
+### Completion
+# Find most of the stuff at https://github.com/zap-zsh/completions
 
-# autoload -Uz compinit; compinit
-# zstyle ':compinstall' filename '/home/aluc/.zshrc'
-# # cache
-# zstyle ':completion:*' use-cache on
-# zstyle ':completion:*' cache-path "$ZDOTDIR/zcompcache"
+zmodload zsh/complist
+autoload -Uz compinit; compinit
+zstyle ':compinstall' filename '/home/aluc/.zshrc'
+# cache
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$ZDOTDIR/zcompcache"
 
-# # completers
-# zstyle ':completion:*' completer _extensions _complete
+# completers
+zstyle ':completion:*' completer _extensions _complete
 
-# # format
-# zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D%d --%f'
-# zstyle ':completion:*:*:*:*:messages' format '%F{purple}-- %d --%f'
-# zstyle ':completion:*:*:*:*:warnings' format '%F{red}-- no matches found --%f'
-# zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-# # show a 'ls -a' like outptut when listing files
-# zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
+# format
+zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D%d --%f'
+zstyle ':completion:*:*:*:*:messages' format '%F{purple}-- %d --%f'
+zstyle ':completion:*:*:*:*:warnings' format '%F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+# show a 'ls -a' like outptut when listing files
+zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# # Group completions by categories
-# zstyle ':completion:*' group-name ''
-# zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
+# automatically find new executables in PATH
+zstyle ':completion:*' rehash true
 
-# zstyle ':completion:*' squeeze-slashes true
+# Group completions by categories
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
 
-# # Prefer completing for an option (think cd -)
-# zstyle ':completion:*' complete-options true
+zstyle ':completion:*' squeeze-slashes true
 
-# # keep prefix when completing
-# zstyle ':completion:*' keep-prefix true
+# Prefer completing for an option (think cd -)
+zstyle ':completion:*' complete-options true
 
-# # ui
-# zstyle ':completion:*' menu select
+# keep prefix when completing
+zstyle ':completion:*' keep-prefix true
 
-# _dotnet_zsh_complete()
-# {
-#   local completions=("$(dotnet complete "$words")")
+# ui
+zstyle ':completion:*' menu select
 
-#   # If the completion list is empty, just continue with filename selection
-#   if [ -z "$completions" ]
-#   then
-#     _arguments '*::arguments: _normal'
-#     return
-#   fi
+_dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
 
-#   # This is not a variable assignment, don't remove spaces!
-#   _values = "${(ps:\n:)completions}"
-# }
-# compdef _dotnet_zsh_complete dotnet
+  # If the completion list is empty, just continue with filename selection
+  if [ -z "$completions" ]
+  then
+    _arguments '*::arguments: _normal'
+    return
+  fi
+
+  # This is not a variable assignment, don't remove spaces!
+  _values = "${(ps:\n:)completions}"
+}
+compdef _dotnet_zsh_complete dotnet

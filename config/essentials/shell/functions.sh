@@ -283,7 +283,7 @@ muttmail()
 	config="$HOME/.config/mutt"
 	mail="$(find "$config"/configs -type f -printf '%f\n' | fzf)"
 	[ "$mail" ] || return 1
-	ln -sf "$config/configs/$mail" "$config"/muttrc
+    printf 'source %s\n' "$config"/configs/"$mail" > "$config"/muttrc
 	mutt
 }
 
@@ -305,3 +305,7 @@ to_webm()
 {
     ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm
 }
+remove_audio() { ffmpeg -i "$1" -cpu-used -$(nproc) -deadline realtime -c copy -an "${2:-out.mp4}"; }
+nasg() { smbclient //192.168.178.24/Public/ -D ENFANTS/Luca/tmp -N -c "get $1"; }
+trll() { printf "%s
+" "$1" | trl 2>/dev/null; }

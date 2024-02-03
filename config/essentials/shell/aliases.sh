@@ -45,6 +45,7 @@ fi
 
 # Programs
 alias nb='newsboat'
+alias nr='newsraft'
 alias sr='surfraw'
 alias ccu='calcurse'
 alias pf='profanity'
