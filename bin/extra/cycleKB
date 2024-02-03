@@ -1,11 +1,6 @@
-#!/usr/bin/env sh
-keyboards_file="/home/aluc/bin/keyboards.txt"
-cur_keyboard="$(setxkbmap -print | grep "xkb_symbols" | cut -f 2 -d "+")"
-# Get line number of match
-line="$(awk "/${cur_keyboard}/ {print NR}" "${keyboards_file}")"
-lines="$(wc -l "${keyboards_file}" | cut -f 1 -d ' ')"
-# cycle back to first line
-[[ "$line" == "$lines" ]] && line=1 || ((line++))
-new_keyboard="$(sed -n "${line}p" "${keyboards_file}")"
-setxkbmap "${new_keyboard}"
-dunstify "cycleKB" "keyboard: <b>${new_keyboard}</b>"
+#!/usr/bin/sh
+keyboards="$HOME/bin/keyboards.txt"
+kb="$(head -n 1 "$keyboards")"
+setxkbmap $kb &
+sed -i '1h;1d;$G' "$keyboards" 
+notify-send -t 1000 "cycleKB" "keyboard: <b>$kb</b>"
