@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$WAYLAND_DISPLAY" ]
+then
+	paste="$(wl-paste)"
+	wl-paste -p | wl-copy -n
+	printf "%s" "$paste" | wl-copy -p -n
+fi

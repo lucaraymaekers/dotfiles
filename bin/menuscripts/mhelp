@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-program="$(commander -rcd)"
+program="$(commander -rc)"
 
 [ "$program" ] || exit 1
 
@@ -10,7 +10,7 @@ option="$("$program" --help |
 	tr -s ' ' |
 	sort | uniq |
 	column -l 2 -t |
-	commander -lxcd |
+	commander -lxc |
 	awk '{print $1}')"
 
 [ "$option" ] || exit 1

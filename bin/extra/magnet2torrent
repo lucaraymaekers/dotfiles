@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#################################
+#                               #
+# Bash script to convert a      #
+# magnet link to a torrent file #
+#                               #
+#  StrickStuff.com              #
+#                               #
+#################################
+
+
+# Check that the user entered a valid magnet link
+if [ "$#" -ne 1 ] || [ "${1##*magnet*}" ]
+then
+    echo "Usage: $0 "
+    exit 1
+fi
+
+# Extract the info hash from the magnet link
+hash="${1##*btih:}"
+hash="${hash%%&*}"
+
+# Download the torrent file from a torrent website
+torrent_file="${hash}.torrent"
+wget "https://itorrents.org/torrent/${hash}.torrent" -O "$torrent_file"
+echo "Torrent file written to ${torrent_file}"

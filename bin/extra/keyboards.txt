@@ -1,2 +1,2 @@
-be
 us
+us -option ctrl:swapcaps -variant colemak

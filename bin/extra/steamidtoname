@@ -1,0 +1,8 @@
+#!/bin/sh
+
+[ "$#" -eq 0 ] && >&2 printf "usage: steamidtoname <id>" &&  exit 1
+name="$(curl -s https://store.steampowered.com/app/"$1"/ |
+	pup -p 'title text{}' |
+	sed 's/on Steam$//')"
+
+printf '%s\n' "$name"

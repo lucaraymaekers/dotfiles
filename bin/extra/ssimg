@@ -1,0 +1,4 @@
+#!/bin/sh
+out="/tmp/ssimg.png"
+clipo > "$out" || exit 1
+printf "file://clip" | ydotool type -d 40 -f -

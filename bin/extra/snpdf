@@ -1,0 +1,2 @@
+#!/bin/sh
+zathura "$(clipo | sed 's@^file://@@;s/\.pdf.*/.pdf/;s/%20/ /g')"

@@ -1,0 +1,3 @@
+#!/bin/sh
+curl -s "https://www.timeanddate.com/time/zone/$1" |
+	pup -p '.tb-tz > tbody:nth-child(2) > tr:nth-child(1) > th:nth-child(1) text{}'
