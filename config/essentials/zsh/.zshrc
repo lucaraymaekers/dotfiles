@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# zmodload zsh/zprof
+
 if [ "$(id -u)" -ne 0 ]
 then
 	[ "${TTY%%tty*}" = '/dev/' ] && clear
@@ -48,7 +50,7 @@ plug "zsh-users/zsh-history-substring-search"
 plug "MichaelAquilina/zsh-auto-notify"
 export AUTO_NOTIFY_TITLE="zsh"
 export AUTO_NOTIFY_BODY="<b>%command</b> [%exit_code]"
-AUTO_NOTIFY_IGNORE+=("gurk")
+AUTO_NOTIFY_IGNORE+=("gurk" "ttyper" "pulsemixer")
 
 # Substring search settings
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=blue,fg=black,bold"
@@ -142,3 +144,5 @@ setopt histreduceblanks
 setopt interactivecomments
 setopt notify
 setopt cdablevars
+
+# zprof
