@@ -77,8 +77,8 @@ alias lst1='ls --tree -L1'
 alias lst2='ls --tree -L2'
 alias lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
-which exa >/dev/null 2>&1 &&
-	alias ls='exa --sort extension --group-directories-first --no-time --git' ||
+which eza >/dev/null 2>&1 &&
+	alias ls='eza --sort extension --group-directories-first --no-time --git' ||
 	alias ls='ls --color --group-directories-first --sort=extension'
 
 # pacman aliases
@@ -157,7 +157,7 @@ alias airpods='bluetoothctl connect 60:93:16:24:00:10'
 alias hotpsot='nmcli dev wifi hotspot ifname wlan0 ssid wiefie password "peepeepoopoo"'
 alias wtip='wt ip -c -brief addr'
 alias fusephone='sshfs myphone: /media/phone'
-alias ttyper='ttyper -l english1000 -w 100'
+alias ttyper='ttyper -l english1000'
 
 alias wgup='doas wg-quick up wg0'
 alias wgdown='doas wg-quick down wg0'
@@ -226,7 +226,7 @@ alias vb='vbm startvm'
 
 # quick config
 alias ez='vi ${ZDOTDIR:-~}/.zshrc'
-alias eza='vi $HOME/.config/shell/aliases.sh'
+alias ezal='vi $HOME/.config/shell/aliases.sh'
 alias ezf='vi $HOME/.config/shell/functions.sh'
 alias eto='vi ~/sync/TODO'
 alias edw='vi ~/proj/suckless/dwm/config.def.h'
@@ -314,7 +314,16 @@ alias dbinf='ssh db dlinfo'
 alias sshdb='ssh -t db "tmux a || tmux"'
 alias dbsmu='rsync -rlpP db:/media/basilisk/music/ /media/kilimanjaro/music'
 
-# oh-my-zsh git aliases
+# git
 alias config='GIT_WORK_TREE=~/src/dotfiles/ GIT_DIR=~/src/dotfiles/.git'
 alias cfg='vi ~/src/dotfiles/"$(config git ls-files | fzf || exit)"'
 alias gmod='git status --short | sed '\''/^\s*M/!d;s/^\s*M\s*//'\'' | fzf | xargs vi'
+
+# docker
+alias dorm='docker container rm $(docker container ls -a | tail -n +2 | fzf -m | awk '\''{print $1}'\'')'
+alias dostop='docker container stop $(docker container ls -a | tail -n +2 | fzf -m | awk '\''{print $1}'\'')'
+alias doirm='docker image rm $(docker image ls | tail -n +2 | fzf -m | awk '\''{print $3}'\'')'
+
+alias -g skip='tail -n +2'
+alias ddeps='pactree -r -d 1'
+alias update-mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
