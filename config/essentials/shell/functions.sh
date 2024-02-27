@@ -68,6 +68,14 @@ sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
 getgit() { git clone git@db:"$1"; }
+esc() { eval "$EDITOR '$(which $1)'"; }
+delfile() { curl "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
+upfile() { curl -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
+to_webm() { ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm; }
+ngenable() { ln -sf /etc/nginx/sites-available/$1 /etc/nginx/sites-enabled/; }
+remove_audio() { ffmpeg -i "$1" -cpu-used -$(nproc) -deadline realtime -c copy -an "${2:-out.mp4}"; }
+nasg() { smbclient //192.168.178.24/Public/ -D ENFANTS/Luca/tmp -N -c "get $1"; }
+trll() { printf "%s\n" "$1" | trl 2>/dev/null; }
 
 ipc() 
 {
@@ -105,22 +113,6 @@ unzipp() {
     rm -- "$1"
 }
 
-# fix long waiting time
-__git_files() { 
-    _wanted files expl 'local files' _files     
-}
-
-esc() {
-	eval "$EDITOR '$(which $1)'"
-}
-
-delfile() {
-	curl "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"
-}
-upfile() {
-	curl -F "file=@\"$1\"" ${2:-https://0x0.st}
-}
-
 # git
 sgd() {
 	d="$PWD"
@@ -140,6 +132,9 @@ sgd() {
 	cd "$d"
 	unset d
 }
+
+# fix long waiting time
+__git_files() { _wanted files expl 'local files' _files; }
 
 ginit()
 {
@@ -205,11 +200,6 @@ gpg_import()
 	gpg --import-ownertrust trust.asc
 	gpg --import private.asc
 	shred -uz public.asc private.asc trust.asc
-}
-
-ngenable()
-{
-	ln -sf /etc/nginx/sites-available/$1 /etc/nginx/sites-enabled/
 }
 
 vbsr()
@@ -300,12 +290,3 @@ edit_in_dir() {
 	[ -f "$file" ] || return 1
 	$EDITOR "$file"
 }
-
-to_webm()
-{
-    ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm
-}
-remove_audio() { ffmpeg -i "$1" -cpu-used -$(nproc) -deadline realtime -c copy -an "${2:-out.mp4}"; }
-nasg() { smbclient //192.168.178.24/Public/ -D ENFANTS/Luca/tmp -N -c "get $1"; }
-trll() { printf "%s
-" "$1" | trl 2>/dev/null; }
