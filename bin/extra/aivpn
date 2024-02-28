@@ -4,27 +4,18 @@ logn() { printf "%s\n" "$@"; }
 
 if [ "$1" = "-k" ]
 then
-	pgrep -f -- "ssh.*-L.*vm" |
-		xargs kill
+	pgrep -f -- "ssh.*-L.*vm" | xargs kill
 	exit
-fi
-
-# For when script calls itself
-if [ "$PASSWORD" ]
-then
-	pass show "$PASSWORD" &&
-		exit
-	exit 1
 fi
 
 keyadd ehb/ai
 
-export SSH_ASKPASS="$0"
+export SSH_ASKPASS="sshpass"
 export SSH_ASKPASS_REQUIRE="prefer"
-export PASSWORD=zot/qemu
+export PASSWORD="zot/qemu"
 
 logn "I: Waiting for connectivity..."
-while ! ssh -o ConnectTimeout=1 -o BatchMode=yes vm 2>&1 | grep -q "Permission denied"
+while ! ssh -o ConnectTimeout=1 -o BatchMode=yes vm 2>&1 | grep "Permission denied" > /dev/null
 do sleep 1
 done
 
