@@ -99,8 +99,7 @@ alias doprm='dopac -Rns'
 
 alias mpkg='makepkg -si'
 
-which pikaur > /dev/null 2>&1 &&
-	alias yay='pikaur'
+which pikaur > /dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
 alias yup='yay -Syu'
 alias ysi='yay -Si'
 alias yss='yay -Ss'
