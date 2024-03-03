@@ -44,7 +44,7 @@ background = "#4c566a"
 text = "CellForeground"
 
 [cursor.style]
-blinking = "Off"
+blinking = "Never"
 shape = "Block"
 
 [env]
@@ -108,7 +108,7 @@ key = "F11"
 history = 10000
 
 [window]
-decorations = "none"
+decorations = "Full"
 opacity = 0.87
 
 [window.padding]
