@@ -26,9 +26,10 @@ export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
 export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
 export RANDFILE="$XDG_CACHE_HOME"/rnd
-export NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages"
+export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
+export PARALLEL_HOME="$XDG_CACHE_HOME"/parallel
 
-export XINITRC="$XDG_CONFIG_HOME/x11"/xinitrc
+export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
@@ -46,7 +47,7 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 # export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
-export PASSWORD_STORE_DIR="$HOME/src/password-store"
+export PASSWORD_STORE_DIR="$HOME"/src/password-store
 export PASSWORD_STORE_CLIP_TIME=5
 
 # old
