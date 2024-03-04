@@ -1,0 +1,14 @@
+#!/bin/sh
+
+### Word Definition
+# Based on https://askubuntu.com/questions/191125/is-there-an-offline-command-line-dictionary
+#
+### Installation
+# > sudo mkdir -p /usr/share/stardict/dic/
+## Get the dictionaries
+# > wget https://web.archive.org/web/20140428003644/http://abloz.com/huzheng/stardict-dic/dict.org/stardict-dictd_www.dict.org_gcide-2.4.2.tar.bz2
+# > wget https://web.archive.org/web/20140428004049/http://abloz.com/huzheng/stardict-dic/misc/stardict-xfardic-gnu-linux-2.4.2.tar.bz2
+
+sdcv -nj "$1" |
+    jq -r '.[].definition' |
+    sed -e '/^$/d;s/^[^ ].*$/\o033[1;4;38m&\o033[0m/'
