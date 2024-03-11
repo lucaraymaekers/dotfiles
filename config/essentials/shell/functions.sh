@@ -77,6 +77,7 @@ remove_audio() { ffmpeg -i "$1" -cpu-used -$(nproc) -deadline realtime -c copy -
 nasg() { smbclient //192.168.178.24/Public/ -D ENFANTS/Luca/tmp -N -c "get $1"; }
 trll() { printf "%s\n" "$1" | trl 2>/dev/null; }
 vidlen() { date -u -d @"$(ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i "$1")" +'%T'; }
+pcp() { readlink -f "$1" | clipp; }
 
 ipc() 
 {
