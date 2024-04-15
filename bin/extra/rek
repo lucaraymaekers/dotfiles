@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Record desktop with ffmpeg, strip metadata and use mp4 for relative small file size
+# copy the path of the output file to the system clipboard for sharing
+out="out.mp4"
+
+# with audio
+if [ "$1" = "-a" ]
+then
+    ffmpeg -y -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i default -map 0:v -map 0:a? -map_metadata -1 -map_metadata:s:v -1 -map_metadata:s:a -1 -map_chapters -1 -disposition 0 "$out"
+else
+    ffmpeg -y -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0+0,0 -map 0:v -map 0:a? -map_metadata -1 -map_metadata:s:v -1 -map_metadata:s:a -1 -map_chapters -1 -disposition 0 "$out"
+fi
+
+# copy output path
+readlink -f "$out" | clipp

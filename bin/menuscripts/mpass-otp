@@ -1,6 +1,6 @@
 #!/bin/sh
-pass="$(find "$PASSWORD_STORE_DIR"/keys/otp -name "*.gpg" -printf '%f\n' |
-    sed 's/\.gpg$//' |
+pass="$(find "$PASSWORD_STORE_DIR"/keys/otp -iname "*.gpg" |
+    sed "/^\./d;s#^$PASSWORD_STORE_DIR/keys/otp/##;s/\.gpg$//" |
     commander -c)"
 [ "$pass" ] || exit 1
 pass otp -c keys/otp/"$pass"

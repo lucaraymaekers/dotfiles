@@ -2,8 +2,8 @@
 [ 0 -eq "$#" ] && >&2 echo 'usage: wipe <file>' && exit 1
 [ ! -f "$1" ] && [ ! -d "$1" ] && >&2 echo "'$1' not found." && exit 1
 
-confirm "sure?" || exit 1
->&2 printf "\n"
+printf "sure? "
+[ "$(head -n 1)" != "y" ] && exit 1
 
 find "$1" -type f -print0 |
 	xargs -0I{} shred -uz "{}" &&

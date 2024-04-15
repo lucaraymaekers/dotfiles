@@ -144,6 +144,7 @@ alias mdb='mariadb -u admin -ppass admindb'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
 alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 alias tmux='pgrep tmux && tmux attach || tmux new-session'
+alias wd='dict'
 
 # ssh
 alias sha='ssh-add'
@@ -185,7 +186,7 @@ alias gdate='date +%y_%m_%d-%T'
 alias tpid='tail -f /dev/null --pid'
 alias pwdcp='pwd | clipp'
 alias gw="grep -ri"
-alias srcsupd='echo ~/src/{installdrier,dotfiles,password-store} ~/proj/suckless/*/ ~/proj/personal/scripts/*/ ~/.config/emacs | supd'
+alias srcsupd='echo ~/src/{installdrier,dotfiles,password-store} ~/proj/suckless/*/ ~/proj/personal/scripts/*/ ~/.config/emacs ~/.config/nvim | supd'
 
 # systemctl aliases
 alias smc='systemctl'
@@ -290,7 +291,6 @@ alias ffwin='hyprctl clients -j | jq '\''.[].pid'\'' | fzf --preview "hyprctl cl
 alias pff='find ${PASSWORD_STORE_DIR:=~/src/password-store/} -name "*.gpg" | sed -e "s@$PASSWORD_STORE_DIR/@@" -e '\''s/\.gpg$//'\'' | fzf | xargs pass show -c'
 alias fzps='fzf --print0 | xargs -0I{}'
 alias ytdl='yt-dlp --restrict-filenames --embed-chapters -f "b" -S "res:1080" -P "$HOME/vids/youtube/" -o "%(channel)s/%(title)s.%(ext)s"'
-alias ytplay='mpv "$(ytlink)"'
 
 # emacs aliases
 alias emacsd='emacs --daemon'
@@ -330,3 +330,4 @@ alias ddeps='pactree -r -d 1'
 alias update-mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
 
 alias tmpd='cd $(mktemp -d)'
+alias brs='$BROWSER'

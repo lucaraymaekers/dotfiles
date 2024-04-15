@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# toggle an usb device
+
+# dependencies
+# - lsusb (to list usb devices)
+# - commander (menu command)
+# - doas (to run as root)
+
+device="$(lsusb | fzf)"
+[ "$device" ] || exit 1
+# get vendor id
+d=${device#*: * }
+v=${d%%:*}
+# get product id
+d=${device#*:*:}
+p=${d%% *}
+
+# find path by uzing vendor and product IDs
+file="$(grep -l "$p" $(grep -l "$v" /sys/bus/usb/devices/*/idVendor |
+    sed 's/idVendor/idProduct/') |
+    sed 's/idProduct$/authorized/')"
+
+echo 0 | doas tee "$file"
+echo 1 | doas tee "$file"
