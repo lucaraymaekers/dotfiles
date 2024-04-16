@@ -72,8 +72,8 @@ getgit() { git clone git@db:"$1"; }
 esc() { eval "$EDITOR '$(which $1)'"; }
 compdef esc="which"
 
-delfile() { curl "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
-upfile() { curl -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
+delfile() { curl -s "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
+upfile() { curl -s -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
 to_webm() { ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm; }
 ngenable() { ln -sf /etc/nginx/sites-available/$1 /etc/nginx/sites-enabled/; }
 remove_audio() { ffmpeg -i "$1" -cpu-used -$(nproc) -deadline realtime -c copy -an "${2:-out.mp4}"; }

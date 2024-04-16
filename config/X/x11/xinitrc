@@ -27,6 +27,7 @@ setxkbmap us -option ctrl:swapcaps,altwin:menu_win -variant colemak
 gammastep -m randr &
 # dunst &
 slstatus &
+upds &
 emacs --daemon &
 eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
 unclutter --timeout 3 --jitter 50 -b

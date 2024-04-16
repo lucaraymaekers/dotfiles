@@ -66,6 +66,9 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 
 export LESS="-j 4 -i"
 
+# Colored manpages
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
+export MANROFFOPT="-P -c"
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"

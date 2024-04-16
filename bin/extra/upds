@@ -1,0 +1,51 @@
+#!/bin/sh
+
+if [ "$1" = "install" ]
+then
+    hook="/etc/pacman.d/hooks/upds.hook"
+    if [ "$(id -u)" -ne 0 ]
+    then
+        >&2 printf 'Please run as root.\n'; exit 1
+    fi
+
+    if [ -f "$hook" ]
+    then
+        >&2 printf 'Hook already installed.\n'; exit 1
+    fi
+
+    # Install the hook
+    cat <<EOF > "$hook"
+# Hook for keeping available updates in sync after upgrade
+# relies on 'upds'
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = *
+[Action]
+Description = Sync upds
+When = PostTransaction
+Exec = /usr/bin/sh -c '/usr/bin/kill -s USR1 "\$(/usr/bin/pgrep upds | /usr/bin/head -n 1)"'
+EOF
+    >&2 printf 'Installed.\n'
+
+    exit
+fi
+
+count_updates() { checkupdates | wc -l  > ~/.cache/updates; }
+
+# Periodically count updates in background
+(
+    while true
+    do
+        count_updates
+        sleep 60m
+    done
+) &
+
+# update on USR1 signal
+trap count_updates USR1
+
+# wait for signal
+while true
+do sleep 1s
+done

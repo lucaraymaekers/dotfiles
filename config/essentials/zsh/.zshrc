@@ -16,10 +16,6 @@ fi
 autoload -U select-word-style
 autoload -z edit-command-line
 zle -N edit-command-line
-autoload -Uz surround
-zle -N delete-surround surround
-zle -N add-surround surround
-zle -N change-surround surround
 
 ### Source files
 . $XDG_CONFIG_HOME/zsh/comp.zsh
@@ -49,8 +45,8 @@ plug "zsh-users/zsh-history-substring-search"
 
 plug "MichaelAquilina/zsh-auto-notify"
 export AUTO_NOTIFY_TITLE="zsh"
-export AUTO_NOTIFY_BODY="<b>%command</b> [%exit_code]"
-AUTO_NOTIFY_IGNORE+=("gurk" "ttyper" "pulsemixer" "tmux" "btop")
+export AUTO_NOTIFY_BODY="%command [%exit_code]"
+AUTO_NOTIFY_IGNORE+=("gurk" "ttyper" "pulsemixer" "tmux" "btop" "vis")
 
 # Substring search settings
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=blue,fg=black,bold"
@@ -86,9 +82,6 @@ fi
 
 ### Keybinds
 bindkey -v
-bindkey -a cs change-surround
-bindkey -a ds delete-surround
-bindkey -a ys add-surround
 bindkey -M visual S add-surround
 bindkey "^A"  beginning-of-line
 bindkey "^E"  end-of-line
@@ -103,6 +96,7 @@ bindkey "^Xe" edit-command-line
 bindkey "^[." insert-last-word
 bindkey "^['" quote-line
 bindkey '\ea' autosuggest-toggle
+bindkey '^Xp' push-input
 ## Move around using h j k l in completion menu
 zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char
