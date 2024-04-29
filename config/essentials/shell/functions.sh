@@ -301,4 +301,11 @@ wgtoggle() {
 	ip -br a | awk '{print $1}' | grep "$d" > /dev/null &&
         doas wg-quick down "$d" ||
         doas wg-quick up "$d"
- }
+}
+
+serve() {
+    docker container run \
+        --rm \
+        --volume "$(readlink -f "$1")":/data \
+        --publish 80:5000 sigoden/dufs:latest /data --allow-all
+}
