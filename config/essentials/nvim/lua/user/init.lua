@@ -1,8 +1,0 @@
-require("user.packer")
-require("user.remap")
-require("user.treesitter")
-require("user.set")
--- require("user.cmp")
-require("user.zk")
-require("user.live-server")
-vim.cmd.source(vim.fn.stdpath("config") .. "/lua/user/aucommands.vim")
