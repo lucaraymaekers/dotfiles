@@ -3,6 +3,7 @@
 
 # The most important one
 alias vi='nvim'
+alias cd='z'
 
 # Zsh specific aliases
 if [ $SHELL = "/bin/zsh" ]
@@ -149,6 +150,7 @@ alias wd='dict'
 # ssh
 alias sha='ssh-add'
 alias sshs='eval "$(ssh-agent)" && ssh-add'
+alias sshids='ssh-add -L | xargs -I{} grep "{}" -l $(find "$HOME/.ssh" -type f -iname '\''*.pub'\'') | sed "s;$HOME/.ssh/;;;s;\.pub$;;"'
 alias whatsmyip='curl -s "ifconfig.co"'
 alias icognito='unset HISTFILE'
 alias webcam='v4l2-ctl --set-fmt-video=width=1280,height=720; mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed --no-resume-playback'

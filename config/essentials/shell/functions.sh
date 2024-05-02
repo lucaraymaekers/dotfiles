@@ -330,3 +330,5 @@ serve() {
             --publish 80:5000 sigoden/dufs /data --allow-upload
     fi
 }
+
+ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
