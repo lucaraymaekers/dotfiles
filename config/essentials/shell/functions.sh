@@ -332,3 +332,14 @@ serve() {
 }
 
 ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
+
+
+fchange()
+{
+    [ "$1" ] || return 1
+    inotifywait -m -e create,modify,delete --format "%f" "${2:-.}"  |
+        while read -r EVENT
+        do
+            eval "$1"
+        done
+}

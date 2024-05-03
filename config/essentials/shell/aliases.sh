@@ -333,3 +333,4 @@ alias update-mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee 
 
 alias tmpd='cd $(mktemp -d)'
 alias brs='$BROWSER'
+

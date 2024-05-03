@@ -34,8 +34,6 @@ disabled = false
 
 [custom.upds]
 command = 'cat ~/.cache/updates' # shows output of command
-# detect_files = ['foo'] # can specify filters but wildcards are not supported
-when = ''' test "$(cat ~/.cache/updates)" -gt 0'''
+when = '[ "$(cat ~/.cache/updates)" -gt 0 ]'
 symbol = '📦'
 format = '$output$symbol '
-
