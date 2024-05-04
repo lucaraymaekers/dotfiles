@@ -296,6 +296,15 @@ edit_in_dir() {
 	$EDITOR "$file"
 }
 
+# Download a file from google drive
+# link like this: https://drive.usercontent.google.com/download?id=1TiJDEftTtF1KTMBI950Bj487ndYqkwpQ&export=download
+gdown () {
+        agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/12$(head /dev/urandom | tr -dc '0-1' | cut -c1).0.0.0 Safari/537.36"
+        uuid=$(curl -sL "$1" -A "$agent" | sed -nE 's|.*(uuid=[^"]*)".*|\1|p')
+        aria2c -x16 -s16 "$1&confirm=t&$uuid" -U "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" --summary-interval=0 -d "${2:-.}"
+}
+
+# toggle wireguard vpn on $1 -> interface
 wgtoggle() { 
 	d="${1:-wg0}"
 	ip -br a | awk '{print $1}' | grep "$d" > /dev/null &&
@@ -303,9 +312,34 @@ wgtoggle() {
         doas wg-quick up "$d"
 }
 
+# serve a file through dufs
 serve() {
-    docker container run \
-        --rm \
-        --volume "$(readlink -f "$1")":/data \
-        --publish 80:5000 sigoden/dufs:latest /data --allow-all
+    if [ "$1" ]
+    then
+        logn "Serving $1"
+        docker container run \
+            --rm \
+            --volume "$(readlink -f "$1")":/data \
+            --publish 80:5000 sigoden/dufs /data
+    else
+
+        logn "Receiving files.."
+        docker container run \
+            --rm \
+            --volume /tmp/data:/data \
+            --publish 80:5000 sigoden/dufs /data --allow-upload
+    fi
+}
+
+ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
+
+
+fchange()
+{
+    [ "$1" ] || return 1
+    inotifywait -m -e create,modify,delete --format "%f" "${2:-.}"  |
+        while read -r EVENT
+        do
+            eval "$1"
+        done
 }
