@@ -2,7 +2,7 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-export BROWSER="librewolf"
+export BROWSER="surf"
 export VIEWER="zathura"
 export PLAYER="mpv"
 
@@ -78,7 +78,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=info:#b48ead,prompt:#bf6069,pointer:#b48dac
     --color=marker:#a3be8b,spinner:#ebcb8b,header:#a3be8b'
 
-export LESS="-j 4 -i -r"
+export LESS="-i -r"
 
 # Colored manpages
 export MANPAGER="less -R --use-color -Dd+r -Du+b"

@@ -343,3 +343,24 @@ fchange()
             eval "$1"
         done
 }
+
+unhappy.exe() {
+    [ "$1" ] &&
+        smiles=("[: " ".-." " :]" "._.") ||
+        smiles=("]: " ".-." " :[" "._.")
+
+	while true
+	do
+		for s in $smiles
+		do
+			printf '\r%s' "$s"
+			sleep 1
+		done
+	done
+}
+
+ssh_port()
+{
+    ssh -f -N -L 0.0.0.0:"$3":localhost:"$1" "$2"
+    >&2 printf "Forwarded port '%s' on '%s' to '%s'.\n" "$1" "$2" "$3"
+}
