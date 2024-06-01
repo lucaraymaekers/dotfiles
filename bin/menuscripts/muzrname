@@ -1,0 +1,22 @@
+#!/bin/sh
+
+rename()
+{
+	## Expression 1:
+	# For CDs or volumes 1-01 -> 1_01
+	## Expression 2:
+	# * don't match the start (^)
+	# match the first part with a number and replace following [ -.] by '. '
+	sed -e 's/^\s*\([0-9]\+\)[ -_.]\([0-9]\+\)/\1_\2. /' \
+		-e 's#\s*\([0-9]\+\)[ -.]\+#\1. #'
+}
+
+if [ ! -t 0 ]
+then 
+	rename
+elif [ "$1" ]
+then 
+	printf '%s' "$1" | rename
+else
+	exit 1
+fi

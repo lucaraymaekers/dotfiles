@@ -1,0 +1,76 @@
+#!/bin/sh
+
+MUSIC="$HOME/music"
+
+
+list_dirs()
+{
+	find -L "$1" \
+		-mindepth 1 -maxdepth 1 \
+		-not -name "*.cue" |
+		sed "s@^$1/@@" | sort;
+}
+
+find_song()
+{
+	file="$MUSIC"
+	while [ -d "$file" ]
+	do 
+		choice="$(list_dirs "$file" | commander -clx)"
+		[ "$choice" ] || return
+		file="$file/$choice"
+	done
+	printf '%s' "${file##"$MUSIC/"}"
+}
+
+play_song()
+{
+	printf '%s\n' "$1" | tr '\n' '\0' |
+		xargs -0I{} mpc insert "{}" || return
+	mpc next 2> /dev/null
+	mpc play 2> /dev/null
+}
+
+main()
+{
+	choice="$(printf 'volume\nsearch\ncommand\nall_search\nquit' | commander -c -w 5 -y 1)"
+	case "$choice" in
+		volume) 
+			# Change volume while no error
+			while true 
+			do
+				volume="$(mpc volume | awk -F '[ %]' '{print $2}')"
+				nb="$(printf 'p\nm' | commander -c -y 2 -p "$volume" | tr 'pm' '+-')"
+				[ "$nb" ] || break
+				change="$(commander -ci -p "$volume$nb")"
+				mpc volume "$nb$change" || break
+			done ;;
+
+		search) 
+			song="$(find_song)"
+			[ "$song" ] || return
+
+			choice="$(printf 'insert\nadd\nplay' | commander -c -w 3 -y 1)"
+			case "$choice" in
+				insert|add) mpc "$choice" "$song" ;;
+				play) play_song "$song" ;;
+			esac ;;
+
+		command) 
+			mpc "$(printf 'next\nprevious\nclear\nstop\ntoggle' |
+				commander -c -w 8 -y 5)" ;;
+
+		all_search) 
+			song="$(mpc listall | commander -cxh)"
+			[ "$song" ] || return
+			play_song "$song";;
+		quit) return 1 ;;
+
+		*) return 1 ;; 
+	esac
+	return 0
+}
+
+while main
+do :;
+done

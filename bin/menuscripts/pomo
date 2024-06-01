@@ -1,0 +1,78 @@
+#!/bin/sh
+
+### FUNCTIONS
+notif() { 
+    herbe "pomo" "$1" &
+    sleep 1
+    pkill -SIGUSR1 herbe
+}
+logn () { >&2 printf '%s\n' "$@"; }
+log () { >&2 printf '%s' "$@"; }
+
+# Plays ringing sound
+# Then wait for user input to start/end the break
+player_command()
+{
+	>&2 printf ' > '
+	[ -r "$ringSound" ] || PLAYER=""
+	case "$PLAYER" in
+	    mpv) mpv --loop --msg-level=all=no "$ringSound" ;;
+	    "") head -n 1;;
+	    *) $PLAYER "$ringSound" ;;
+	esac
+}
+
+# $1: time in minutes
+# $2: msg for notification
+ring_ring()
+{
+	logn "$(date '+%R') B $round"
+	player_command
+    herbe "pomo" "$2" &
+    sleep "${1}m"
+	player_command
+	>&2 printf '\n'
+}
+
+### PROGRAM
+main()
+{
+	round="${1-0}"
+	case "$round" in
+		0|1|2|3) ;;
+		ring) ;;
+		*) logn "Invalid \$round value." && exit 1 ;;
+	esac
+
+	ringSound="${XDG_DATA_HOME:-$HOME/.local/share}"/pomo/ring.aac
+	[ -r "$ringSound" ] && logn "ring: $ringSound"
+
+	if [ "$1" = "ring" ]
+	then
+	    player_command
+	    exit
+	fi
+
+	# Countdown
+	for msg in "three" "two" "one"
+	do notif "$msg"
+	done
+
+	while true
+	do
+		notif "START"
+		logn "$(date '+%R') S $round"
+		sleep 25m
+		if [ "$round" -eq 3 ]
+		then
+			ring_ring 20 "GIGA BREAK TIME"
+			round=0
+		else
+			ring_ring 5 "BREAK TIME"
+			round=$((round+1))
+		fi
+	done
+}
+
+trap 'exit 1' INT
+main "$@"
