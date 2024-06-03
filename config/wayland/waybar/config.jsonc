@@ -1,1 +1,16 @@
-hyprland.jsonc
+{
+	"modules-left": ["hyprland/workspaces", "custom/layout", "hyprland/window"],
+	"modules-right": ["custom/status"],
+	"hyprland/window": {
+		"format": " {} "
+	},
+	"custom/layout": { 
+		"format": " []= ",
+		"interval": "once",
+	},
+	"custom/status": { 
+		"exec": "~/.config/waybar/status.sh",
+		"format": " {} ",
+		"interval": 1
+	}
+}
