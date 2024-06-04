@@ -51,7 +51,7 @@ choice="$(
 	grep "$regex" |
 	sort | tee "$tmp" |
 	concat_path |
-	dmenu -px -c -n -x -l 10 -g 1 -F)"
+	dmenu -px -c -i -l 10 -g 1 -F)"
 
 file="$(sed -n "${choice}p" "$tmp")"
 [ -r "$file" ] || exit 1

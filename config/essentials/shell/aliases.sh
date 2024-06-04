@@ -195,7 +195,7 @@ alias gdate='date +%y_%m_%d-%T'
 alias tpid='tail -f /dev/null --pid'
 alias pwdcp='pwd | clipp'
 alias gw="grep -ri"
-alias srcsupd='echo ~/src/{installdrier,dotfiles,password-store} ~/proj/suckless/*/ ~/proj/personal/scripts/*/ ~/.config/emacs ~/.config/nvim | supd'
+alias srcsupd='echo ~/src/{installdrier,dotfiles,password-store} ~/proj/suckless/*/ ~/.config/emacs ~/.config/nvim | supd'
 
 # systemctl aliases
 alias smc='systemctl'

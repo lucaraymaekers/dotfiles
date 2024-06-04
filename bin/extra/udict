@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && printf '%s\n' "Usage:
+    udict some term" && exit 1
+
+term="$@"
+
+term="$(printf '%s\n' "${term}" | sed 's/ /\\/g' )"
+
+curl -s "https://api.urbandictionary.com/v0/define?term=${term}" |
+	jq -r '.list[0] | .word, .definition' |
+	sed -e 's/\[/\o033[1m/g' -e 's/\]/\o033[0m/g' -e '1s/^.*$/\o033[1;4;34m&\o033[0m/'
