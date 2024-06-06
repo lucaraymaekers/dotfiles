@@ -8,8 +8,6 @@
 	autosetupremote = true
 [pull]
 	rebase = false
-[commit]
-	gpgsign = true
 [merge]
 	ff = false
 [alias]
