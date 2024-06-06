@@ -2,7 +2,7 @@
 export EDITOR="vis"
 export VISUAL="vis"
 
-export BROWSER="librewolf"
+export BROWSER="osurf"
 export VIEWER="zathura"
 export PLAYER="mpv"
 
@@ -11,23 +11,37 @@ export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_STATE_HOME="$HOME"/.local/state
 
+export ANDROID_USER_HOME="$XDG_DATA_HOME"/android
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
 export CARGO_HOME="$XDG_CONFIG_HOME"/cargo
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc-2.0
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
-export NVM_DIR="$XDG_DATA_HOME"/nvm
-export W3M_DIR="$XDG_STATE_HOME"/w3m
-export GOPATH="$XDG_DATA_HOME"/go
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
-export TNS_ADMIN=/opt/oracle/instantclient_21_9/network/admin
-export WGETRC="$XDG_CONFIG_HOME"/wgetrc
-export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
-export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
+export GOPATH="$XDG_DATA_HOME"/go
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc-2.0
 export MYSQL_HISTFILE="$XDG_DATA_HOME"/mysql_history
-export RANDFILE="$XDG_CACHE_HOME"/rnd
+export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
-export PARALLEL_HOME="$XDG_CACHE_HOME"/parallel
+export NVM_DIR="$XDG_DATA_HOME"/nvm
+export OMNISHARPHOME="$XDG_CONFIG_HOME"/omnisharp
+export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
+export RANDFILE="$XDG_CACHE_HOME"/rnd
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export TERMINFO="$XDG_DATA_HOME"/terminfo
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
+export TNS_ADMIN=/opt/oracle/instantclient_21_9/network/admin
+export W3M_DIR="$XDG_STATE_HOME"/w3m
+export WGETRC="$XDG_CONFIG_HOME"/wgetrc
+export WINEPREFIX="$XDG_DATA_HOME"/wine
+export XCURSOR_PATH=/usr/share/icons:"$XDG_DATA_HOME"/icons
+alias adb='HOME="$XDG_DATA_HOME"/android adb'
+alias irssi='irssi --config="$XDG_CONFIG_HOME"/irssi/config --home="$XDG_DATA_HOME"/irssi'
+alias mbsync='mbsync -c "$XDG_CONFIG_HOME"/isync/mbsyncrc'
 
 export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
 export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
@@ -64,9 +78,13 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=info:#b48ead,prompt:#bf6069,pointer:#b48dac
     --color=marker:#a3be8b,spinner:#ebcb8b,header:#a3be8b'
 
+export LESS="-i -r"
+
 # Colored manpages
 export MANPAGER="less -R --use-color -Dd+r -Du+b"
 export MANROFFOPT="-P -c"
+
+export CM_LAUNCHER="commander -c"
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
@@ -74,3 +92,4 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$XDG_CONFIG_HOME/cargo/bin:$PATH"
 export PATH="$PATH:./node_modules/.bin"
 export PATH="$PATH:$HOME/.dotnet/tools"
+export PATH="$PATH:$GOPATH/bin"

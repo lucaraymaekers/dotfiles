@@ -3,7 +3,7 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 # format = ' ${custom.upds}'
-format = ' [\[$username@$hostname\]](bg:#000000) ${custom.upds}$all'
+format = ' [\[$username@$hostname\]](bg:#000000) $all'
 right_format = """$status"""
 
 [character]
@@ -32,10 +32,8 @@ min_time = 500
 format = '($status)'
 disabled = false
 
-[custom.upds]
-command = 'cat ~/.cache/updates' # shows output of command
-# detect_files = ['foo'] # can specify filters but wildcards are not supported
-when = ''' test "$(cat ~/.cache/updates)" -gt 0'''
-symbol = '📦'
-format = '$output$symbol '
-
+# [custom.upds]
+# command = 'cat ~/.cache/updates' # shows output of command
+# when = '[ "$(cat ~/.cache/updates)" -gt 0 ]'
+# symbol = '📦'
+# format = '$output$symbol '

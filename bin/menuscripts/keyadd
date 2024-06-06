@@ -1,0 +1,62 @@
+#!/bin/sh
+
+log()
+{
+	notify-send -t 1000 "keyadd" "$1"
+	>&2 printf '%s\n' "$1"
+}
+
+SSHFOLDER="$HOME/.ssh"
+
+# Test if can connect to ssh-agent
+ssh-add -l > /dev/null 2>&1
+if [ $? -gt 1 ] # ignore if there are no identities
+then
+	log "Could not connect to agent."
+	exit 1
+fi
+
+delete=0
+if [ "$1" = "-d" ] 
+then
+    delete=1
+    shift
+fi
+
+if [ "$1" ]
+then
+    key_pretty="$1"
+else
+	key_pretty="$(find "$SSHFOLDER" -iname "*.pub" |
+        sed "s@$SSHFOLDER/\(.*\)\.pub\$@\1@" |
+        commander -xc)"
+fi
+[ "$key_pretty" ] || exit 1
+key="$SSHFOLDER/$key_pretty"
+
+if [ ! -f "$key" ] 
+then
+    log "No key found at: $key"
+    exit 1
+fi
+
+if [ "$delete" -eq 1 ]
+then
+	ssh-add -q -d - < "$key".pub 2> /dev/null &&
+		log "Deleted $key_pretty." ||
+		log "Could not delete."
+    exit
+fi
+
+# check if key is already added
+if ssh-add -l | grep -q "$(ssh-keygen -lf "$key")"
+then
+	log "Key already added."
+    exit 1
+fi
+
+HOST=$(hostnamectl hostname)
+export PASSWORD="keys/$HOST/ssh/$key_pretty"
+export SSH_ASKPASS="sshpass"
+ssh-add -q - < "$key" &&
+    log "Added $key_pretty."

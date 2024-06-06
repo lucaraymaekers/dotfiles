@@ -1,0 +1,65 @@
+#!/bin/sh
+
+todo="$HOME/docs/filios"/todo
+
+die() { >&2 printf '%s\n' "$*"; exit 1; }
+usage()
+{
+    cat <<EOF
+usage: td [COMMAND] [ARGUMENT]
+        td                  lists to-do's
+COMMANDS
+        new TEXT...         add a new to-do
+        clear               remove all to-do's
+        delete NUMBER       delete a to-do by number
+        grep REGEX          show to-do's matching regex
+        help                show usage
+        move NUMBER NUMBER  change priority of a to-do
+        edit                edit file in \$EDITOR
+EOF
+    exit 1
+}
+wrong_usage() { >&2 printf 'Wrong usage!\n'; usage; }
+
+list_todos() { 
+    [ ! -r "$todo" ] && die "No to-do's."
+    [ "$(wc -l < "$todo")"  -eq 0 ] && die "No to-do's."
+    awk '{print NR ": " $0}' "$todo"
+}
+
+# shellcheck disable=SC2142
+
+### MAIN
+
+# Arguments without an option
+case "$1" in
+    c*) rm -f "$todo"; >&2 printf 'Cleared.\n' ;;
+    h*) usage ;;
+    e*) $EDITOR "$todo" ;;
+    "") list_todos ;;
+    *) false ;;
+esac && exit
+
+
+arg="$1"
+shift
+[ "$1" ] || wrong_usage
+
+case "$arg" in
+    n*)
+        printf '%s\n' "$*" >> "$todo"
+        list_todos ;;
+
+    d*)
+        sed -i -n "$1!p" "$todo"
+        list_todos ;;
+    g*) list_todos | grep "$*" ;;
+
+    m*)
+        [ "$2" ] || wrong_usage
+        line="$(list_todos | sed "/^$1:/!d;s/^$1: //")"
+        sed -i "${1}d;${2}i${line}" "$todo"
+        list_todos ;;
+
+    *) wrong_usage ;;
+esac

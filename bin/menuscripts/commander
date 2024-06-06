@@ -1,0 +1,261 @@
+#!/bin/sh
+
+# An attempt to unify usage of multiple launchers.
+# MENUCMD must be set to the name of the lancher
+#
+# look at the last line to understand how it works
+
+### TODO
+# instead of dynamic, provide a command to set width and height manually
+
+tmp="$(mktemp -u)"
+export menuopts=""
+TOFIRC="$HOME/.config/tofi/config"
+
+options='
+horizontal
+height
+center
+input
+instant
+long
+prompt
+numbered
+prefix
+width'
+
+cleanup() { rm -f "$tmp"; }
+
+logn() { >&2 printf '%s\n' "$@"; }
+die() { logn "$@"; exit 1; }
+
+help() {
+	>&2 cat <<-EOF
+	Usage: commander OPTIONS...
+
+	An attempt to regroup multiple launchers into one,
+	it detects the value of the MENUCMD variable
+
+	try:
+	MENUCMD=tofi commander < /etc/passwd
+
+	Options:
+	  -h              Display items horizontally
+	  -c              Display centered
+	  -i              Take an input and return it to stdout
+	  -p ARG          Prompt user with the specified argument
+	  -l              Display in long list format
+	  -n              Output the number of matches
+	  -r              Select an executable from PATH
+	  -1              Invert instant select on single match
+	  -y ARG          Use specified height
+	  -w ARG          Use specified width
+	  -x              Invert prefix matching
+	EOF
+}
+
+add_option() { menuopts="$menuopts $*"; }
+get_prop() { awk -F '=' "/$1 *=*/ {print \$2}" "$TOFIRC"; }
+
+
+trap cleanup EXIT
+
+# Helper functions
+case "$MENUCMD" in
+	tofi)
+		### Get a height based on a number of items
+		# $1: max items count
+		get_height()
+		{
+			font_size="$(get_prop "font-size")"
+			padding_top="$(get_prop "padding-top")"
+			padding_bottom="$(get_prop "padding-bottom")"
+
+			printf "%s" "$((
+			font_size*2 + padding_top + padding_bottom + 2 +
+			($1)*(font_size*2 - 2)
+			))"
+
+		}
+		### Get a width based on a maximum character length
+		# $1: max character length
+		get_width()
+		{
+			font_size="$(get_prop "font-size")"
+			padding_left="$(get_prop "padding-left")"
+			padding_right="$(get_prop "padding-right")"
+			printf "%s" "$(($1*(font_size-2) + 3 + padding_left + padding_right))"
+		} ;;
+	*) ;;
+esac
+
+
+main()
+{
+	# shellcheck disable=SC2317
+	case "$MENUCMD" in
+		tofi)
+			center() { add_option "--anchor=center --width=252"; }
+
+			horizontal() {
+				add_option "--horizontal=true --height=32"
+				add_option "--result-spacing=12"
+				add_option "--selection-background=#88c0d0"
+				add_option "--selection-background-padding=6,4"
+				add_option "--padding-top=0 --padding-bottom=0"
+				add_option "--margin-top=4"
+			}
+
+			long() { add_option "--width=100% --height=$(get_height 20)"; }
+
+			input() {
+				add_option "--height=$(get_height 0) --width=$(get_width 24)"
+				pre_filter() { cat /dev/null; }
+			}
+
+			prefix() { add_option '--matching-algorithm=normal'; }
+
+			instant() { add_option "--auto-accept-single=false"; }
+
+			prompt() { add_option '--prompt-text' "$prompt_arg"; }
+
+			numbered() { 
+				pre_filter() { awk '{print NR, $0}'; }
+				post_filter() { awk '{print $1}'; }
+			}
+
+			height() { add_option "--height=$(get_height "$height_arg")"; }
+			width() { add_option "--width=$(get_width "$width_arg")"; }
+
+			run() { tofi-run $*; }
+
+			menucmd() { tofi "$@"; } ;;
+
+		dmenu)
+			horizontal() { add_option "-l 0"; }
+
+			center() { add_option "-c"; }
+
+			long() { add_option "-l 20 -g 1"; }
+
+			input() {
+				pre_filter() { cat /dev/null; }
+			}
+
+			instant() { add_option "-n"; }
+
+			prefix() { add_option '-x -i'; }
+
+			prompt() { add_option '-p' "$prompt_arg"; }
+
+			numbered() { add_option "-px"; }
+
+
+			height() { add_option "-l $height_arg"; }
+			width() { add_option "-g $width_arg"; }
+
+			run() { dmenu_path | dmenu $*; }
+
+			menucmd() { dmenu $*; } ;;
+
+		fzf)
+			center() { :; }
+			horizontal() { :; }
+			long() { :; }
+			height() { :; }
+			width() { :; }
+			instant() { :; }
+			prefix() { :; }
+
+			input() {
+				pre_filter() { cat /dev/null; }
+				add_option '--print-query'
+			}
+
+			prompt() { add_option "--prompt" "$prompt_arg"; }
+
+			numbered() { 
+				pre_filter() { awk '{print NR, $0}'; }
+				add_option '--with-nth' '2..'
+				post_filter() { awk '{print $1}'; }
+			}
+
+			run() {
+				IFS=:
+				set -f
+				find -L $PATH -type f -printf "%f\n" 2> /dev/null | sort -u | fzf $*
+			}
+
+			menucmd() { fzf -0 -1 "$@"; } ;;
+
+		*) ;;
+	esac
+
+	for option in $options
+	do eval "$option=0"
+	done
+
+	while getopts ":cdhilop:nr1w:xy:v" opt
+	do
+		# shellcheck disable=SC2034
+		case $opt in
+			
+			# display horizontal
+			h) horizontal=1 ;;
+			# display centered
+			c) center=1 ;;
+			# take an input and return it on stdout
+			i) input=1 ;;
+			# adjust size and style dynamically
+			p) prompt=1; prompt_arg="$OPTARG";;
+			# long list format
+			l) long=1 ;;
+			# output number of match
+			n) numbered=1 ;;
+			# select an executable from PATH
+			r) run=1 ;;
+			# invert instant select on single match
+			1) instant=1 ;;
+			w) width=1; width_arg="$OPTARG" ;;
+			# invert prefix matching
+			x) prefix=1 ;;
+			y) height=1; height_arg="$OPTARG" ;;
+
+			:) die "Option '-$OPTARG' requires an argument" ;;
+			?) die "Invalid option: -$OPTARG" ;;
+		esac
+	done
+
+	# quit if stdin is empty
+	[ -t 0 ] && [ "${run:-0}" -eq 0 ] && [ "$input" -eq 0 ] && help && exit 1
+
+	# call options
+	for option in $options
+	do eval "test \"\$$option\" -eq 1" && $option
+	done
+
+	if [ "$run" ] 
+	then
+		run "$menuopts" 
+		exit
+	fi
+
+	command -v pre_filter > /dev/null || pre_filter() { cat; }
+	command -v post_filter > /dev/null || post_filter() { cat; }
+
+	! which "${MENUCMD:-fzf}" > /dev/null && die "MENUCMD '$MENUCMD' was not found."
+
+	if command -v pre_cmd > /dev/null
+	then
+		pre_cmd > "$tmp"
+		logn "menuopts: $menuopts"
+		# shellcheck disable=SC2086
+		pre_filter < "$tmp" | menucmd $menuopts | post_filter
+	else
+		logn "menuopts: $menuopts"
+		# shellcheck disable=SC2086
+		pre_filter | menucmd $menuopts | post_filter
+	fi
+}
+
+main "$@"

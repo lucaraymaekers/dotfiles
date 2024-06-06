@@ -50,7 +50,7 @@ og()
 	_googoo_fzf_opt "$1"
 	cd "$(goo d "$dest" | fzf $opt)"
 }
-ogo()
+oog()
 {
 	_googoo_fzf_opt "$1"
 	cd "$(dirname "$(goo f "$dest" | fzf $opt)")"
@@ -68,7 +68,10 @@ sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
 getgit() { git clone git@db:"$1"; }
+
 esc() { eval "$EDITOR '$(which $1)'"; }
+compdef esc="which"
+
 delfile() { curl -s "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
 upfile() { curl -s -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
 to_webm() { ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm; }
@@ -291,4 +294,73 @@ edit_in_dir() {
 	file="$1/$(goo f "$1" | sed "s@^$1@@" | fzf)"
 	[ -f "$file" ] || return 1
 	$EDITOR "$file"
+}
+
+# Download a file from google drive
+# link like this: https://drive.usercontent.google.com/download?id=1TiJDEftTtF1KTMBI950Bj487ndYqkwpQ&export=download
+gdown () {
+        agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/12$(head /dev/urandom | tr -dc '0-1' | cut -c1).0.0.0 Safari/537.36"
+        uuid=$(curl -sL "$1" -A "$agent" | sed -nE 's|.*(uuid=[^"]*)".*|\1|p')
+        aria2c -x16 -s16 "$1&confirm=t&$uuid" -U "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" --summary-interval=0 -d "${2:-.}"
+}
+
+# toggle wireguard vpn on $1 -> interface
+wgtoggle() { 
+	d="${1:-wg0}"
+	ip -br a | awk '{print $1}' | grep "$d" > /dev/null &&
+        doas wg-quick down "$d" ||
+        doas wg-quick up "$d"
+}
+
+# serve a file through dufs
+serve() {
+    if [ "$1" ]
+    then
+        logn "Serving $1"
+        docker container run \
+            --rm \
+            --volume "$(readlink -f "$1")":/data \
+            --publish 80:5000 sigoden/dufs /data
+    else
+
+        logn "Receiving files.."
+        docker container run \
+            --rm \
+            --volume /tmp/data:/data \
+            --publish 80:5000 sigoden/dufs /data --allow-upload
+    fi
+}
+
+ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
+
+
+fchange()
+{
+    [ "$1" ] || return 1
+    inotifywait -m -e create,modify,delete --format "%f" "${2:-.}"  |
+        while read -r EVENT
+        do
+            eval "$1"
+        done
+}
+
+unhappy.exe() {
+    [ "$1" ] &&
+        smiles=("[: " ".-." " :]" "._.") ||
+        smiles=("]: " ".-." " :[" "._.")
+
+	while true
+	do
+		for s in $smiles
+		do
+			printf '\r%s' "$s"
+			sleep 1
+		done
+	done
+}
+
+ssh_port()
+{
+    ssh -f -N -L 0.0.0.0:"$3":localhost:"$1" "$2"
+    >&2 printf "Forwarded port '%s' on '%s' to '%s'.\n" "$1" "$2" "$3"
 }

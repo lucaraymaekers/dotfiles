@@ -18,9 +18,9 @@ autoload -z edit-command-line
 zle -N edit-command-line
 
 ### Source files
+. $XDG_CONFIG_HOME/zsh/comp.zsh
 . $XDG_CONFIG_HOME/shell/functions.sh
 . $XDG_CONFIG_HOME/shell/aliases.sh
-. $XDG_CONFIG_HOME/zsh/comp.zsh
 . $XDG_CONFIG_HOME/zsh/widgets.zsh
 # . $XDG_CONFIG_HOME/zsh/prompt.zsh
 # . $XDG_CONFIG_HOME/zsh/plugins.zsh
@@ -115,7 +115,7 @@ add-zsh-hook -Uz preexec () { print -n "\e]0;$1\a\033[0m"; }
 add-zsh-hook -Uz precmd set_wt (){ print -Pn "\e]0;%n@%m on %~\a"; }
 
 ## automatic ls after cd
-add-zsh-hook -Uz chpwd (){ [ "$PWD" = "$HOME" ] || ls -a; }
+add-zsh-hook -Uz chpwd (){ [ "$PWD" = "$HOME" ] || ls -A; }
 
 ### Variables
 ## Run menuscripts with fzf

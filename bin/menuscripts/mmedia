@@ -1,0 +1,59 @@
+#!/usr/bin/env sh
+
+tmp="/tmp/mmedia"
+
+dirs="$HOME/dl"
+
+concat_path() { sed "s#^$HOME#\~#;s#\([^/]\)[^/]*/#\1/#g"; }
+
+case "$1" in 
+	"video") 
+		regex='^.\+\.\(webm\|mp4\|mpeg\|mkv\)$' 
+		dirs="$dirs $HOME/vids"
+		viewer() { $PLAYER "$1"; } ;;
+	"pdf") 
+		regex='^.\+\.\(pdf\)$' 
+		dirs="$dirs $HOME/docs"
+		viewer() { $VIEWER "$1"; } ;;
+	"image")
+		regex='^.\+\.\(png\|avif\|jpg\)$' 
+		dirs="$dirs $HOME/pics"
+		viewer() { $IMAGE "$1"; } ;;
+	"cursus")
+		regex='^.*/[cC]ursus/index.html$'
+		dirs="$HOME/docs/school/Vakken"
+		concat_path() { sed "s#$dirs/##;s#/[cC]ursus/index.html##"; }
+		viewer() { $BROWSER "$1"; } ;;
+	"schoolpdf")
+		regex='^.\+\.\(pdf\)$' 
+		dirs="$HOME/docs/school/Vakken"
+		concat_path() { sed "s#$dirs/##;s#/[cC]ursus/index.html##;s#/Cursus/viewer/files/#: #"; }
+		viewer() { $VIEWER "$1"; } ;;
+	*) 
+		choice="$(cat <<-EOF | dmenu -g 5 -l 1 -c
+		video
+		pdf
+		image
+		cursus
+		schoolpdf
+		EOF
+		)"
+		[ "$choice" ] || exit 1
+		"$0" "$choice"
+		exit ;;
+esac
+
+shift
+[ "$1" ] && dirs="$1"
+
+choice="$(
+	find -L $dirs 2> /dev/null |
+	grep "$regex" |
+	sort | tee "$tmp" |
+	concat_path |
+	dmenu -px -c -n -x -l 10 -g 1 -F)"
+
+file="$(sed -n "${choice}p" "$tmp")"
+[ -r "$file" ] || exit 1
+
+viewer "$file"

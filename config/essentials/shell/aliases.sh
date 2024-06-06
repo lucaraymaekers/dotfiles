@@ -3,6 +3,7 @@
 
 # The most important one
 alias vi='nvim'
+alias cd='z'
 
 # Zsh specific aliases
 if [ $SHELL = "/bin/zsh" ]
@@ -149,6 +150,7 @@ alias wd='dict'
 # ssh
 alias sha='ssh-add'
 alias sshs='eval "$(ssh-agent)" && ssh-add'
+alias sshids='ssh-add -L | xargs -I{} grep "{}" -l $(find "$HOME/.ssh" -type f -iname '\''*.pub'\'') | sed "s;$HOME/.ssh/;;;s;\.pub$;;"'
 alias whatsmyip='curl -s "ifconfig.co"'
 alias icognito='unset HISTFILE'
 alias webcam='v4l2-ctl --set-fmt-video=width=1280,height=720; mpv --demuxer-lavf-format=video4linux2 --demuxer-lavf-o-set=input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed --no-resume-playback'
@@ -167,7 +169,14 @@ alias wgdown='doas wg-quick down wg0'
 alias npi="npm init --yes"
 
 # Python
-alias penv='python3 -m venv env'
+
+if which uv > /dev/null 2>&1
+then
+    alias penv='uv venv env'
+    alias pip='uv pip'
+else
+    alias penv='python3 -m venv env'
+fi
 alias phttp='python3 -m http.server'
 alias pipreq='pip install -r requirements.txt'
 
@@ -331,3 +340,10 @@ alias update-mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee 
 
 alias tmpd='cd $(mktemp -d)'
 alias brs='$BROWSER'
+which bat > /dev/null 2>&1 &&
+    alias cat="bat -p"
+
+alias glf='git pull --ff'
+alias glnf='git pull --no-ff'
+alias quickvms='/media/cricket/vms/quickemu/"$(find '\''/media/cricket/vms/quickemu/'\'' -type f -iname '\''*.conf'\'' -printf '\''%f
+'\'' | sed '\''s/\.conf$//'\'' | fzf)".conf 2> /dev/null'

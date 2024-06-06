@@ -1,0 +1,53 @@
+#!/bin/sh
+
+err() { printf "%s\n" "$@"; }
+
+if [ -z "$1" ] || [ "$1" = "-h" ]
+then
+    >&2 cat <<EOF
+-k kill ssh
+-v vpn
+-s ssh bindings
+-h help
+EOF
+    exit 1
+fi
+
+if [ "$1" = "-k" ]
+then
+    shift
+	pgrep -f -- "ssh.*-L.*vm" | xargs kill
+fi
+
+export SSH_ASKPASS="sshpass"
+export SSH_ASKPASS_REQUIRE="prefer"
+export PASSWORD="zot/qemu"
+
+if [ "$1" = "-v" ]
+then
+    shift
+    err "I: Waiting for connectivity..."
+    while ! ssh -o ConnectTimeout=1 -o BatchMode=yes vm 2>&1 | grep "Permission denied" > /dev/null
+    do sleep 1
+    done
+
+    err "I: Activating vpn"
+    ssh vm "rasdial \"vpn.student.ehb.be\""
+fi
+
+
+if [ "$1" = "-s" ]
+then
+    shift
+    keyadd ehb/ai
+    ssh -f -N \
+        -L 2222:10.2.160.41:22 \
+        vm
+
+    keyadd ehb/vm_int
+    >&2 printf 'ssh forwardings for vms\n'
+    ssh -f -N -L 2223:10.2.160.9:22 vm
+    ssh -f -N -L 2224:10.2.160.10:22 vm
+    ssh -f -N -L 2225:10.2.160.11:22 vm
+    ssh -f -N -L 2226:10.2.160.51:22 vm
+fi

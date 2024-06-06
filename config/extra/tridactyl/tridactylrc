@@ -35,6 +35,7 @@ set searchurls.y https://www.youtube.com/results?search_query=%s
 bind J tabnext
 bind K tabprev
 
+bind i filldmcdline bmarks
 bind goc open https://chat.openai.com/chat
 bind gnc winopen https://chat.openai.com/chat
 bind gpc tabopen https://chat.openai.com/chat

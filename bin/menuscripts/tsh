@@ -1,0 +1,204 @@
+#!/bin/sh
+
+PROG="$(basename "$0")"
+## VARIABLES
+# copy command and deps variable
+deps="pup curl $MENUCMD"
+
+LIBPFX=/home/aluc/.local/share/tsh
+module='1337x.sh' # default module
+
+# Files
+export tmp="/tmp/$PROG"
+files="seeds sizes names html tmp_types"
+# Use export so that these variables can be used inside of modules
+for file in $files
+do eval "export $file=$tmp/$file"
+done
+# Files not in $files won't be deleted
+export results="$tmp/results"
+export links="$tmp/links"
+
+types="music anime movies shows other software games isos books"
+
+if [ "$WAYLAND_DISPLAY" ]
+then
+	clipp() { wl-copy -n; }
+	deps="$deps wl-copy"
+else
+	clipp() { xclip -selection clipboard -r; }
+	deps="$deps xclip"
+fi
+## FUNCTIONS
+
+help ()
+{
+	>&2 cat <<-EOF
+	Usage: $PROG [options] query
+	Options:
+	    -h           Show this help message and exit
+	    -r           Skip getting pages and use last results
+	    -s OPTION    Sort results based on the specified OPTION
+	                 Available options: seeds, size, name
+	    -m MODULE    Select a module, if MODULE is 'list',
+	                 lists out available modules
+	EOF
+}
+
+log () { >&2 printf '%s' "$*"; }
+logn () { >&2 printf '%s\n' "$*"; }
+die () { logn "$@"; exit 1; }
+
+confirm()
+{
+	log "$1"
+	head -n 1 | grep -q "[yY]"
+}
+
+dependencies ()
+{
+	for p in $deps
+	do
+		if ! command -v "$p" > /dev/null
+		then
+			logn "E: Program '$p' not found."
+			error=1
+		fi
+	done
+	[ "${error:-0}" -eq 1 ] && exit 1
+}
+
+# shellcheck disable=SC2046
+# (we use word splitting on purpose)
+isOnline () { grep -q '1' $(echo /sys/class/net/*/carrier | sed 's#/sys/class/net/lo/carrier ##'); }
+
+# Remove temp files and quit
+cleanup ()
+{
+	for file in $files
+	do eval "rm -f \$$file"
+	done
+}
+
+list_modules () { find -L "$LIBPFX" -type f -printf "%f\n"; }
+
+# get a query from user based on MENUCMD
+get_query ()
+{
+	isOnline || exit 1
+	if [ "${query:="$*"}" ]
+	then
+		printf "%s" "$query"
+	else
+		log ' > '
+		head -n 1
+	fi | tr ' ' '+'
+}
+
+# Select a result from the result file sorterd with sort_results
+# and select with fzf
+select_result ()
+{
+	command -v sort_results > /dev/null || sort_results() { sort -k3 -n -r; }
+	awk '{print NR, $0}' "$results" |
+		sort_results |
+		column -t -l 3 |
+		fzf -m --with-nth 2.. |
+		awk '{print $1}'
+}
+
+show_files()
+{
+	hash="${1##*btih:}"
+	hash="${hash%%&*}"
+
+	# Download the torrent file from a torrent website
+	curl -s "https://itorrents.org/torrent/${hash}.torrent" > "$tmp"/.torrent
+	transmission-show "$tmp"/.torrent | sed -n '/^FILES/,$p' | head -n -1 | tail -n +3 >&2
+	rm -f "$tmp"/.torrent
+}
+
+# Select a type after having displayed them with 'show_types'
+select_type()
+{
+	for type in $types
+	do printf "%s\n" "$type"
+	done | fzf
+}
+
+trap "exit 1" INT
+trap "cleanup" EXIT
+
+## OPTIONS
+skip=0
+while getopts ":hm:rs:" opt
+do
+	case $opt in
+		h) help && exit ;;
+		m)
+			[ "$OPTARG" = "list" ] && list_modules && exit
+			module="$(list_modules | grep -m 1 "^$OPTARG")"
+			[ -z "$module" ] && die "No valid module for '$OPTARG'"
+			logn "module: $module" ;;
+		r) 
+			[ ! -r "$results" ] && die "No previous results found."
+			skip=1 ;;
+		s)
+			case $OPTARG in
+				"seeds")	sort_results() { sort -k3 -n -r; } ;;
+				"size") 	sort_results() { sort -k2 -h -r; } ;;
+				"name") 	sort_results() { sort -k4; } ;;
+				*) die "argument '$OPTARG' not seeds,size,name" ;;
+			esac ;;
+		:) die "Option -$OPTARG requires an argument" ;;
+		?) die "Invalid option: -$OPTARG" ;;
+	esac
+done
+shift $((OPTIND - 1))
+
+dependencies
+
+# Get the torrents with module
+if [ $skip -ne 1 ]
+then
+	mkdir -p "$tmp"
+
+	query="$(get_query "$*")"
+	[ "$query" ] || exit 1
+
+	# Get results
+	rm -f "$results" "$links"
+	# shellcheck source=/usr/local/lib/$PROG/nyaa.sh disable=SC1091
+	. "$LIBPFX/$module"
+	[ -f "$results" ] || die "No results."
+
+	# Save which module was used
+	printf "%s\n" "$module" >> "$links"
+else
+	module="$(tail -n 1 "$links")"
+fi
+
+# acquire get_magnet function
+# shellcheck source=/usr/local/lib/$PROG/nyaa.sh disable=SC1091
+getfunctions=1 . "$LIBPFX/$module"
+
+# select result from "$results"
+for choice in $(select_result | xargs)
+do
+    printf 'choice: %s\n' "$choice"
+    magnet="$(get_magnet "$choice")"
+    [ "$magnet" ] || exit 1
+
+    confirm 'files?' && show_files "$magnet"
+
+    if confirm 'download?'
+    then
+	    type="$(select_type)"
+	    [ "$type" ] || exit 1
+	    transmission-remote debuc.com -a "$magnet" -w "/downloads/$type"
+    elif confirm "copy?"
+    then
+	    echo "$magnet" | clipp
+    fi
+
+done

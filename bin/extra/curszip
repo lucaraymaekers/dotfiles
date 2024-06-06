@@ -2,7 +2,7 @@
 
 list1() { find "$1" -mindepth 1 -maxdepth 1 -type "${2:-d}" -printf '%f\n'; }
 
-curs="$(list1 ~/docs/school/Vakken | fzf)"
+curs="$(list1 ~/docs/school/Vakken | commander -c)"
 [ "$curs" ] || exit 1
 zip="$(list1 ~/dl f | fzf -f "$curs" | grep '\.zip$')"
 >&2 printf "curs: %s\n" "$curs"

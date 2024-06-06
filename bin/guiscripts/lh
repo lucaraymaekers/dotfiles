@@ -8,7 +8,6 @@
 
 [ "${url:=$1}" ] || url="$(clipo)"
 notify-send "linkhandler" "$url"
-echo "$url" > ~/file.txt
 
 case "$url" in
     file://*) 

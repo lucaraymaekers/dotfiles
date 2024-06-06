@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ "colemak" = "$(setxkbmap -query | awk '/^variant:/ {print $2}')" ]
+then
+    cycleKB
+    cycle=1
+fi
+# assume we are using colemak
 pass="$(
 	find "${PASSWORD_STORE_DIR:=~/src/password-store/}" -name "*.gpg" |
 	sed -e "s@$PASSWORD_STORE_DIR/@@" -e 's/\.gpg$//' |
@@ -13,3 +19,5 @@ if [ "$login" ]
 then printf '%s\t%s\n' "$login" "$password" | ydotool type -f -
 else printf '%s\n' "$password" | ydotool type -f -
 fi
+
+[ "$cycle" ] && cycleKB

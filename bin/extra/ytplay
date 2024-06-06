@@ -1,2 +1,4 @@
 #!/bin/sh
-yt-dlp -o - "$(ytlink)" | mpv -
+url="$(ytlink)"
+notify-send "playing: $url" &
+yt-dlp -o - "$url" | mpv -

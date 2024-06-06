@@ -1,0 +1,88 @@
+#!/bin/sh
+
+# colors
+red="$(printf '\033[31m')"
+blue="$(printf '\033[34m')"
+cyan_light="$(printf '\033[36m')"
+yellow="$(printf '\033[33m')"
+green="$(printf '\033[32m')"
+italic="$(printf '\033[3m')"
+reset="$(printf '\033[0m')"
+
+deadlines="$HOME/docs/filios"/deadlines
+
+die() { >&2 printf '%s\n' "$*"; exit 1; }
+usage()
+{
+    cat <<EOF
+usage: ddl [COMMAND] [ARGUMENT]
+        ddl                 lists deadlines
+COMMANDS
+        new TEXT...         add a new deadline
+        coming [NUM]        show the nearest coming deadline(s)
+        delete NUM          delete deadline by number
+        grep REGEX          show deadlines matching regex
+        help                show usage
+        edit                edit file in \$EDITOR
+EOF
+    exit 1
+}
+wrong_usage() { >&2 printf 'Wrong usage!\n'; usage; }
+
+colorize()
+{
+    sed \
+        -e "s/^#.*/${red}&${reset}/" \
+        -e "s/^\s*[-?!*].*/${cyan_light}&${reset}/" \
+        -e "s/([^()]\+)/${yellow}${italic}&${reset}/" \
+        -e "s/^\s*#.*/${blue}${italic}&${reset}/"
+}
+list_deadlines() { cat "$deadlines"; }
+# list dates in chronological order
+list_dates()
+{
+    grep '^#' "$deadlines" |
+        sort -t '/' -k 3 -k 2 -k 1 -n | 
+        uniq |
+        sed 's@/@.@g'
+}
+
+
+# shellcheck disable=SC2142
+
+### MAIN
+
+# Arguments without an option
+case "$1" in
+    h*) usage ;;
+
+    e*) $EDITOR "$deadlines" ;;
+
+    c*) 
+        i=1
+        list_dates | head -n "${2:-1}" |
+            while read -r date
+                do
+                    sed -n "/$date/,/^#\|^$/p" "$deadlines" | 
+                        colorize |
+                        sed "1s/.*/& ($green$i$reset)/"
+                    i=$((i+1))
+                done ;;
+
+    "") list_deadlines | colorize ;;
+
+    *) false ;;
+
+esac && exit
+
+arg="$1"
+shift
+[ "$1" ] || wrong_usage
+
+case "$arg" in
+
+    d*) sed -i "/$(list_dates | sed -n "${1}p")/,/^$/d" "$deadlines" ;;
+
+    *) wrong_usage ;;
+
+esac
