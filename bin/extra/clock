@@ -7,7 +7,8 @@ then
 	printf 'start,end,message\n' > "$clocks"
 fi
 
-if [ "$1" = "-c" ]
+# print clocks file prettily 
+if [ "$1" = "-p" ]
 then
 	# empty
 	[ "$(wc -l < "$clocks")" -eq 1 ] && exit
@@ -23,6 +24,7 @@ then
 	exit
 fi
 
+# edit clocks file in $EDITOR
 if [ "$1" = "-e" ]
 then
 	$EDITOR "$clocks"
