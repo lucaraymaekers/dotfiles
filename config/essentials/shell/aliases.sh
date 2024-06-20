@@ -164,9 +164,6 @@ alias wtip='wt ip -c -brief addr'
 alias fusephone='sshfs myphone: /media/phone'
 alias ttyper='ttyper -l english1000'
 
-alias wgup='doas wg-quick up wg0'
-alias wgdown='doas wg-quick down wg0'
-
 # NPM
 alias npi="npm init --yes"
 

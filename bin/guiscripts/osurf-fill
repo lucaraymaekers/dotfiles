@@ -1,6 +1,16 @@
 #!/bin/sh
-# bitwarden dmenu script - based off of the autofill userscript from qutebrowser
-# requires the fifo patch
+
+# Fills a password for a given website 
+# original script by Avalon Williams (avalonwilliams@protonmail.com)
+# This version uses the window id to know the url of the surf window
+# and to know which fifo it must use.  Then it injects javascript code.
+# that will fill the forms with the credentials
+
+# dependencies:
+# - surf fifo patch (http://surf.suckless.org/patches/fifo/)
+# - xprop
+# - 'pass' with password store in form dir/url/pass.gpg
+
 # $1: winid
 
 fifodir="$HOME/.config/surf/fifo" 
@@ -12,6 +22,7 @@ fi
 fifo="$fifodir/$winid"
 [ -p "$fifo" ] || exit 2
 
+# Get only domain name + top-level domain
 url="$(xprop -id "$winid" _SURF_URI |
 	 cut -f 2 -d'"' |
 	 sed 's,^.*://\([^/]*\)/.*,\1,' |
@@ -19,13 +30,15 @@ url="$(xprop -id "$winid" _SURF_URI |
 [ "$url" ] || exit 3
 >&2 printf 'url: %s\n' "$url"
 
-
+# get pass with url and ask if multiple are found
 pass="$({ find $PASSWORD_STORE_DIR/websites/ -type f -name '*.gpg' |
 	 grep "$url/" || echo; } | head -n 1 |
 	 sed "s,$PASSWORD_STORE_DIR/,,;s/\.gpg$//" |
 	 dmenu -c)"
+# if dmenu was stopped, exit
 [ $? -gt 0 ] && exit 4
 
+# if no password was found, search through password store manually with dmenu
 if [ -z "$pass" ]
 then
  	store="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
@@ -44,14 +57,15 @@ then
 	pass="$file"
 fi
 >&2 printf 'pass: %s\n' "$pass"
-
 herbe "filling ${pass#websites/}" &
 
 # Get password and username in variables with only one call to 'pass'
+# escape single quotes
 eval "$(pass show "$pass" |
 	 sed -n "1s/'/'\\\\''/g;1s/.*/password='&'/p;s/^login: \?\(.\+\)/username='\1'/p")"
 printf '%s : %s\n' "$username" "$password"
 
+# Escape quotes and backslashes for javascript
 javascript_escape() {
     printf '%s' "$1" | sed -s 's,['\''"\\\\],\\\\&,g'
 }

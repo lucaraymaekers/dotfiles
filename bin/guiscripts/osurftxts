@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# open all links in txt file into one tabbed surf
+
+# dependencies: surf, osurf, dmenu
+
+# $1: file path for non interactive use
+if [ -z "$1" ]
+then 
+	d="$HOME/dl/txtabs"
+	f="$(find "$d" -type f -printf '%f\n' | dmenu)"
+	[ "$f" ] || exit 1
+	f="$d"/"$f"
+else
+	[ -f "$1" ] || exit 1
+	f="$1"
+fi
+
+winid="$(osurf "$(head -n 1 "$f")")"
+tail -n +2 "$f" | while read -r url;
+	do surf -e "$winid" "$url" &
+	done

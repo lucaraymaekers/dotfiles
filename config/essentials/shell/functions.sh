@@ -306,7 +306,7 @@ gdown () {
 }
 
 # toggle wireguard vpn on $1 -> interface
-wgtoggle() { 
+wgt() { 
 	d="${1:-wg0}"
 	ip -br a | awk '{print $1}' | grep "$d" > /dev/null &&
         doas wg-quick down "$d" ||

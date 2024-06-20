@@ -5,6 +5,7 @@
 require('vis')
 require('plugins/vis-cursors')
 require('plugins/vis-title')
+require('plugins/vis-snippets')
 
 ------------------------------------
 --- EVENTS
