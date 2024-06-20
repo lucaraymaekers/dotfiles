@@ -1,16 +1,11 @@
-.PHONY: check format check-luacheck check-format
+.PHONY: check format all
 
-LUA_FILES := $(shell find -name "*.lua")
+LUA_FILES := $(shell find . -name "*.lua")
 
-check: check-luacheck 
+all: check format
 
-all: check check-format
-
-check-luacheck:
-	luacheck --globals=vis -- $(LUA_FILES)
-
-check-format:
-	set -e; for lf in $(LUA_FILES); do tools/check-format "$${lf}"; done
+check:
+	luacheck --no-color --globals=vis -- $(LUA_FILES)
 
 format:
 	lua-format -i $(LUA_FILES)
