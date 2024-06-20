@@ -7,7 +7,8 @@
 # - $EDITOR: -e  
 # - herbe (optional): -s
 
-repos="${XDG_DATA_HOME:-$HOME}"/git-track.txt
+repos=$HOME/sync/share/git-track.txt
+# prevent file not found errors
 touch "$repos"
 
 help() {
@@ -92,18 +93,27 @@ do
 			printf '%s\n' "$r" >> "$repos" 
 
 			>&2 printf 'added.\n' ;;
-	        c) repos_cmd "$OPTARG" ;;
-		s) status=1 ;;
+	        c) f_command=1; f_arg="$OPTARG" ;;
+		s) f_status=1 ;;
 		l) cat "$repos" ;;
 		e) $EDITOR "$repos" ;;
 		f) repos="$OPTARG" ;;
-		T) help ;;
+		h) help ;;
 		:) >&2 printf -- '-%s requires argument\n' "$OPTARG"; exit 1 ;;
 		?) >&2 printf -- 'Invalid option: -%s\n' "$OPTARG"; exit 1 ;;
 	esac
 done
 
-if [ "$status" ] 
+# commands hereafter must happen in order
+
+[ "$(wc -l < "$repos")" -gt 0 ] || exit 0
+
+if [ "$f_command" ]
+then
+	repos_cmd "$f_arg"
+fi 
+
+if [ "$f_status" ] 
 then
 	status 
 	which herbe > /dev/null 2>&1 &&
