@@ -5,7 +5,6 @@
 # dependencies:
 # - git
 # - $EDITOR: -e  
-# - herbe (optional): -s
 
 repos=$HOME/sync/share/git-track.txt
 # prevent file not found errors
@@ -47,7 +46,8 @@ status() {
 	>&2 printf '\r\033[0K'
 
 	status="$(git status --porcelain 2> /dev/null | awk '{print $1}' | uniq | tr -d '\n')"
-	remote="$(git branch -v 2>/dev/null | sed 's/ahead/↑/;s/behind/↓/;s/[^↓↑]*//g')"
+	remote="$(git branch -v 2>/dev/null |
+		sed '/^*/!d;s/ahead/↑/;s/behind/↓/;s/[^↓↑]*//g')"
 
 	printf '%s %s %s\n' "$repo_pretty" "$status" "$remote"
     done < "$repos"
@@ -116,6 +116,6 @@ fi
 if [ "$f_status" ] 
 then
 	status 
-	which herbe > /dev/null 2>&1 &&
-		eval "herbe $(status | sed 's/"/\"/g;s/.*/"&"/' | tr '\n' ' ')" &
 fi
+
+# eval "herbe $(status | sed 's/"/\"/g;s/.*/"&"/' | tr '\n' ' ')"
