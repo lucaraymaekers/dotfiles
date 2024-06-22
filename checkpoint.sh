@@ -1,5 +1,5 @@
 #!/bin/sh
 
-git commit -m 'checkpoint'
+git commit -a -m 'checkpoint'
 keyadd db
 git push

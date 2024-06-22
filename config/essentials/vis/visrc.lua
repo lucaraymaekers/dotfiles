@@ -123,6 +123,7 @@ vis.events.subscribe(vis.events.INIT, function()
 end)
 
 vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused args
+	vis:info(win.file.name)
 	win.options.relativenumbers = true
 
 	if win.syntax == "bash" then
