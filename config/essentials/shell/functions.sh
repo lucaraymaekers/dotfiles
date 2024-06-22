@@ -364,17 +364,3 @@ ffconcat () {
 	ffmpeg -y -f concat -safe 0 -i $tmp -c copy "$1"
 	rm $tmp
 }
-
-# wrap ssh and add key if exists
-ssh() {
-	if [ "$#" -gt 1 ] 
-	then
-		/usr/bin/ssh $@
-		return
-	fi
-
-	grep -E "Host\s+$1" $HOME/.ssh/config > /dev/null 2>&1 &&
-		keyadd "$1" > /dev/null 2>&1
-	/usr/bin/ssh "$1"
-}
-

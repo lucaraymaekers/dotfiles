@@ -14,7 +14,7 @@ list_pswds()
 
 while [ -d "$store/$file" ]
 do
-	choice="$(list_pswds "$store/$file" | dmenu -c -g 4 -l 4)"
+	choice="$(list_pswds "$store/$file" | commander -c)"
 	[ "$choice" ] || exit 1
 	[ -z "$file" ] && file="$choice" || file="$file/$choice"
 done

@@ -26,7 +26,6 @@ local format = require("format")
 local fzfmru = require("fzf-mru")
 fzfmru.fzfmru_path = 'grep "^' .. os.getenv("PWD") .. '" | fzf'
 
-
 -- todo:
 -- c-scope
 -- c-tags
@@ -83,8 +82,12 @@ end, "Remove trailing whitespace")
 --- MAPPINGS
 -------------------------------------
 
-vis:map(m.NORMAL, "<C-p>", function() vis:command("fzf") end, "Open file with fzf")
-
+vis:map(m.NORMAL, " pf", function()
+	vis:command("fzf")
+end, "Open file with fzf")
+vis:map(m.NORMAL, " pr", function()
+	vis:command("fzfmru")
+end, "Open file with fzf")
 
 vis:map(m.NORMAL, " r", function()
 	wrap_restore(vis.command, vis, "e $vis_filepath")
@@ -120,14 +123,32 @@ vis.events.subscribe(vis.events.INIT, function()
 end)
 
 vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused args
+	-- automatically cd in parent dir of file
+	if win.file and win.file.path then
+		local dir = win.file.path:match(".*/")
+		vis:command("cd " .. dir)
+	end
+
 	win.options.relativenumbers = true
 
 	if win.syntax == "bash" then
 		map_keys(
 			m.NORMAL,
-			" v",
+			";p",
 			"V:x/^(\\s*)(.+)$/ c/\\1>\\&2 printf '\\2: %s\\\\n' \"$\\2\"/<Enter><Escape>",
 			"Print variable"
 		)
+		map_keys(m.NORMAL, ";v", 'V:x/^(\\s*)(.+)$/ c/\\1"$(\\2)"/<Enter><Escape>', "Surround in variable")
+		map_keys(m.NORMAL, ";|", "V:x/\\| / c/|\n\t/<Enter><Escape>", "Wrap one-line multi pipe command")
+		map_keys(
+			m.NORMAL,
+			";e",
+			'V:x/^(\\s*)(.+)$/ c/\\1[ "\\2" ] || exit 1/<Enter><Escape>',
+			"Condition exit if empty"
+		)
+		map_keys(m.NORMAL, ";sc", ":-/\\<case\\>/,/\\<esac\\>/<Enter>", "Expand to case")
+		map_keys(m.NORMAL, ";sw", ":-/\\<while/,/\\<done\\>/<Enter>", "Expand to while")
+		map_keys(m.NORMAL, ";sf", ":-/\\<for\\>/,/\\<done\\>/<Enter>", "Expand to for")
+		map_keys(m.NORMAL, ";si", ":-/\\<if\\>/,/\\<fi\\>/<Enter>", "Expand to if")
 	end
 end)

@@ -1,0 +1,50 @@
+
+IMAPStore luca@spacehb.net-remote
+Host mail.spacehb.net
+Port 993
+User luca@spacehb.net
+PassCmd "pass websites/spacehb.net/luca@spacehb.net"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore luca@spacehb.net-local
+Subfolders Verbatim
+Path /home/aluc/.local/share/mail/luca@spacehb.net/
+Inbox /home/aluc/.local/share/mail/luca@spacehb.net/INBOX
+
+Channel luca@spacehb.net
+Expunge Both
+Far :luca@spacehb.net-remote:
+Near :luca@spacehb.net-local:
+Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+# End profile
+
+IMAPStore billy@spacehb.net-remote
+Host mail.spacehb.net
+Port 993
+User billy@spacehb.net
+PassCmd "pass websites/spacehb.net/billy@spacehb.net"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore billy@spacehb.net-local
+Subfolders Verbatim
+Path /home/aluc/.local/share/mail/billy@spacehb.net/
+Inbox /home/aluc/.local/share/mail/billy@spacehb.net/INBOX
+
+Channel billy@spacehb.net
+Expunge Both
+Far :billy@spacehb.net-remote:
+Near :billy@spacehb.net-local:
+Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+# End profile
