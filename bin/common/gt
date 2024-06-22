@@ -15,10 +15,10 @@ help() {
 usage: gt [OPTION]
 -a PATH         add repo 
 -s              update and show status of each repo
--c COMMAND      run 'git COMMAND'  in each repo
+-c COMMAND      run 'git COMMAND' in each repo
 -h              show this help
 -l              list repos
--e 		edit repos in $EDITOR
+-e 		edit repos in \$EDITOR
 EOF
 }
 

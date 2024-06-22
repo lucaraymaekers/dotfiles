@@ -3,11 +3,15 @@
 # We can figure out the password for the key based on $1
 # which is in the following form:
 #	Enter passphrase for key 'path/to/key':
-# The point is to retrieve the path and use the final name of the key
-# find the according password.
+# The point is to retrieve the path where the filename is the name of
+# the key.
+# Then we can construct the path for pass and get the password.
 key="$(printf '%s\n' "$1" |
 	cut -f 2 -d \' |
 	awk -F '/' '{print $NF}')"
 pass="keys/$(hostname)/ssh/$key"
+
+# optional: add key to running ssh-agent
+keyadd "$key" &
 
 pass show "$pass" | head -n 1

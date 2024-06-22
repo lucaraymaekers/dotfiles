@@ -147,7 +147,6 @@ alias mdb='mariadb -u admin -ppass admindb'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
 alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
 alias tmux='pgrep tmux && tmux attach || tmux new-session'
-alias wd='dict'
 
 # ssh
 alias sha='ssh-add'
@@ -184,7 +183,7 @@ alias kll='killall'
 alias pi='ping 9.9.9.9 -c4'
 alias sba='source env/bin/activate || source bin/activate'
 
-alias zsr='source ${ZDOTDIR:-~}/.zshrc && rehash'
+alias zsr='exec zsh'
 alias rh='rehash'
 alias wf='doas wipefs -a'
 alias dmci="doas make clean install"
@@ -250,6 +249,7 @@ alias ehyb='vi ~/.config/hypr/binds.conf'
 alias ewbj='vi ~/.config/waybar/config.jsonc'
 alias ewbs='vi ~/.config/waybar/style.css'
 alias cfd='vi config.def.h'
+alias dump='vi ~/notes/dump.md'
 # /# quick cdjV}k:!sort -t "'" -k 2
 alias cdl='cd ~/dl'
 alias cdoc='cd ~/docs'
