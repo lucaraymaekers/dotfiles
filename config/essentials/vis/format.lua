@@ -1,6 +1,8 @@
-local global_options = { check_same = true }
+local M = {}
+M.check_same = true
+M.wrapwidth = 90
 
-local function stdio_formatter(cmd, options)
+M.stdio_formatter = function(cmd, options)
 	local function apply(win, range, pos)
 		local size = win.file.size
 		local all = { start = 0, finish = size }
@@ -8,7 +10,7 @@ local function stdio_formatter(cmd, options)
 			range = all
 		end
 		local command = type(cmd) == "function" and cmd(win, range, pos) or cmd
-		local check_same = (options and options.check_same ~= nil) and options.check_same or global_options.check_same
+		local check_same = (options and options.check_same ~= nil) and options.check_same or M.check_same
 		local check = check_same == true or (type(check_same) == "number" and check_same >= size)
 		local status, out, err = vis:pipe(win.file, all, command)
 		if status ~= 0 then
@@ -28,7 +30,7 @@ local function stdio_formatter(cmd, options)
 	}
 end
 
-local function with_filename(win, option)
+M.with_filename = function(win, option)
 	if win.file.path then
 		return option .. "'" .. win.file.path:gsub("'", "\\'") .. "'"
 	else
@@ -36,13 +38,12 @@ local function with_filename(win, option)
 	end
 end
 
-local formatters = {}
-formatters = {
-	bash = stdio_formatter(function(win)
-		return "shfmt " .. with_filename(win, "--filename ") .. " -"
+M.formatters = {
+	bash = M.stdio_formatter(function(win)
+		return "shfmt " .. M.with_filename(win, "--filename ") .. " -"
 	end),
-	csharp = stdio_formatter("dotnet csharpier"),
-	go = stdio_formatter("gofmt"),
+	csharp = M.stdio_formatter("dotnet csharpier"),
+	go = M.stdio_formatter("gofmt"),
 	lua = {
 		pick = function(win)
 			local _, out = vis:pipe(
@@ -50,41 +51,41 @@ formatters = {
 				{ start = 0, finish = win.file.size },
 				"test -e .lua-format && echo luaformatter || echo stylua"
 			)
-			return formatters[out:gsub("\n$", "")]
+			return M.formatters[out:gsub("\n$", "")]
 		end,
 	},
-	luaformatter = stdio_formatter("lua-format"),
-	markdown = stdio_formatter(function(win)
-		if win.options and win.options.colorcolumn ~= 0 then
+	luaformatter = M.stdio_formatter("lua-format"),
+	markdown = M.stdio_formatter(function(win)
+		if win.options and M.wrapwidth ~= 0 then
 			return "prettier --parser markdown --prose-wrap always "
-				.. ("--print-width " .. (win.options.colorcolumn - 1) .. " ")
-				.. with_filename(win, "--stdin-filepath ")
+				.. ("--print-width " .. (M.wrapwidth - 1) .. " ")
+				.. M.with_filename(win, "--stdin-filepath ")
 		else
-			return "prettier --parser markdown " .. with_filename(win, "--stdin-filepath ")
+			return "prettier --parser markdown " .. M.with_filename(win, "--stdin-filepath ")
 		end
 	end, { ranged = false }),
-	powershell = stdio_formatter([[
+	powershell = M.stdio_formatter([[
     "$( (command -v powershell.exe || command -v pwsh) 2>/dev/null )" -c '
         Invoke-Formatter  -ScriptDefinition `
           ([IO.StreamReader]::new([Console]::OpenStandardInput()).ReadToEnd())
       ' | sed -e :a -e '/^[\r\n]*$/{$d;N;};/\n$/ba'
   ]]),
-	rust = stdio_formatter("rustfmt"),
-	stylua = stdio_formatter(function(win, range)
+	rust = M.stdio_formatter("rustfmt"),
+	stylua = M.stdio_formatter(function(win, range)
 		if range and (range.start ~= 0 or range.finish ~= win.file.size) then
 			return "stylua -s --range-start "
 				.. range.start
 				.. " --range-end "
 				.. range.finish
-				.. with_filename(win, " --stdin-filepath ")
+				.. M.with_filename(win, " --stdin-filepath ")
 				.. " -"
 		else
-			return "stylua -s " .. with_filename(win, "--stdin-filepath ") .. " -"
+			return "stylua -s " .. M.with_filename(win, "--stdin-filepath ") .. " -"
 		end
 	end),
-	text = stdio_formatter(function(win)
-		if win.options and win.options.colorcolumn ~= 0 then
-			return "fmt -w " .. (win.options.colorcolumn - 1)
+	text = M.stdio_formatter(function(win)
+		if win.options and M.wrapwidth ~= 0 then
+			return "fmt -w " .. (M.wrapwidth - 1)
 		else
 			return "fmt"
 		end
@@ -99,7 +100,7 @@ local function getwinforfile(file)
 	end
 end
 
-local function apply(file_or_keys, range, pos)
+M.apply = function(file_or_keys, range, pos)
 	local win = type(file_or_keys) ~= "string" and getwinforfile(file_or_keys) or vis.win
 	local ret = type(file_or_keys) ~= "string" and function()
 		return pos
@@ -107,7 +108,7 @@ local function apply(file_or_keys, range, pos)
 		return 0
 	end
 	pos = pos or win.selection.pos
-	local formatter = formatters[win.syntax]
+	local formatter = M.formatters[win.syntax]
 	if formatter and formatter.pick then
 		formatter = formatter.pick(win)
 	end
@@ -125,10 +126,4 @@ local function apply(file_or_keys, range, pos)
 	return ret()
 end
 
-return {
-	formatters = formatters,
-	options = global_options,
-	apply = apply,
-	stdio_formatter = stdio_formatter,
-	with_filename = with_filename,
-}
+return M

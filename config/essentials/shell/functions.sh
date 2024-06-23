@@ -70,7 +70,10 @@ rln() { ln -s "$(readlink -f "$1")" "$2"; }
 getgit() { git clone git@db:"$1"; }
 
 esc() { eval "$EDITOR '$(which $1)'"; }
-compdef esc="which"
+if [ $SHELL = "/bin/zsh" ]
+then
+	compdef esc="which"
+fi
 
 delfile() { curl -s "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
 upfile() { curl -s -F "file=@\"$1\"" "${2:-https://0x0.st}"; }

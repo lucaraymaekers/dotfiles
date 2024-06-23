@@ -3,12 +3,11 @@
 
 # The most important one
 alias vi='vis'
-which z > /dev/null 2>&1 &&
-    alias cd='z'
+which z >/dev/null 2>&1 &&
+	alias cd='z'
 
 # Zsh specific aliases
-if [ $SHELL = "/bin/zsh" ]
-then
+if [ $SHELL = "/bin/zsh" ]; then
 	# googoo aliases
 	alias o~='o $HOME'
 	alias o/='o /'
@@ -22,10 +21,8 @@ then
 
 	alias calc='bc <<<'
 
-	if [ -z "$WAYLAND_DISPLAY" ]
-    then
-		if which devour > /dev/null 2>&1  
-		then
+	if [ -z "$WAYLAND_DISPLAY" ]; then
+		if which devour >/dev/null 2>&1; then
 			alias mpv='devour mpv'
 			alias zathura='devour zathura'
 		fi
@@ -38,9 +35,7 @@ then
 	alias -g hl='--help |& less -r'
 fi
 
-
-if grep -qi "debian\|ubuntu" /etc/os-release 2> /dev/null
-then
+if grep -qi "debian\|ubuntu" /etc/os-release 2>/dev/null; then
 	alias aptup='apt update && apt upgrade -y'
 	alias ufwd='while echo y | ufw delete "$(ufw status numbered | tail -n +5 | fzf | cut -f2 -d'\''['\'' | cut -f1 -d'\'']'\'')" > /dev/null 2>&1 && >&2 echo "deleted."; do :; done'
 fi
@@ -54,23 +49,22 @@ alias pf='profanity'
 
 alias f='fg'
 
-which gurk > /dev/null 2>&1 &&
-    alias gurk='pgrep gurk > /dev/null && printf "Already Running.\n" || gurk'
+which gurk >/dev/null 2>&1 &&
+	alias gurk='pgrep gurk > /dev/null && printf "Already Running.\n" || gurk'
 
 alias arduino-cli='arduino-cli --config-file $XDG_CONFIG_HOME/arduino15/arduino-cli.yaml'
 
-if [ -x /usr/bin/dircolors ] || [ -x $HOME/../usr/bin/dircolors ]
-then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    # alias ls='ls -h --color --group-directories-first'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+if [ -x /usr/bin/dircolors ] || [ -x $HOME/../usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	# alias ls='ls -h --color --group-directories-first'
+	#alias dir='dir --color=auto'
+	#alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias ip='ip -color=auto'
-    alias ipa='ip -br a'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+	alias ip='ip -color=auto'
+	alias ipa='ip -br a'
 fi
 
 alias l='ls -l'
@@ -104,7 +98,7 @@ alias doprm='dopac -Rns'
 
 alias mpkg='makepkg -si'
 
-which pikaur > /dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
+which pikaur >/dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
 alias yup='yay -Syu'
 alias ysi='yay -Si'
 alias yss='yay -Ss'
@@ -128,11 +122,11 @@ alias vimp="vim '+PlugInstall'"
 alias nvimp="nvim '+PackerSync'"
 alias nvg='git status > /dev/null 2>&1 && nvim "+Git"'
 alias nvn='nvim "+Telekasten panel"'
- 
+
 alias xrandr-rpgmaker='xrandr --auto --output VGA-1 --mode 1024x768 --left-of HDMI-1 && ~/.fehbg'
 alias xrandr-default='xrandr --auto --output VGA-1 --mode 1920x1080 --left-of HDMI-1 --output HDMI-1 --mode 1920x1080 && ~/.fehbg'
 alias xrhdmi='xrandr --auto --output HDMI-4 --left-of DP-1-2'
- 
+
 alias d='du -d 0 -h'
 alias dud='du .* * -d 0 -h 2>/dev/null | sort -h'
 alias df='df -h'
@@ -168,12 +162,11 @@ alias npi="npm init --yes"
 
 # Python
 
-if which uv > /dev/null 2>&1
-then
-    alias penv='uv venv env'
-    alias pip='uv pip'
+if which uv >/dev/null 2>&1; then
+	alias penv='uv venv env'
+	alias pip='uv pip'
 else
-    alias penv='python3 -m venv env'
+	alias penv='python3 -m venv env'
 fi
 alias phttp='python3 -m http.server'
 alias pipreq='pip install -r requirements.txt'
@@ -333,15 +326,14 @@ alias dorm='docker container rm $(docker container ls -a | tail -n +2 | fzf -m |
 alias dostop='docker container stop $(docker container ls -a | tail -n +2 | fzf -m | awk '\''{print $1}'\'')'
 alias doirm='docker image rm $(docker image ls | tail -n +2 | fzf -m | awk '\''{print $3}'\'')'
 
-alias -g skip='tail -n +2'
 alias ddeps='pactree -r -d 1'
 alias update-mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
 
 alias tmpd='cd $(mktemp -d)'
 alias tmpf='$EDITOR $(mktemp)'
 alias brs='$BROWSER'
-which bat > /dev/null 2>&1 &&
-    alias cat="bat -p"
+which bat >/dev/null 2>&1 &&
+	alias cat="bat -p"
 
 alias glf='git pull --ff'
 alias glnf='git pull --no-ff'

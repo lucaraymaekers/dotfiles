@@ -1,0 +1,29 @@
+#!/bin/sh
+
+select_link() {
+	regex='(((file|https?|gopher|gemini|ftps?|git)://|www\.)[a-zA-Z0-9.]*[:;!a-zA-Z0-9./+@$&%?$\#=_~-]*)|(magnet:\?xt=urn:btih:[a-zA-Z0-9]*)'
+	tr -d '\n' | grep -Eo "$regex" | dmenu -n -x -c
+}
+
+case $1 in
+'copylink')
+	url="$(select_link)"
+	[ "$url" ] || exit 1
+	printf '%s' "$url" | clipp
+	;;
+'open')
+	url="$(select_link)"
+	[ "$url" ] || exit 1
+	lh "$url"
+	;;
+'copypath')
+	path="$(grep -Eo -e '/([^/ ](/?)+)+' -e '[^ /]+/+([^ /]+(/?)+)*' |
+		sort | uniq | dmenu -n -x -c)"
+	[ "$path" ] || exit 1
+	printf '%s' "$path" | clipp
+	;;
+*)
+	echo "no option"
+	exit 1
+	;;
+esac

@@ -69,7 +69,7 @@ end
 -----------------------------------
 
 vis:command_register("make", function()
-	vis:command("!make && head -n 1")
+	vis:command("!make; head -n 1")
 end, "make")
 vis:command_register("Q", function()
 	vis:command("qa!")
@@ -100,15 +100,9 @@ map_cmd(m.NORMAL, " q", "q!", "Quit (force)")
 map_cmd(m.NORMAL, " s", "!doas vis $vis_filepath", "Edit as superuser")
 map_cmd(m.NORMAL, " w", "w", "Write")
 map_cmd(m.NORMAL, " x", "!chmod u+x $vis_filepath", "Make active file executable")
-
-vis:map(m.NORMAL, " eh", function()
-	vis:command("!lowdown $vis_filepath > ${vis_filepath%.md}.html")
-	vis:info("exported.")
-end, "Export markdown to html")
+map_cmd(m.NORMAL, "!", "!bash", "Run bash")
 
 map_keys(m.NORMAL, " nl", ":<seq -f '%0.0f. ' 1 ", "Insert numbered list")
-
--- select markdown list element:	,x/^(\d+\.|[-*])\s+.+\n(^ .+\n)*/
 
 ------------------------------------
 --- EVENTS
@@ -131,24 +125,42 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused a
 
 	win.options.relativenumbers = true
 
+	if win.syntax then
+		vis:info(win.syntax)
+	end
+
+	-- FILETYPE OPTIONS
 	if win.syntax == "bash" then
 		map_keys(
 			m.NORMAL,
-			";p",
+			"\\p",
 			"V:x/^(\\s*)(.+)$/ c/\\1>\\&2 printf '\\2: %s\\\\n' \"$\\2\"/<Enter><Escape>",
 			"Print variable"
 		)
-		map_keys(m.NORMAL, ";v", 'V:x/^(\\s*)(.+)$/ c/\\1"$(\\2)"/<Enter><Escape>', "Surround in variable")
+		map_keys(m.NORMAL, "\\v", 'V:x/^(\\s*)(.+)$/ c/\\1"$(\\2)"/<Enter><Escape>', "Surround in variable")
 		map_keys(m.NORMAL, ";|", "V:x/\\| / c/|\n\t/<Enter><Escape>", "Wrap one-line multi pipe command")
 		map_keys(
 			m.NORMAL,
-			";e",
+			"\\e",
 			'V:x/^(\\s*)(.+)$/ c/\\1[ "\\2" ] || exit 1/<Enter><Escape>',
 			"Condition exit if empty"
 		)
-		map_keys(m.NORMAL, ";sc", ":-/\\<case\\>/,/\\<esac\\>/<Enter>", "Expand to case")
-		map_keys(m.NORMAL, ";sw", ":-/\\<while/,/\\<done\\>/<Enter>", "Expand to while")
-		map_keys(m.NORMAL, ";sf", ":-/\\<for\\>/,/\\<done\\>/<Enter>", "Expand to for")
-		map_keys(m.NORMAL, ";si", ":-/\\<if\\>/,/\\<fi\\>/<Enter>", "Expand to if")
+		map_cmd(m.NORMAL, "\\sc", "-/\\<case\\>/,/\\<esac\\>/", "Expand to case")
+		map_cmd(m.NORMAL, "\\sw", "-/\\<while/,/\\<done\\>/", "Expand to while")
+		map_cmd(m.NORMAL, "\\sf", "-/\\<for\\>/,/\\<done\\>/", "Expand to for")
+		map_cmd(m.NORMAL, "\\si", "-/\\<if\\>/,/\\<fi\\>/", "Expand to if")
 	end
+
+	if win.syntax == "markdown" then
+		vis:map(m.NORMAL, "\\h", function()
+			vis:command("!lowdown $vis_filepath > ${vis_filepath%.md}.html")
+			vis:info("exported.")
+		end, "Export markdown to html")
+		map_cmd(m.NORMAL, "\\sl", "-+x/(\\d+|[-*])\\s+.+\n/", "Expand to list item")
+	end
+
+	if win.syntax == "ansi_c" then
+		map_keys(m.NORMAL, "\\a", "f,a <Escape>hdw<S-Tab>i<Tab><Escape>", "Align table")
+	end
+
 end)
