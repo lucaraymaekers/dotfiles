@@ -1,3 +1,12 @@
+--[[
+Based on https://git.cepl.eu/cgit/vis/vis-fzf-open
+Changes made:
+- stylua
+- height argument
+- module renamed to M
+- ignore exit code 130
+--]]
+
 -- Copyright (C) 2017  Guillaume Chérel
 -- Copyright (C) 2023  Matěj Cepl
 --

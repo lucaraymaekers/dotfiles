@@ -1,3 +1,11 @@
+--[[
+Based on https://gitlab.com/muhq/vis-build
+Changes made:
+- stylua format
+- print build messages on success
+--]]
+
+
 -- Copyright (c) 2024 Florian Fischer. All rights reserved.
 --
 -- vis-build is free software: you can redistribute it and/or modify it under

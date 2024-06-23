@@ -8,6 +8,7 @@ require("build")
 -- use Trash directory instead, remove set_dir function
 require("backup")
 require("cursors")
+require("ctags")
 require("title")
 require("commentary")
 require("complete-line")

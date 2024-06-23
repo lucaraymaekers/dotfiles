@@ -1,3 +1,11 @@
+--[[
+Based on https://github.com/milhnl/vis-format
+Changes made:
+- stylua
+- restore position after format
+- use local M to return the module
+--]]
+
 local M = {}
 M.check_same = true
 M.wrapwidth = 90

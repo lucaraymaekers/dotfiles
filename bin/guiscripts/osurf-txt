@@ -13,6 +13,7 @@ f="$(find "$tabs" -type f -printf '%f\n' | dmenu -c)"
 f="$tabs"/"$f"
 >&2 printf 'f: %s\n' "$f"
 
-url="$(dmenu -c < "$f")"
+url="$(dmenu -x -c < "$f")"
+[ "$url" ] || exit 1
 
-printf 'loaduri %s' "$url" > $HOME/.config/surf/fifo/$winid
+printf 'loaduri %s\n' "$url" > $HOME/.config/surf/fifo/$winid

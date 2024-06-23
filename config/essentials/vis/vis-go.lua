@@ -1,3 +1,12 @@
+--[[
+Based on https://gitlab.com/timoha/vis-go
+Changes made:
+- stylua format
+- check if line, col in godef()
+- no formatting because already handled by format.lua
+- removed the goimports option
+--]]
+
 local function jump_to(path, line, col)
 	if path then
 		vis:command(string.format("e %s", path))
@@ -44,7 +53,9 @@ local function godef()
 		-- same file
 		line, col = string.match(out, "([^:]+):([^:]+)")
 	end
-	jump_to(path, line, col)
+	if line and col then
+		jump_to(path, line, col)
+	end
 end
 
 local function godef_back()

@@ -3,3 +3,4 @@ config/common/btop/
 config/essentials/gnupg/*
 config/extra/pikaur.conf
 config/theme/gtk-3.0/bookmarks
+tags

@@ -1,3 +1,9 @@
+--[[
+Based on https://github.com/erf/vis-cursors
+Changes made:
+- stylua
+--]]
+
 local M = {}
 local cursors = {}
 local files = {}
