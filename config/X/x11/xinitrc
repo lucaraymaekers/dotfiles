@@ -33,6 +33,7 @@ which tiramisu >/dev/null 2>&1 &&
 				herbe "$summary" "$body"
 			done
 	) &
+ntfy transmission &
 # dunst &
 slstatus &
 upds &

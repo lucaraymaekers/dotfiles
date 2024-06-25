@@ -1,0 +1,15 @@
+#!/bin/sh
+
+which jq > /dev/null || exit 1
+
+[ "$1" ] || exit 1
+
+curl -s -N "http://debuc.com:32336/$1/json?since=60m" |
+while read -r notification
+do 
+	s="$(printf '%s' "$notification" | jq -r -c '"\(.title)@@@@@\(.message)"')"
+	message="${s#*@@@@@}"
+	title="${s%%@@@@@*}"
+	[ "$message" = "null" ] && [ "$title" = "null" ] && continue
+	herbe "$title" "$message" &
+done
