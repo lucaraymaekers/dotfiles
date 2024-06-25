@@ -42,7 +42,7 @@ plug "zsh-users/zsh-completions"
 plug "MichaelAquilina/zsh-auto-notify"
 export AUTO_NOTIFY_TITLE="zsh"
 export AUTO_NOTIFY_BODY="%command [%exit_code]"
-AUTO_NOTIFY_IGNORE+=("gurk" "ttyper" "pulsemixer" "tmux" "btop" "vis" "clock")
+AUTO_NOTIFY_IGNORE+=("abduco" "gurk" "ttyper" "pulsemixer" "tmux" "btop" "vis" "clock")
 
 # Substring search settings
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=blue,fg=black,bold"
