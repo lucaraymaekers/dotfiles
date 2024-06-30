@@ -19,6 +19,7 @@ usage: gt [OPTION]
 -h              show this help
 -l              list repos
 -e 		edit repos in \$EDITOR
+-f FILE         use FILE as list of repos
 EOF
 }
 
@@ -63,6 +64,11 @@ status() {
 # $1: command
 repos_cmd() {
 	while read -r repo; do
+		if [ ! -d "$repo" ]; then
+			printf '%s missing\n' "$repo_pretty"
+			continue
+		fi
+
 		repo_pretty="$(printf '%s' "$repo" | sed "s@$HOME@~@")"
 		printf ''\''%s'\'' in %s' "$1" "$repo_pretty"
 		(
