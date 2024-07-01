@@ -1,3 +1,0 @@
-#!/bin/sh
-rm ~/bin/keyboards.txt ~/.config/user-dirs.dirs ~/bin/wd
-stowdots d
