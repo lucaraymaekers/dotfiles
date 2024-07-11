@@ -85,7 +85,7 @@ while getopts ":a:c:f:lsheu" opt; do
 			while read -r repo remote_url; do
 				gt-sync "$repo" "$remote_url"
 			done <"$repos"
-		fi | awk -F ':' '/x$/ {print $1}' |
+		fi | awk -F ':' '/x$/ {print $1}' | sed "s@~@$HOME@" |
 			if [ "$parallel" ]; then
 				parallel gt-cmd {} pull
 			else
