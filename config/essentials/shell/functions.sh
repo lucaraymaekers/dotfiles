@@ -121,26 +121,6 @@ unzipp() {
     rm -- "$1"
 }
 
-# git
-sgd() {
-	d="$PWD"
-	find $HOME/src -maxdepth 1 -mindepth 1 -type d |
-		while read -r dir
-	do
-		cd "$dir"
-		git status > /dev/null 2>&1 || continue
-		git fetch > /dev/null 2>&1
-		printf "$PWD"
-		test "$(git status --short 2>/dev/null | grep -v "??" | head -1)" &&
-			printf " \e[1;31m*changes\e[0m" | sed "s#$HOME#~#" >&2
-		test "$(parse_git_remote)" && 
-			printf " \e[0;32m*push/pull\e[0m" | sed "s#$HOME#~#" >&2
-		printf "\n"
-	done
-	cd "$d"
-	unset d
-}
-
 # fix long waiting time
 __git_files() { _wanted files expl 'local files' _files; }
 
