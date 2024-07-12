@@ -91,9 +91,9 @@ lexers.STYLE_TARGET = ""
 -- Markdown
 lexers.STYLE_HR = ""
 lexers.STYLE_HEADING_H1 = "fore:" .. colors.orange .. ",bold"
-lexers.STYLE_HEADING_H2 = "fore:" .. colors.red .. ",bold"
+lexers.STYLE_HEADING_H2 = "fore:" .. colors.magenta .. ",bold"
 for i = 3, 6 do
-	lexers["STYLE_HEADING_H" .. i] = "fore:" .. colors.magenta .. ",bold"
+	lexers["STYLE_HEADING_H" .. i] = "fore:" .. colors.cyan .. ",bold"
 end
 lexers.STYLE_BOLD = "bold"
 lexers.STYLE_ITALIC = "italics"

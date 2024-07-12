@@ -148,7 +148,7 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused a
 		map_keys(
 			m.NORMAL,
 			"\\e",
-			'V:x/^(\\s*)(.+)$/ c/\\1[ "\\2" ] || exit 1/<Enter><Escape>',
+			'V:x/^(\\s*)(.+)$/ c/\\1[ "$\\2" ] || exit 1/<Enter><Escape>',
 			"Condition exit if empty"
 		)
 		map_cmd(m.NORMAL, "\\sc", "-/\\<case\\>/,/\\<esac\\>/", "Expand to case")

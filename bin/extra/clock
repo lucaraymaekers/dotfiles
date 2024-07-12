@@ -4,74 +4,96 @@ clocks="$HOME"/sync/share/clocks.csv
 
 # Create csv file with headers if not exist
 [ -f "$clocks" ] ||
-	printf 'start,end,message\n' > "$clocks"
+	printf 'start,end,message\n' >"$clocks"
 
-
-if [ "$1" = "-h" ]
-then
+if [ "$1" = "-h" ]; then
 	>&2 cat <<EOF
 usage: clock [OPTION]
 -h shows this help
 -p print clockings prettily
+-e edit clocks file
+-a add time manually
 
-With no option it will start clocking and prompt for a task.
+With no option it will start clocking and prompt for a task.  Use
+Ctrl-D to signify the end of the task.  Ctrl-c to quit.
 EOF
-	exit 1 
+	exit 1
 fi
 
+# Note(Luca):
+# You can add a time manually with this command
 
-# print clocks file prettily 
-if [ "$1" = "-p" ]
-then
+if [ "$1" = "-a" ]; then
+	>&2 printf 'start>'
+	start_time="$(head -n1)"
+	[ "$start_time" ] || exit 1
+
+	>&2 printf 'end>'
+	end_time="$(head -n1)"
+	[ "$end_time" ] || exit 1
+
+	>&2 printf 'message>'
+	message="$(head -n1)"
+	[ "$message" ] || exit 1
+
+	printf -- '%s,%s,%s\n' \	
+	"$(date -d "$start_time" +%s)" \
+		"$(date -d "$end_time" +%s)" \
+		"$message" >>"$clocks"
+	exit
+fi
+
+# print clocks file prettily
+if [ "$1" = "-p" ]; then
 	# empty
-	[ "$(wc -l < "$clocks")" -eq 1 ] && exit
+	[ "$(wc -l <"$clocks")" -eq 1 ] && exit
 
-	timefmt="%y%m%d-%T"
 	IFS=","
 	# skip csv header
-	tail -n +2 "$clocks" |   
-	while read -r start end message
-	do
-		printf "%s - %s | %s\n" "$(date -d "@$start" +"$timefmt" )" "$(date -d "@$end" +"$timefmt")" "$message"
-	done
+	tail -n +2 "$clocks" |
+		while read -r start end message; do
+			printf "[%s] %s-%s | %s\n" \
+				"$(date -d "@$start" +'%m/%d')" \
+				"$(date -d "@$start" +'%R')" \
+				"$(date -d "@$end" +'%R')" \
+				"$message"
+		done
 	exit
 fi
 
 # edit clocks file in $EDITOR
-if [ "$1" = "-e" ]
-then
+if [ "$1" = "-e" ]; then
 	$EDITOR "$clocks"
 	exit
 fi
 
 trap 'exit 0' INT # The proper way to exit
 
-while true
-do
-	>&2 printf ' > ' 
-	message="$(head -n 1)" 
+# When no arguments are provided start clocking
+while true; do
+	>&2 printf ' > '
+	message="$(head -n 1)"
 
 	[ "$message" ] || exit 1
 	printf '\033[1A' # move cursor up once: https://en.wikipedia.org/wiki/ANSI_escape_code
 
 	start_time="$(date +%s)"
-	start_time_pretty="$(date -d "@$start_time" +%R)" 
+	start_time_pretty="$(date -d "@$start_time" +%R)"
 	>&2 printf -- '\r%s- > %s' "$start_time_pretty" "$message"
 
 	# Wait for EOF
-	cat > /dev/null 2>&1
+	cat >/dev/null 2>&1
 
 	end_time="$(date +%s)"
-	end_time_pretty="$(date -d "@$end_time" +%R)" 
+	end_time_pretty="$(date -d "@$end_time" +%R)"
 	>&2 printf -- '\r%s-%s > %s\n' "$start_time_pretty" "$end_time_pretty" "$message"
 
-	if printf '%s' "$message" | grep ',' > /dev/null
-	then
+	if printf '%s' "$message" | grep ',' >/dev/null; then
 		# escape potential double quotes
 		message="$(printf '%s' "$message" | sed -e 's/"/""/g')"
 		message="\"$message\""
 	fi
 
 	# save clocked time and message
-	printf '%s,%s,%s\n' "$start_time" "$end_time" "$message" >> "$clocks"
+	printf '%s,%s,%s\n' "$start_time" "$end_time" "$message" >>"$clocks"
 done
