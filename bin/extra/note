@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Write a note
+
+notes="$HOME/notes"
+if [ ! -d "$notes" ]; then
+	>&2 printf 'Create the notes directory.\n'
+	exit 1
+fi
+
+if [ "$1" ]; then
+	name="$1"
+else
+	>&2 printf 'name> '
+	name="$(head -n 1)"
+fi
+[ "$name" ] || exit 1
+
+$EDITOR $HOME/notes/"$name".md

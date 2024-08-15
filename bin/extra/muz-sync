@@ -4,7 +4,6 @@ trap "exit 1" INT
 music="$(xdg-user-dir MUSIC)"
 >&2 printf "music: %s\n" "$music"
 
-# recursive, links, fuzzy, partial, progress
-while ! rsync -rlyP --size-only db:/media/basilisk/music/sorted/ "$music"
+while ! rsync --recursive --verbose --partial --progress --ignore-existing --size-only db:/media/basilisk/music/sorted/ "$music"
 do :
 done

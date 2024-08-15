@@ -6,6 +6,8 @@ Changes made:
 - no formatting because already handled by format.lua
 - removed the goimports option
 - set env variable for godef that fixes "no definition found"
+- removed syntax checks
+- gorename is a keybind
 --]]
 
 local function jump_to(path, line, col)
@@ -32,9 +34,6 @@ end
 
 local function godef()
 	local win = vis.win
-	if win.syntax ~= "go" then
-		return 0
-	end
 
 	local file = win.file
 	local pos = win.selection.pos
@@ -60,24 +59,13 @@ local function godef()
 end
 
 local function godef_back()
-	if vis.win.syntax ~= "go" then
-		return 0
-	end
-
 	local pos = Gostack:pop()
 	if pos then
 		jump_to(pos.path, pos.line, pos.col)
 	end
 end
 
-vis:map(vis.modes.NORMAL, "gd", godef, "Jump to Go symbol/definition")
-vis:map(vis.modes.NORMAL, "gD", godef_back, "Jump back to previous Go symbol/definition")
-
 local function gorename(argv, force, win, selection)
-	if win.syntax ~= "go" then
-		return true
-	end
-
 	local name = argv[1]
 	if not name then
 		vis:info("empty new name provided")
@@ -107,6 +95,8 @@ local function gorename(argv, force, win, selection)
 	return true
 end
 
+vis:map(vis.modes.NORMAL, "gd", godef, "Jump to Go symbol/definition")
+vis:map(vis.modes.NORMAL, "gD", godef_back, "Jump back to previous Go symbol/definition")
 vis:command_register(
 	"gorename",
 	gorename,

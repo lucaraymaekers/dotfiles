@@ -1,0 +1,8 @@
+#!/bin/sh
+
+notes="$HOME/notes"
+note="$(find "$notes" -type f -name '*.md' |
+	sed "s@$notes/@@;s@\.md\$@@" |
+	fzf)"
+[ "$note" ] || exit 1
+$EDITOR "$notes/$note.md"

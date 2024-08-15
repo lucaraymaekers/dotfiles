@@ -12,8 +12,6 @@ require("ctags")
 require("title")
 require("commentary")
 require("complete-line")
--- removed formatting because already fulfilled by format.lua
-require("vis-go")
 -- set height to 40%
 require("fzf-open")
 require("vis-ultisnips")
@@ -78,6 +76,7 @@ end, "Quit all")
 vis:command_register("delws", function()
 	vis:command(",x/[ \t]+$|^[ \t]+$/d")
 end, "Remove trailing whitespace")
+vis:command_register("redraw", function() vis:redraw() end, "Redraw UI")
 
 -------------------------------------
 --- MAPPINGS
@@ -121,8 +120,8 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused a
 	-- automatically cd in parent dir of file
 	vis:command_register("cdp", function()
 		if win and win.file and win.file.path then
-			-- local dir = win.file.path:match(".*/")
-			-- vis:info("cd " .. tostring(dir))
+			local dir = win.file.path:match(".*/")
+			vis:info("cd " .. tostring(dir))
 		end
 	end, "Cd to parent dir of file")
 
@@ -133,6 +132,10 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused a
 	end
 
 	-- FILETYPE OPTIONS
+	if win.syntax == "ansi_c" then
+		map_keys(m.NORMAL, "\\a", "f,a <Escape>hdw<S-Tab>i<Tab><Escape>", "Align table")
+	end
+
 	if win.syntax == "bash" then
 		vis:command_register("curl", function()
 			vis:command("x/ -H/ c/\\\n\t-H/")
@@ -157,9 +160,12 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused a
 		map_cmd(m.NORMAL, "\\si", "-/\\<if\\>/,/\\<fi\\>/", "Expand to if")
 	end
 
-	if win.syntax == "yaml" then
-		win.options.tabwidth = 2
-		win.options.expandtab = true
+	if win.syntax == "go" then
+		require("vis-go")
+	end
+
+	if win.syntax == "lua" then
+		require("vis-lua")
 	end
 
 	if win.syntax == "markdown" then
@@ -175,7 +181,8 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win) -- luacheck: no unused a
 		-- ,x/^# Planning\n([^#]|\n)+
 	end
 
-	if win.syntax == "ansi_c" then
-		map_keys(m.NORMAL, "\\a", "f,a <Escape>hdw<S-Tab>i<Tab><Escape>", "Align table")
+	if win.syntax == "yaml" then
+		win.options.tabwidth = 2
+		win.options.expandtab = true
 	end
 end)
