@@ -1,6 +1,6 @@
 #!/bin/zsh
-export EDITOR="vis"
-export VISUAL="vis"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 export BROWSER="osurf"
 export VIEWER="zathura"

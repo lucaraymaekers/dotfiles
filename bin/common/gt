@@ -29,6 +29,8 @@ usage: gt [OPTION]
 EOF
 }
 
+list_repos() { cut -f 1 -d ' ' "$repos"; }
+
 # fetch repository prettily, outputs nothing if failed
 fetch() {
 	# fetch with one-line printing of progress
@@ -66,31 +68,34 @@ while getopts ":a:c:f:lsheu" opt; do
 		printf >&2 'added.\n'
 		;;
 	c)
-		cut -f 1 -d ' ' "$repos" |
+		list_repos |
 			if [ "$parallel" ]; then
 				parallel gt-cmd "{}" "$OPTARG"
 			else
 				xargs -I{} gt-cmd "{}" "$OPTARG"
 			fi
 		;;
-	s) cut -f 1 -d ' ' "$repos" | xargs -I{} gt-st {} ;;
-	l) cut -f 1 -d ' ' "$repos" ;;
+	s) list_repos | xargs -I{} gt-st {} ;;
+	l) list_repos ;;
 	e) $EDITOR "$repos" ;;
 	f) repos="$OPTARG" ;;
 	u)
+		>&2 printf 'pull.\n'
 		if [ "$parallel" ]; then
-			parallel --colsep ' ' gt-sync {1} {2} <"$repos"
+			list_repos | parallel gt-cmd {} pull  
+			>&2 printf 'push.\n'
+			list_repos |
+				xargs -I{} gt-st {} |
+				awk -F: '/↑/ {print $1}' |
+				parallel gt-cmd {} push
 		else
-			IFS=' '
-			while read -r repo remote_url; do
-				gt-sync "$repo" "$remote_url"
-			done <"$repos"
-		fi | awk -F ':' '/x$/ {print $1}' | sed "s@~@$HOME@" |
-			if [ "$parallel" ]; then
-				parallel gt-cmd {} pull
-			else
-				xargs -I{} gt-cmd {} pull
-			fi
+			list_repos | xargs -I{} gt-cmd {} pull
+			>&2 printf 'push.\n'
+			list_repos |
+				xargs -I{} gt-st {} |
+				awk -F: '/↑/ {print $1}' |
+				xargs -I{} gt-cmd {} push
+		fi
 		;;
 	h) help ;;
 	:)
