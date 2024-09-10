@@ -7,7 +7,7 @@ PATH=$HOME/bin:$PATH
 # bold="\[\033[1m\]"
 # reset="\[\033[0m\]"
 # PS1="${color1}${bold} ${color3}\\u${reset}${color3}${color4}@${color2}${bold}\\h${reset}${color3} \\w${reset} "
-PS1='$ '
+PS1=' \w $ '
 HISTFILE=
 . $HOME/.config/shell/aliases.sh 
 . $HOME/.config/shell/functions.sh

@@ -3,11 +3,11 @@ choice="$(
 cat <<EOF | commander -c -w 1 -y 5
 poweroff
 suspend
-hibernate
 reboot
 firmware
 EOF
 )"
+# hibernate
 
 [ "$choice" = "firmware" ] && systemctl reboot --firmware-setup
 [ "$choice" ] && systemctl "$choice"

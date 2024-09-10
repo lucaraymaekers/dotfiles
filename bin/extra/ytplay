@@ -1,4 +1,4 @@
 #!/bin/sh
 url="$(ytlink)"
 herbe "playing: $url" &
-yt-dlp -S "res:1080" -o - "$url" | mpv -
+yt-dlp --no-playlist -S "res:1080" -o - "$url" | mpv -

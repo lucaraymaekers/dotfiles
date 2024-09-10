@@ -168,18 +168,19 @@ function git_develop_branch() {
 }
 
 # gpg backup
+# $1: key
 gpg_backup()
 {
-    # $1: option
-    # $2: output file (without .asc)
-    gpg_command() { gpg "$1" --armor > "$2".asc; }
-    gpg_command --export-secret-keys "private"
-    gpg_command --export "public"
-    gpg_command --export-ownertrust "trust"
+    key="$(gpg --list-keys --with-colons | awk -F: '/^uid/ {print $10}' |sort|uniq | fzf)"
+    [ "$key" ] || exit 1
+    gpg --armor --export-secret-keys "$key" > private.asc
+    gpg --armor --export "$key" > public.asc
+    gpg --armor --export-ownertrust > trust.asc
     tar -czvf gpg_backup.tar.gz public.asc private.asc trust.asc
     shred -uz public.asc private.asc trust.asc
 }
 
+# $1: backup tar
 gpg_import()
 {
 	tar xf $1

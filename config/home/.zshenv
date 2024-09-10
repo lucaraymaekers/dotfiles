@@ -1,8 +1,8 @@
 #!/bin/zsh
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="vis"
+export VISUAL="vis"
 
-export BROWSER="osurf"
+export BROWSER="zen-browser"
 export VIEWER="zathura"
 export PLAYER="mpv"
 
@@ -99,3 +99,5 @@ export PATH="$PATH:$PLAN9/bin"
 
 export SSH_ASKPASS=askpass
 export SSH_ASKPASS_REQUIRE=prefer
+
+export MAKEFLAGS="-j$(nproc)"

@@ -39,4 +39,5 @@ slstatus &
 upds &
 eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
 unclutter --timeout 3 --jitter 50 -b
+herbimisu &
 exec startdwm
