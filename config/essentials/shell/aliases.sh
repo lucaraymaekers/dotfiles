@@ -2,7 +2,7 @@
 # s/alias \([^-]\)/alias -g \1
 
 # The most important one
-alias vi='vis'
+alias vi='nvim'
 which z >/dev/null 2>&1 &&
 	alias cd='z'
 

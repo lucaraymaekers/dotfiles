@@ -348,3 +348,4 @@ ffconcat () {
 	ffmpeg -y -f concat -safe 0 -i $tmp -c copy "$1"
 	rm $tmp
 }
+nvim_bindings() {  "$(tmp="$(mktemp)"; nvim +":set nomore | :redir! > $tmp | :map | :redir END | :q" ; fzf < "$tmp"; rm "$tmp")"; }
