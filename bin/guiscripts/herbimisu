@@ -1,0 +1,7 @@
+#!/bin/sh
+IFS=' '
+tiramisu -o "#summary #body" |
+    while read -r summary body 
+    do 
+        herbe "$summary" "$body" 
+    done

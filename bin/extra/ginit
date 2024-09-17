@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Create a clone of the current git repository on a remote
+
+# Expects the remote to have a git user 'git@remote.net'
+
+if [ -z "$1" ] ;then
+    >&2 printf 'ginit <remote>\n'
+    exit 1
+fi
+
+git_current_branch () {
+	local ref
+	ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null) 
+	local ret=$? 
+	if [ "$ret" -ne 0 ]
+	then
+		[ "$ret" -eq 128 ] && return
+		ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null)  || return
+	fi
+	echo ${ref#refs/heads/}
+}
+
+remote="$1"
+name="$(basename "$(git rev-parse --show-toplevel)")"
+[ "$name" ] || exit 1
+
+ssh "git@$remote" "git init --bare $name.git"
+git remote add "$remote" "git@$remote":"$name.git"
+git push "$remote" $(git_current_branch)

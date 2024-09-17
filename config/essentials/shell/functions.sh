@@ -124,14 +124,6 @@ unzipp() {
 # fix long waiting time
 __git_files() { _wanted files expl 'local files' _files; }
 
-ginit()
-{
-	[ "$1" ] || return 1
-	ssh db /var/git/initdir.sh "$1"
-	git remote add origin git@db:"$1.git"
-	git push --set-upstream origin $(git_current_branch)
-}
-
 # Returns current branch
 git_current_branch()
 {
