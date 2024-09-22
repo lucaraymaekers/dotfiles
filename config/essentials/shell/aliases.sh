@@ -3,8 +3,7 @@
 
 # The most important one
 alias vi='nvim'
-which z >/dev/null 2>&1 &&
-	alias cd='z'
+which zoxide > /dev/null 2>&1 && alias cd='z'
 
 # Zsh specific aliases
 if [ $SHELL = "/bin/zsh" ]; then
@@ -249,7 +248,7 @@ alias cdoc='cd ~/docs'
 alias czk='cd ~/docs/zk'
 alias cda='cd ~/docs/android/projects'
 alias csv='cd ~/docs/school/Vakken'
-alias cdpj='cd ~/docs/school/Vakken/ITProj'
+alias cdpj='cd ~/proj'
 alias cdm='cd ~/music'
 alias cdp='cd ~/pics'
 alias cdpa='cd ~/pics/ai-outputs/'

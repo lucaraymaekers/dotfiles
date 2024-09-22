@@ -25,14 +25,6 @@ feh --no-fehbg --bg-scale ~/pics/wallpaper
 setxkbmap colemak -option ctrl:swapcaps,altwin:menu_win
 # xautolock -locker slock &
 gammastep -m randr &
-which tiramisu >/dev/null 2>&1 &&
-	(
-		IFS=','
-		tiramisu -o '#summary,#body' |
-			while read -r summary body; do
-				herbe "$summary" "$body"
-			done
-	) &
 ntfy transmission &
 # dunst &
 slstatus &
@@ -40,4 +32,5 @@ upds &
 eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
 unclutter --timeout 3 --jitter 50 -b
 herbimisu &
+202020 &
 exec startdwm

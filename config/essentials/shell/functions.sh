@@ -341,3 +341,10 @@ ffconcat () {
 	rm $tmp
 }
 nvim_bindings() {  "$(tmp="$(mktemp)"; nvim +":set nomore | :redir! > $tmp | :map | :redir END | :q" ; fzf < "$tmp"; rm "$tmp")"; }
+
+prj () {
+    pfx="$HOME/proj"
+	d="$(find "$pfx" -mindepth 1 -maxdepth 1 -type d | sed "s@$pfx@@" |fzf)"
+    [ -d "$d" ] || exit 1
+    cd "$pfx"/"$d"
+}
