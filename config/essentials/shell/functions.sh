@@ -347,11 +347,34 @@ nvim_bindings() {
     rm "$tmp"
 }
 
-prj () {
+prj() {
     pfx="$HOME/proj"
 	d="$(find "$pfx" -mindepth 1 -maxdepth 1 -type d | sed "s@$pfx/@@" |fzf)"
     [ -d "$pfx/$d" ] || return 1
     cd "$pfx/$d"
+}
+prje() {
+    prj || return 1
+    f="$(git ls-files | fzf)"
+    if [ -f "$f" ] 
+    then
+        "$EDITOR" "$f"
+    else
+        cd -
+    fi
+}
+nprj() {
+    if [ "$1" ] 
+    then
+        p="$1"
+    else
+        printf '>'
+        p="$(head -n1)"
+        [ "$p" ] || exit 1
+    fi
+
+    mkdir -p "$HOME/proj/$p"
+    cd "$HOME/proj/$p"
 }
 
 edit_git_file () {
