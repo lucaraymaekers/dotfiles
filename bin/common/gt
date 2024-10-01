@@ -6,7 +6,7 @@
 # - git
 # - $EDITOR: -e
 # - parallel: optional, if installed will run the commands on all repos with parallel
-# - gt-[cmd,st,sync]
+# - gt-cmd, gt-st
 
 export REPOS=$HOME/sync/share/git-track.txt
 # prevent file not found errors

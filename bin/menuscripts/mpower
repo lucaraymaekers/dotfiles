@@ -8,7 +8,6 @@ firmware
 hibernate
 EOF
 )"
-# hibernate
 
 [ "$choice" = "firmware" ] && systemctl reboot --firmware-setup
 [ "$choice" ] && systemctl "$choice"

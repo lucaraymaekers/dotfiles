@@ -3,9 +3,9 @@
 while true
 do
     sleep 20m
-    mpv --volume=100 ~/.local/share/sounds/avert1.ogg &
+    mpv --volume=100 .local/share/sounds/ring1.ogg &
     herbe '202020' 'avert!'
     sleep 20s
-    mpv --volume=100 ~/.local/share/sounds/avert2.ogg &
+    mpv --volume=100 .local/share/sounds/ring1.ogg &
     herbe '202020' 'stop averting' &
 done

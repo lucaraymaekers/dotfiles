@@ -1,3 +1,4 @@
 histfile
 zcompcache*
 .zcompdump
+.zsh_history

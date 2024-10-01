@@ -340,7 +340,12 @@ ffconcat () {
 	ffmpeg -y -f concat -safe 0 -i $tmp -c copy "$1"
 	rm $tmp
 }
-nvim_bindings() {  "$(tmp="$(mktemp)"; nvim +":set nomore | :redir! > $tmp | :map | :redir END | :q" ; fzf < "$tmp"; rm "$tmp")"; }
+nvim_bindings() {  
+    tmp="$(mktemp)"
+    nvim +":set nomore | :redir! > $tmp | :map | :redir END | :q"  > /dev/null
+    eval "nvim $(fzf < "$tmp" | awk '{print $NF}' | cut -f1 -d'>' | sed 's/:/ +/')"
+    rm "$tmp"
+}
 
 prj () {
     pfx="$HOME/proj"

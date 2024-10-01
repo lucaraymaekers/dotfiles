@@ -319,7 +319,7 @@ alias dbsmu='rsync -rlpP db:/media/basilisk/music/ /media/kilimanjaro/music'
 # git
 alias config='GIT_WORK_TREE=~/src/dotfiles/ GIT_DIR=~/src/dotfiles/.git'
 alias cfg='edit_git_file ~/src/dotfiles/'
-alias nvcfg='edit_git_file ~/.config/nvim'
+alias ncfg='edit_git_file ~/.config/nvim'
 alias gmod='git status --short | sed '\''/^\s*M/!d;s/^\s*M\s*//'\'' | fzf | xargs vi'
 alias gclc='git clone "$(clipo)"'
 
