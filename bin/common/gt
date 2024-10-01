@@ -8,9 +8,9 @@
 # - parallel: optional, if installed will run the commands on all repos with parallel
 # - gt-[cmd,st,sync]
 
-repos=$HOME/sync/share/git-track.txt
+export REPOS=$HOME/sync/share/git-track.txt
 # prevent file not found errors
-touch "$repos" || exit 1
+touch "$REPOS" || exit 1
 
 which parallel >/dev/null 2>&1 && parallel=1
 
@@ -28,7 +28,7 @@ usage: gt [OPTION]
 EOF
 }
 
-list_repos() { cut -f 1 -d ' ' "$repos"; }
+list_repos() { cut -f 1 -d ' ' "$REPOS"; }
 
 # fetch repository prettily, outputs nothing if failed
 fetch() {
@@ -44,7 +44,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-[ "$(wc -l <"$repos")" -gt 0 ] || exit 0
+[ "$(wc -l <"$REPOS")" -gt 0 ] || exit 0
 
 while getopts ":a:c:f:lsheu" opt; do
 	case "$opt" in
@@ -57,12 +57,12 @@ while getopts ":a:c:f:lsheu" opt; do
 		repo="$(git rev-parse --show-toplevel)"
 		remote_url="$(git remote show -n origin | awk '/^  Fetch/ {print $NF}')"
 
-		if grep "^$repo " "$repos" >/dev/null 2>&1; then
+		if grep "^$repo " "$REPOS" >/dev/null 2>&1; then
 			printf >&2 'added already.\n'
 			exit 3
 		fi
 
-		printf '%s %s\n' "$repo" "$remote_url" >>"$repos"
+		printf '%s %s\n' "$repo" "$remote_url" >>"$REPOS"
 
 		printf >&2 'added.\n'
 		;;
@@ -76,8 +76,8 @@ while getopts ":a:c:f:lsheu" opt; do
 		;;
 	s) list_repos | xargs -I{} gt-st {} ;;
 	l) list_repos ;;
-	e) $EDITOR "$repos" ;;
-	f) repos="$OPTARG" ;;
+	e) $EDITOR "$REPOS" ;;
+	f) REPOS="$OPTARG" ;;
 	u)
 		>&2 printf 'pull:\n'
 		if [ "$parallel" ]; then
