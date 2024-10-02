@@ -6,6 +6,7 @@ map o zoom out
 map f toggle_fullscreen
 map x toggle_statusbar
 map X toggle_index
+map I recolor
 
 set font                      "monospace bold 11"
 set adjust-open               "best-fit"
@@ -14,6 +15,34 @@ set scroll-page-aware         "true"
 set scroll-full-overlap       0.01
 set scroll-step               100
 
-set guioptions          	" "
+set guioptions          	""
 set database            	"sqlite"
 set continuous-hist-save	true
+
+set recolor true
+set recolor-reverse-video true
+set recolor-keephue true
+set recolor-lightcolor "#2e3340"
+set recolor-darkcolor "#d8dee9"
+
+set default-fg "#88C0D0"
+set default-bg "#3b4252"
+set completion-bg "#434c5e"
+set completion-fg "#d8dee9"
+set completion-highlight-fg "#434c5e"
+set completion-highlight-bg "#d08770"
+set inputbar-fg "#d8dee9"
+set inputbar-bg "#3b4252"
+set notification-bg "#81a1c1"
+set notification-fg "#2e3440"
+set notification-error-bg "#bf616a"
+set notification-error-fg "#eceff4"
+set notification-warning-bg "#ebcb8b"
+set notification-warning-fg "#2e3340"
+set highlight-active-color rgba(235,203,139,0.75) # #ebcb8b
+set highlight-color rgba(235,203,139,0.5)
+set highlight-fg "#2e3440"
+set index-active-bg "#d08770"
+set index-active-fg "#ebcb8b"
+set index-bg "#2e3440"
+set index-fg "#d8dee9"
