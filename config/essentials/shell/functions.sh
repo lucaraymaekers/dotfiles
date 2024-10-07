@@ -356,6 +356,7 @@ prj() {
 prje() {
     prj || return 1
     f="$(git ls-files | fzf)"
+    [ "$f" ] || exit 1
     if [ -f "$f" ] 
     then
         "$EDITOR" "$f"

@@ -341,3 +341,6 @@ alias glf='git pull --ff'
 alias glnf='git pull --no-ff'
 alias quickvms='/media/cricket/vms/quickemu/"$(find '\''/media/cricket/vms/quickemu/'\'' -type f -iname '\''*.conf'\'' -printf '\''%f
 '\'' | sed '\''s/\.conf$//'\'' | fzf)".conf 2> /dev/null'
+
+alias sqlplus='sqlplus -x'
+alias rsqp='rlwrap sqlplus -x'
