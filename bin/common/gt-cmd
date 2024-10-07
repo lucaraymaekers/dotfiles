@@ -17,13 +17,13 @@ fi
 
 # Check if repo's remote's key is in ssh-agent
 # If key is not registered and command is push/pull we exit with error
+# Note:
+# path to key: ~/.ssh/<hostname>.pub
+# where <hostname> is the same in ssh config
 r="$(grep "$repo" "$REPOS" | cut -f 2 -d ' ' | cut -f 2 -d '@' | cut -f 1 -d ':')"
-if { [ "$command" = "push" ] || [ "$command" = "pull" ]; } && 
-    # In my ssh config every Host has the same name as its private key.  This means remotes in
-    # "$REPOS" (here "$r") + .pub is the public key, so we convert the name to what would be the
-    # public key's name and check if its contents are registered in the ssh-agent.
-    [ -r "$HOME/.ssh/$r.pub" ] &&
-    ! ssh-add -L | grep "$(cat "$HOME/.ssh/$r.pub")" > /dev/null
+if { [ "$command" = "push" ] || [ "$command" = "pull" ] || [ "$command" = "fetch" ]; } &&
+    # key not registered in agent
+    ! { ssh-add -L | grep "$(cat "$HOME/.ssh/$r.pub")" > /dev/null; }
 then
     printf '%s: '\''%s'\'' not in ssh-agent\n' "$repo_pretty" "$r" 
     exit 1
