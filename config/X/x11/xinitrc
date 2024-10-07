@@ -20,17 +20,25 @@ fi
 
 export MENUCMD="dmenu"
 export IMAGE="feh"
-xcompmgr &
-feh --no-fehbg --bg-scale ~/pics/wallpaper
-setxkbmap colemak -option ctrl:swapcaps,altwin:menu_win
-# xautolock -locker slock &
-gammastep -m randr &
-ntfy transmission &
-# dunst &
-slstatus &
-upds &
-eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
-unclutter --timeout 3 --jitter 50 -b
-herbimisu &
-202020 &
+# Autostart these programs
+{ 
+    xcompmgr &
+    feh --no-fehbg --bg-scale ~/pics/wallpaper
+    setxkbmap colemak -option ctrl:swapcaps,altwin:menu_win
+    # xautolock -locker slock &
+    gammastep -m randr &
+    ntfy transmission &
+    # dunst &
+    slstatus &
+    upds &
+    eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
+    unclutter --timeout 3 --jitter 50 -b
+    herbimisu &
+    202020 &
+    
+    signal-desktop &
+    discord &
+    st -e "sh" "-c" "pgrep tmux && tmux a || tmux" &
+}
+
 exec startdwm

@@ -5,6 +5,8 @@ export VISUAL="nvim"
 export BROWSER="zen-browser"
 export VIEWER="zathura"
 export PLAYER="mpv"
+export MENUCMD="dmenu"
+export IMAGE="feh"
 
 export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_CACHE_HOME="$HOME"/.cache

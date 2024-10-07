@@ -350,13 +350,13 @@ nvim_bindings() {
 prj() {
     pfx="$HOME/proj"
 	d="$(find "$pfx" -mindepth 1 -maxdepth 1 -type d | sed "s@$pfx/@@" |fzf)"
-    [ -d "$pfx/$d" ] || return 1
+    { [ "$d" ] && [ -d "$pfx/$d" ]; } || return 1
     cd "$pfx/$d"
 }
 prje() {
     prj || return 1
     f="$(git ls-files | fzf)"
-    [ "$f" ] || exit 1
+    [ "$f" ] || return 1
     if [ -f "$f" ] 
     then
         "$EDITOR" "$f"
