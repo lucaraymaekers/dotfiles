@@ -16,12 +16,12 @@ autoload -z edit-command-line
 zle -N edit-command-line
 
 ### Source files
-source_it() { [ -f "$1" ] && . "$1" }
-source_it /etc/profile.d/plan9.sh
-source_it $XDG_CONFIG_HOME/zsh/comp.zsh
-source_it $XDG_CONFIG_HOME/shell/functions.sh
-source_it $XDG_CONFIG_HOME/shell/aliases.sh
-source_it $XDG_CONFIG_HOME/zsh/widgets.zsh
+source_ex() { [ -f "$1" ] && . "$1"; } # source if exists
+source_ex /etc/profile.d/plan9.sh
+source_ex $XDG_CONFIG_HOME/zsh/comp.zsh
+source_ex $XDG_CONFIG_HOME/shell/functions.sh
+source_ex $XDG_CONFIG_HOME/shell/aliases.sh
+source_ex $XDG_CONFIG_HOME/zsh/widgets.zsh
 # . $XDG_CONFIG_HOME/zsh/prompt.zsh
 # . $XDG_CONFIG_HOME/zsh/plugins.zsh
 
@@ -36,6 +36,7 @@ then
 	# plug "MichaelAquilina/zsh-you-should-use"
 	plug "chivalryq/git-alias"
 	# plug "marlonrichert/zsh-autocomplete"
+    # plug "wintermi/zsh-golang"
 	plug "zap-zsh/fzf"
 	plug "zdharma-continuum/fast-syntax-highlighting"
 	plug "zsh-users/zsh-autosuggestions"

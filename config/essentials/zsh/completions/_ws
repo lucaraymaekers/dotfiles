@@ -1,0 +1,12 @@
+#compdef ws
+local -a subcmds
+subcmds=('add: Adds a task to the end of the stack'
+	'done: Mark a task as done'
+	'undone: Mask a task as undone'
+	'pc: Procrastinate task a task to end of stack'
+	'del: Delete an active task'
+	'ls: List active tasks'
+	'list: List all tasks'
+	'reset: Recreate the tasks.gob file'
+	'help: Show this help')
+_describe 'ws commands' subcmds 

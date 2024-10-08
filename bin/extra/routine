@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Dependencies:
+# - fzf
+
+routine="$HOME/sync/share/routine.md"
+if [ ! -r "$routine" ]; then
+    >&2 printf 'No routine file at %s\n' "$routine"
+    exit 1
+fi
+
+case "$1" in
+    "clear") 
+        new="$routine.$$"
+        sed 's/\[x]/[ ]/' "$routine" > "$new"
+        mv "$new" "$routine"
+        ;;
+    "edit")
+        $EDITOR "$routine"
+        ;;
+    "done")
+        grep "^- \[ ]" "$routine" > /dev/null || exit 1
+        t="$(grep "^- \[ ]" "$routine" | fzf)"
+        [ "$t" ] || exit 2
+        new="$routine.$$"
+        sed "/${t#- [ }/s/\[ ]/[x]/" "$routine" >> "$new"
+        mv "$new" "$routine"
+        ;;
+    "")
+        cat "$routine"
+        ;;
+esac

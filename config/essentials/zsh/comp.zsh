@@ -1,10 +1,12 @@
 ### Completion
 # Find most of the stuff at https://github.com/zap-zsh/completions
 
+ZSH_COMPDUMP="$ZDOTDIR"/zcompcache
+
 zmodload zsh/complist
 zstyle ':compinstall' filename '/home/aluc/.zshrc'
 # cache
-zstyle ':completion:*' cache-path "$ZDOTDIR/zcompcache"
+zstyle ':completion:*' cache-path "$ZSH_COMPDUMP"
 zstyle ':completion:*' use-cache on
 
 # completers
@@ -16,7 +18,9 @@ zstyle ':completion:*:*:*:*:messages' format '%F{purple}-- %d --%f'
 zstyle ':completion:*:*:*:*:warnings' format '%F{red}-- no matches found --%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 # show a 'ls -a' like outptut when listing files
+zstyle ':completion:*' file-list all
 zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' file-sort date
 
 # automatically find new executables in PATH
 zstyle ':completion:*' rehash true
@@ -36,7 +40,7 @@ zstyle ':completion:*' keep-prefix true
 # ui
 zstyle ':completion:*' menu select
 
-ZSH_COMPDUMP="$ZDOTDIR"/zcompcache
+fpath=($ZDOTDIR/completions $fpath)
 autoload -Uz compinit; compinit -d "$ZSH_COMPDUMP"
 
 _dotnet_zsh_complete()
@@ -54,3 +58,5 @@ _dotnet_zsh_complete()
   _values = "${(ps:\n:)completions}"
 }
 compdef _dotnet_zsh_complete dotnet
+compdef _gnu_generic cpp sqlplus
+

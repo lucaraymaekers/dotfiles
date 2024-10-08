@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NOTES="$HOME"/notes
+
+if ! [ -d "$NOTES" ]; then
+    >&2 printf 'No notes directory.\n'
+    exit 1
+fi
+
+cd "$NOTES"
+
+find . -type d | while read -r d
+do
+    cd "$d"
+    printf '# Notes\n' > index.md
+    find . \
+		-maxdepth 1 \
+		-type f \
+		-name '*.md' \
+		-not \
+		-name 'index.md' \
+		-printf '%f ' \
+		-exec grep '^# ' -m1 {} \; |
+            sed 's/\(.\+\.md\) # \(.\+\)/- [\2](\1)/' |
+            sort -t '[' -k 2 >> index.md
+
+    if [ "$(find . -mindepth 2 -maxdepth 2 -type f -name '*.md' | wc -l)" -gt 0 ]
+    then
+        printf '# Dirs\n' >> index.md
+        find . \
+            -mindepth 1 \
+            -maxdepth 1 \
+            -type d \
+            -not -name '.*'\
+            -printf '- [%f](%f/index.md)\n' | 
+                sort -t '[' -k 2 >> index.md
+    fi
+
+    cd - > /dev/null
+done
