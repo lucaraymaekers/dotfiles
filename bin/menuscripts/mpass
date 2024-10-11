@@ -12,6 +12,7 @@ list_pswds()
 		cut -f 2 | sed 's/\.gpg$//'
 }
 
+file="$1"
 while [ -d "$store/$file" ]
 do
 	choice="$(list_pswds "$store/$file" | commander -c)"
