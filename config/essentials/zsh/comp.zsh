@@ -83,6 +83,6 @@ _go_flag_complete() {
     _describe 'commands' subcmds
 }
 
-compdef _gnu_generic cpp sqlplus
+compdef _gnu_generic cpp sqlplus apropos
 compdef _gnu_generic air
 compdef _go_flag_complete wbr
