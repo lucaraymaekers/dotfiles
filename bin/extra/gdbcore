@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# Open the latest core file for program with gdb
+# RETURN VALUES
+# 0 - success
+# 1 - if the program was not found or not executable
+# 2 - if the user did aborted
+# 3 - zstd failed
+# 4 - wrong usage
+
+if [ "$#" -lt 1 ]; then
+    >&2 printf 'usage: fcore <program>\n'
+fi
+
+prog="$1"
+if [ ! -x "$prog" ]; then
+    prog="$(which "$prog" 2>/dev/null)"
+    [ -x "$prog" ] || exit 1
+fi
+
+# Directory where corefiles are located
+coredir=/var/lib/systemd/coredump
+# Temporary file listing core files location, later used as location for the corefile
+tmp="$(mktemp)"
+
+find "$coredir" -name "core.${prog##*/}*" -printf '%f %TF %TT\n' > "$tmp"
+
+choice="$(sed \
+    -e 's/\.[0-9]\+$//' \
+    -e 's/^core\.//' \
+    -e 's/\.[0-9]\+\.[0-9a-f]\+\.[0-9]\+\.[0-9]\+\.zst / /' \
+    "$tmp" |
+    awk '{print NR ".", "[" $3,$2"]", $1}' | 
+    sort -k 2 -k 3 -r |
+    fzf -0 --with-nth=2..)"
+if [ -z "$choice" ]; then
+    rm "$tmp"
+    exit 2
+fi
+
+nr="${choice%%.*}"
+line="$(sed -n "${nr}p" "$tmp")"
+corefile="$coredir"/"${line%% *}"
+
+if [ ! -f "$corefile" ]; then
+    rm -f "$tmp"
+    exit 1
+fi
+
+if ! zstd -d "$corefile" -f -o "$tmp" 2>/dev/null; then
+    rm -f "$tmp"
+    exit 3
+fi
+
+gdb "$prog" "$tmp"
+
+rm -f "$tmp"

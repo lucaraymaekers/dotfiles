@@ -86,3 +86,5 @@ _go_flag_complete() {
 compdef _gnu_generic cpp sqlplus apropos
 compdef _gnu_generic air
 compdef _go_flag_complete wbr
+compdef esc="which"
+compdef gdbcore="which"

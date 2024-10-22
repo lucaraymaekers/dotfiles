@@ -68,12 +68,8 @@ sms() { ssh -t phone sendmsg "$1" "'$2'"; }
 trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
 getgit() { git clone git@db:"$1"; }
-
 esc() { eval "$EDITOR '$(which $1)'"; }
-if [ $SHELL = "/bin/zsh" ]
-then
-	compdef esc="which"
-fi
+gccg() { gcc -g -Wall -pedantic -std=c99 -o ${1%.c} $@; }
 
 delfile() { curl -s "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
 upfile() { curl -s -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
@@ -400,6 +396,3 @@ ssh() {
     /usr/bin/ssh $@
 }
 
-gccg() {
-    gcc -g -Wall -pedantic -std=c99 -o ${1%.c} $@
-}
