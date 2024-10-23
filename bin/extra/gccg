@@ -1,0 +1,2 @@
+#!/bin/sh
+gcc -ggdb -Wall -pedantic -std=c99 -o ${1%.c} $@

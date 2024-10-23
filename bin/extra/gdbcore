@@ -9,7 +9,7 @@
 # 4 - wrong usage
 
 if [ "$#" -lt 1 ]; then
-    >&2 printf 'usage: fcore <program>\n'
+    >&2 printf 'usage: gdbcore <program>\n'
 fi
 
 prog="$1"
@@ -23,24 +23,33 @@ coredir=/var/lib/systemd/coredump
 # Temporary file listing core files location, later used as location for the corefile
 tmp="$(mktemp)"
 
-find "$coredir" -name "core.${prog##*/}*" -printf '%f %TF %TT\n' > "$tmp"
+if [ "$2" = "-r" ]; then
+    recent="$(find "$coredir" -name 'core.assert*' -printf '%Ts %f\n' |
+        sort -n |
+        head -n 1 |
+        cut -f 2- -d' ')"
+    corefile="$coredir"/"$recent"
+else
 
-choice="$(sed \
-    -e 's/\.[0-9]\+$//' \
-    -e 's/^core\.//' \
-    -e 's/\.[0-9]\+\.[0-9a-f]\+\.[0-9]\+\.[0-9]\+\.zst / /' \
-    "$tmp" |
-    awk '{print NR ".", "[" $3,$2"]", $1}' | 
-    sort -k 2 -k 3 -r |
-    fzf -0 --with-nth=2..)"
-if [ -z "$choice" ]; then
-    rm "$tmp"
-    exit 2
+    find "$coredir" -name "core.${prog##*/}*" -printf '%f %TF %TT\n' > "$tmp"
+
+    choice="$(sed \
+        -e 's/\.[0-9]\+$//' \
+        -e 's/^core\.//' \
+        -e 's/\.[0-9]\+\.[0-9a-f]\+\.[0-9]\+\.[0-9]\+\.zst / /' \
+        "$tmp" |
+        awk '{print NR ".", "[" $3,$2"]", $1}' | 
+        sort -k 2 -k 3 -r |
+        fzf -0 --with-nth=2..)"
+    if [ -z "$choice" ]; then
+        rm "$tmp"
+        exit 2
+    fi
+
+    nr="${choice%%.*}"
+    line="$(sed -n "${nr}p" "$tmp")"
+    corefile="$coredir"/"${line%% *}"
 fi
-
-nr="${choice%%.*}"
-line="$(sed -n "${nr}p" "$tmp")"
-corefile="$coredir"/"${line%% *}"
 
 if [ ! -f "$corefile" ]; then
     rm -f "$tmp"
