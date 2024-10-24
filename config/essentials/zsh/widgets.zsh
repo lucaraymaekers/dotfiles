@@ -13,3 +13,5 @@ insert-last-command-output() {
 }
 zle -N insert-last-command-output
 bindkey "^Xl" insert-last-command-output
+
+bindkey -s "^f" "tmux-sessionizer\n"
