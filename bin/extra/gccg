@@ -1,2 +1,6 @@
 #!/bin/sh
-gcc -ggdb -Wall -pedantic -std=c99 -o ${1%.c} $@
+prog="$1"
+[ "$prog" ] || exit 1
+shift
+set -x
+gcc -ggdb -Wall -pedantic -std=c99 -o "${prog%.c}" "${prog%.c}.c" $@
