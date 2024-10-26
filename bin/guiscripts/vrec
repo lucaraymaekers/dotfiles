@@ -29,7 +29,7 @@ record_cmd()
 		touch "$lock"
 	fi
 
-	herbe "started recording." &
+	herbe "started recording." # use notification to know when recording started
 	w=$(($3 + $3 % 2))
 	h=$(($4 + $4 % 2))
 	ffmpeg $audio        \
