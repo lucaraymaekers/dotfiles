@@ -3,4 +3,4 @@ keyboards="$HOME/bin/keyboards.txt"
 kb="$(head -n 1 "$keyboards")"
 setxkbmap $kb &
 sed -i '1h;1d;$G' "$keyboards" 
-notify-send -t 1000 "cycleKB" "$kb"
+notify-send -t 1000 "cycleKB" "${kb%% *}"

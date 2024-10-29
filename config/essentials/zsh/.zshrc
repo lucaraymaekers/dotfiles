@@ -144,4 +144,4 @@ setopt notify
 
 # zprof
 
-PATH="$PATH:$HOME/proj/chatty/v2/"
+PATH="$PATH:$HOME/proj/chatty/"

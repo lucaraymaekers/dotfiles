@@ -69,7 +69,7 @@ trcp() { scp "$1" db:/media/basilisk/downloads/transmission/torrents/; }
 rln() { ln -s "$(readlink -f "$1")" "$2"; }
 getgit() { git clone git@db:"$1"; }
 esc() { eval "$EDITOR '$(which $1)'"; }
-
+ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
 delfile() { curl -s "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
 upfile() { curl -s -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
 to_webm() { ffmpeg -y -i "$1" -vcodec libvpx -cpu-used -12 -deadline realtime "${1%.*}".webm; }
@@ -284,19 +284,6 @@ wgt() {
         doas wg-quick up "$d"
 }
 
-# serve a file through dufs
-serve() {
-    if [ "$1" ]
-    then
-        logn "Serving $1"
-        dufs "$1"
-    else
-        logn "Receiving files.."
-        dufs /tmp/data --alow-upload
-    fi
-}
-
-ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
 
 
 fchange()
@@ -394,4 +381,3 @@ ssh() {
     done
     /usr/bin/ssh $@
 }
-
