@@ -3,23 +3,18 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 # format = ' ${custom.upds}'
-format = ' [\[$username@$hostname\]](bg:#000000) $all'
-right_format = """$status"""
+format = '$directory($git_branch$git_state$git_status$status)$character'
+right_format = """"""
 
 [character]
-format = ' \$ '
+format = '\$ '
 
-[username]
-style_root = "bold red"
-style_user = "bold purple"
-format = "[$user]($style bg:#000000)"
-show_always = true
-disabled = false
+[git_branch]
+format = '[$branch(:$remote_branch)]($style) '
+style = 'bold purple'
 
-[hostname]
-ssh_only = false
-style = "bold cyan bg:#000000"
-format = "[$hostname]($style)"
+[git_status]
+format = '[$all_status$ahead_behind]($style) '
 
 [directory]
 truncation_length = 4

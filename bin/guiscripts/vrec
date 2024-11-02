@@ -1,22 +1,33 @@
 #!/bin/sh
 
-# record - record an area of the screen
-
-lock="/tmp/record.lock"
-
-# dependencies: ffmpeg, hacksaw (part), xwininfo & lsw (window), xdotool (active) 
-# optional:
+# Quick video capture with dmenu
+#
+# dependencies: 
+#   - ffmpeg
 # 	- hacksaw: part
-# 	- xwininfo, lsw, commander: window
 # 	- xdotool: active
 # 	- xdg-user-dir
+#   - dmenu
+#   - clipp
+#
+# Usage: 
+# vrec [command] [dir]
+# - if you do not provide a command it will launch dmenu.
+# - if you provide command and dir it will save the recording in dir
+# Commands:
+# - active: capture the active window
+# - part: select a part of the screen to record
+# - stop: stop an active recording
+# - full: record your full screen
+# - last: copy the latest recording's path to the clipboard
+# - audio: one of the prior recording commands but with sound
+# Recording:
+# there is a lock file
 
-audio=
-
-# $1: width
-# $2: height
-# $3: x
-# $4: y
+# $1: x
+# $2: y
+# $3: width
+# $4: height
 # $5: output dir
 # $6: output name
 record_cmd()
@@ -28,8 +39,9 @@ record_cmd()
 	else
 		touch "$lock"
 	fi
+	printf '%s\n' "$5/$6.mp4"
 
-	herbe "started recording." # use notification to know when recording started
+	herbe "vrec" "started recording." # use notification to know when recording started
 	w=$(($3 + $3 % 2))
 	h=$(($4 + $4 % 2))
 	ffmpeg $audio        \
@@ -43,62 +55,56 @@ record_cmd()
 	    -pix_fmt yuv420p \
 	    -crf 20          \
 	    "$5/$6.mp4"
-	printf '%s\n' "$5/$6.mp4"
 	rm -f "$lock"
-	herbe "stopped recording." & 
+	herbe "vrec" "stopped recording." & 
 }
 
+lock="/tmp/record.lock"
+# Get recording directory
 if [ -d "$1" ]
 then
 	dir="$1" 
 	shift
 else 
-	dir="$(which xdg-user-dir > /dev/null 2>&1 && xdg-user-dir VIDEOS)"
-	[ "$dir" ] && dir="$dir/records" || dir="$HOME/vids/records"
+	dir="$(xdg-user-dir VIDEOS)"
+	[ -d "$dir" ] && dir="$dir/records" || dir="$HOME"
 fi
-mkdir -p "$dir"
-
+# Set audio variable
 if [ "$1" = "-a" ]
 then
 	audio="-f pulse -ac 2 -i default"
 	shift
 fi
+output="$(date +%F_%H-%M-%S)"
 
-if [ "$1" = "-l" ]
-then
-	find vids/records/ -type f | sort | tail -n 1
-	exit
+if [ -z "${option:="$1"}" ]; then
+    option="$(printf 'active\npart\nstop\nfull\naudio\nlast\n' | dmenu -c)"
 fi
+[ "$option" ] || exit 1
 
-current=$(date +%F_%H-%M-%S)
-
-[ "$1" ] && option="$1" || option="$(printf 'active\nwindow\npart\nstop\nfull\naudio' | commander -c)"
 case "$option" in
     active)
         record_cmd $(xwininfo -id "$(xdotool getactivewindow)" |
-            sed -e '/Absolute\|Width:\|Height:/!d;s/.*:\s*//' | tr '\n' ' ') $dir $current
+            sed '/Absolute\|Width:\|Height:/!d;s/.*:\s*//' | tr '\n' ' ') "$dir" "$output"
         ;;
-
-    window)
-    	winid="$(lsw | commander -cxl | cut -d' ' -f1)"
-    	[ "$winid" ] || exit 1
-    	values="$(xwininfo -id "$winid" | sed -e '/Absolute\|Width:\|Height:/!d;s/.*:\s*//' | tr '\n' ' ')"
-	[ "$values" ] || exit 1
-        record_cmd $values $dir $current
-        ;;
-        
     part) 
         hacksaw | {
             IFS=+x read -r w h x y
-            record_cmd $w $h $x $y $dir $current
+            [ "$x" ] || exit 1 # quit on ESC
+            record_cmd $x $y $w $h "$dir" "$output"
         }
         ;;
     stop)
         pid="$(pgrep ffmpeg | xargs ps | grep 'x11grab' | awk '{print $1}')"
         [ "$pid" ] && kill "$pid"
         rm -f "$lock" 
+        herbe "vrec" "stopped recording." &
         ;;
-    full) record_cmd 0 0 1920 1080 $dir $current ;;
+    last) 
+        file="$(find "$dir" -type f -iname '*.mp4' -printf '%Ts %p\n' | sort -n -r | head -n 1 | cut -f 2- -d' ')"
+        printf '%s' "$file" | clipp
+        ;;
+    full) record_cmd 0 0 1920 1080 "$dir" "$output" ;;
     audio) $0 -a; exit ;;
-    help|*) >&2 printf 'record [dir] (active|window|part|stop|full)\n' ;;
+    help|*) >&2 printf 'record [dir] (active|part|stop|full|last|audio)\n' ;;
 esac

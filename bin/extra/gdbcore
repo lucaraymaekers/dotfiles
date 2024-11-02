@@ -9,7 +9,12 @@
 # 4 - wrong usage
 
 if [ "$#" -lt 1 ]; then
-    >&2 printf 'usage: gdbcore <program>\n'
+    >&2 printf 'usage: gdbcore [-r] <program>\n'
+fi
+
+if [ "$1" = "-r" ]; then
+    recent=1
+    shift
 fi
 
 prog="$1"
@@ -24,11 +29,11 @@ coredir=/var/lib/systemd/coredump
 tmp="$(mktemp)"
 
 
-if [ "$2" = "-r" ]; then
-    recent="$(find "$coredir" -name "core.${prog##*/}*" -printf '%Ts %f\n' |
+if [ "$recent" ]; then
+    file="$(find "$coredir" -name "core.${prog##*/}*" -printf '%Ts %f\n' |
         sort -n -r | head -n 1 |
         cut -f 2- -d' ')"
-    corefile="$coredir"/"$recent"
+    corefile="$coredir"/"$file"
 else
 
     find "$coredir" -name "core.${prog##*/}*" -printf '%f %TF %TT\n' > "$tmp"
@@ -61,6 +66,6 @@ if ! zstd -d "$corefile" -f -o "$tmp" 2>/dev/null; then
     exit 3
 fi
 
-gdb "$prog" "$tmp"
+gdb -q "$prog" "$tmp"
 
 rm -f "$tmp"

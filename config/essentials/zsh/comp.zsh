@@ -88,3 +88,4 @@ compdef _gnu_generic air
 compdef _go_flag_complete wbr
 compdef esc="which"
 compdef gdbcore="which"
+compdef pkgfile="which"

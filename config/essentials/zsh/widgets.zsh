@@ -14,4 +14,19 @@ insert-last-command-output() {
 zle -N insert-last-command-output
 bindkey "^Xl" insert-last-command-output
 
+
+toggle_prompt() {
+    local new_prompt=' $ '
+    if [ "$PS1" = "$new_prompt" ]; then
+        eval "$(starship init zsh)"
+    else
+        PS1="$new_prompt"
+    fi
+    zle clear-screen
+}
+zle -N toggle_prompt
+bindkey '\ep' toggle_prompt
+
+
 bindkey -s "^f" "tmux-sessionizer\n"
+
