@@ -28,5 +28,5 @@ zle -N toggle_prompt
 bindkey '\ep' toggle_prompt
 
 
-bindkey -s "^f" "tmux-sessionizer\n"
+bindkey -s '\eF' "tmux-sessionizer\n"
 
