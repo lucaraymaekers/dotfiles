@@ -45,7 +45,7 @@ then
 	plug "MichaelAquilina/zsh-auto-notify"
 	export AUTO_NOTIFY_TITLE="zsh"
 	export AUTO_NOTIFY_BODY="%command [%exit_code]"
-	AUTO_NOTIFY_IGNORE+=("abduco" "gurk" "ttyper" "pulsemixer" "tmux" "btop" "vis" "clock" "server" "chatty")
+	AUTO_NOTIFY_IGNORE+=("abduco" "gurk" "ttyper" "pulsemixer" "tmux" "btop" "vis" "clock" "server" "chatty" "pwsh")
 fi
 
 # Substring search settings

@@ -21,6 +21,7 @@ toggle_prompt() {
         eval "$(starship init zsh)"
     else
         PS1="$new_prompt"
+        RPROMPT=""
     fi
     zle clear-screen
 }
