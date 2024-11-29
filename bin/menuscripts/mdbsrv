@@ -1,0 +1,17 @@
+#!/bin/sh
+
+services() {
+    cat <<-EOF
+    5030 slsksd
+    9091 transmission
+    8096 jellyfin
+    80 ntfy
+    24961 miniflux
+    24880 pihole
+    8384 syncthing
+EOF
+}
+
+service="$(services | column -t -l 2 | dmenu -c -x)"
+[ "$service" ] || exit 1
+$BROWSER "http://192.168.178.79:${service%% *}"
