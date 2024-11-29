@@ -1,0 +1,14 @@
+#!/bin/sh
+
+gdbs="$HOME/.cache/gdbs" 
+
+command="$@"
+if [ -z "$command" ]; then
+    [ -f ] && command="$(cat "$gdbs" 2>/dev/null)"
+    [ "$command" ] || exit 1
+fi
+
+gdbserver :4200 $command
+
+echo "$command" > "$gdbs"
+

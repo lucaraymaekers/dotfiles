@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# Play a youtube song via yt-dlp, jq, fzf and play it with mpv or mpd.
+
+tsv="/tmp/ytsearch.tsv"
+json="/tmp/ytsearch.json"
+
+# This is the preview code for fzf
+if [ "$1" = "-p" ]; then
+    grep "^$2\s" "$tsv" |
+    cut -f 4,5,6 | tr '\t' '\n' |
+    while read -r channel; do
+        read -r timestamp
+        read -r views
+        printf '\033[2m%s\033[0m\n' "$channel"
+        printf '%s views\n' "$(numfmt --to=iec "$views")"
+        printf '\033[3m%s\033[0m\n' "$(date -d @"$timestamp" +'released on %d/%m/%y at %T')"
+    done
+    exit
+fi
+
+# Whether to pass th --no-video flag to mpv
+if [ "$1" = "-n" ]; then
+    noVideoFlag=1
+    shift
+fi
+
+# Whether to add the url to mpd
+if [ "$1" = "-m" ]; then
+    toMPDFlag=1
+    shift
+fi
+
+q="$@"
+if [ -z "$q" ]; then
+    >&2 printf 'Usage: %s query\n' "$0"
+    exit 1
+fi
+
+>&2 printf 'Searching..\n'
+yt-dlp -j "ytsearch5:$q" | jq > "$json"
+
+jq -r '[.id,.title,.original_url,.channel,.timestamp,.view_count] | @tsv' "$json" > "$tsv"
+
+choice="$(cut -f 1,2,6 "$tsv" |
+    sort -t '	' -k 3 |
+    cut -f 1,2 |
+    column -t -s '	' |
+    fzf --with-nth "2.." --preview "$0"' -p {1}')"
+[ "$choice" ] || exit 1
+choice="${choice%% *}"
+url="$(grep "^$choice	" "$tsv" | cut -f 3)"
+[ "$url" ] || exit 2
+
+rm -f "$tsv" "$json"
+
+if [ "$toMPDFlag" ]; then
+    >&2 printf 'Adding to mpd..\n'
+    mpc add "$(yt-dlp --prefer-insecure -g -f140 "$url")"
+elif [ "$noVideoFlag" ]; then
+    mpv --no-video "$url"
+else
+    mpv "$url"
+fi
+>&2 printf 'Done.\n'
