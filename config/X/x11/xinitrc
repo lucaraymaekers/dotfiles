@@ -24,6 +24,4 @@ fi
 export MENUCMD="dmenu"
 export IMAGE="feh"
 
-eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents gpg,ssh)"
-
 exec startdwm
