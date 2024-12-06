@@ -1,5 +1,5 @@
 # TODO: check if this is home
-if [ "$HOST" = "winter" ]; then
+if [ "$(hostname)" = "winter" ]; then
     (
         CurrentOutput="$(xrandr | grep '\bconnected\b' | awk '{print $1}')" 
         xrandr --output "$CurrentOutput" --mode 1920x1080 --rate 144
@@ -20,8 +20,10 @@ slstatus &
 unclutter --timeout 3 --jitter 50 -b &
 202020 &
 
-# signal-desktop &
-# discord &
+if [ "$(hostname)" = "winter" ]; then
+    signal-desktop &
+    discord &
+fi
 st -e "sh" "-c" "pgrep tmux && tmux a || tmux" &
 
 printf '%s\t%s' "$(date +%y_%m_%d-%T )" "$DISPLAY" >> ~/.x_displays.log &

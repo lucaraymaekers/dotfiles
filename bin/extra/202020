@@ -1,11 +1,14 @@
 #!/bin/sh
 
+mpvwopts="mpv --no-resume-playback --volume=100"
+sounds="$HOME/sync/share/sounds"
+
 while true
 do
     sleep 20m
-    mpv --volume=100 .local/share/sounds/avert1.ogg &
+    $mpvwopts "$sounds"/avert1.ogg &
     herbe '202020' 'avert!'
     sleep 20s
-    mpv --volume=100 .local/share/sounds/avert2.ogg &
+    $mpvwopts "$sounds"/avert2.ogg &
     herbe '202020' 'stop averting' &
 done
