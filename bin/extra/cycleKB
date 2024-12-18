@@ -1,6 +1,21 @@
 #!/usr/bin/sh
-keyboards="$HOME/bin/keyboards.txt"
-kb="$(head -n 1 "$keyboards")"
-setxkbmap $kb &
-sed -i '1h;1d;$G' "$keyboards" 
-notify-send -t 1000 "cycleKB" "${kb%% *}"
+
+list_layouts()
+{
+cat <<EOF
+us
+colemak -option ctrl:swapcaps,altwin:menu_win
+EOF
+}
+
+current_keymap()
+{
+    setxkbmap -print | awk -F '+' '/xkb_symbols/ {print $2}'
+}
+
+NumLayouts="$(list_layouts | wc -l)"
+IndexLayout="$(list_layouts | awk "/^$(current_keymap)/ {print NR}")"
+[ "$IndexLayout" -eq "$NumLayouts" ] && IndexLayout=1 || IndexLayout=$((IndexLayout + 1))
+Layout="$(list_layouts | sed -n "${IndexLayout}p" )"
+setxkbmap $Layout &
+notify-send -t 1000 "cycleKB" "${Layout%% *}"

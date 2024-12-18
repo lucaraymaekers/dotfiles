@@ -1,14 +1,23 @@
 #!/bin/sh
 
-mpvwopts="mpv --no-resume-playback --volume=100"
+mpvCommand="mpv --no-resume-playback --volume=100"
 sounds="$HOME/sync/share/sounds"
 
-while true
-do
-    sleep 20m
-    $mpvwopts "$sounds"/avert1.ogg &
-    herbe '202020' 'avert!'
+if [ "$1" ]; then
+    $mpvCommand "$sounds"/avert1.ogg &
+    herbe '202020' 'avert!' &
     sleep 20s
-    $mpvwopts "$sounds"/avert2.ogg &
+    $mpvCommand "$sounds"/avert2.ogg &
+    herbe '202020' 'stop averting' &
+
+    exit
+fi
+
+while true; do
+    sleep 20m
+    $mpvCommand "$sounds"/avert1.ogg &
+    herbe '202020' 'avert!' &
+    sleep 20s
+    $mpvCommand "$sounds"/avert2.ogg &
     herbe '202020' 'stop averting' &
 done
