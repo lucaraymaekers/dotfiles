@@ -2,7 +2,7 @@
 if ! mv ~/bin/.dmenu ~/bin/dmenu 2>/dev/null
 then
 	mv ~/bin/dmenu ~/bin/.dmenu
-	notify-send "dmtofi" "dmenu <b>enabled</b>!"
+	herbe "_dmtofi" "*enabled!"
 else
-	notify-send "dmtofi" "dmenu <b>disabled</b>!"
+	herbe "_dmtofi" "*disabled!"
 fi

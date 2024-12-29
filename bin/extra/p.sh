@@ -668,7 +668,7 @@ case "$1" in
         curl -Ls "$url" > "$html"
         level1="$(pup -p 'span.infocard:nth-child(2) > small:nth-child(2) text{}' < "$html")"
         level2="$(pup -p 'span.infocard:nth-child(4) > small:nth-child(2) text{}' < "$html")"
-        notify-send "p.sh" "$level1\n$level2"
+        herbe "_p.sh" "$level1\n$level2"
     ;;
 
     # moves

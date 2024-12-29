@@ -18,4 +18,4 @@ IndexLayout="$(list_layouts | awk "/^$(current_keymap)/ {print NR}")"
 [ "$IndexLayout" -eq "$NumLayouts" ] && IndexLayout=1 || IndexLayout=$((IndexLayout + 1))
 Layout="$(list_layouts | sed -n "${IndexLayout}p" )"
 setxkbmap $Layout &
-notify-send -t 1000 "cycleKB" "${Layout%% *}"
+herbe "_cycleKB" "*${Layout%% *}"

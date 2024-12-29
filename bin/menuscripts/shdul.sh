@@ -113,7 +113,7 @@ view_schedule()
 		then
 			print_schedule "$1" "$2"
 			prev_now="$now"
-			notify-send -u critical -t 5000 "shdul" "$(awk "NR==$((now-1)) {print \$2}" "$1")"
+			herbe "_shdul" "$(awk "NR==$((now-1)) {print \$2}" "$1")"
 
 			# Align with clock
 			sleep "$((60-$(date +%-S)))s"

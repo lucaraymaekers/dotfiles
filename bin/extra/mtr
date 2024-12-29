@@ -20,4 +20,4 @@ category="$(list_categories | commander -cl)"
 
 transmission-remote debuc.com -a "$(clipo)" -w "/downloads/$category"
 
-notify-send "mtr" "added to <b>$category</b>"
+herbe "_mtr" "*added to $category"
