@@ -296,7 +296,7 @@ alias ytdl='yt-dlp --restrict-filenames --embed-chapters -S "res:1080" -o "%(cha
 # emacs aliases
 alias emacsd='emacs --daemon'
 alias emacsdbg='emacs --debug-init'
-alias e='emacsclient -c -a "emacs"'
+alias emacs='emacsclient -c -a "emacs"'
 
 # docker aliases
 alias dcb='docker build'
