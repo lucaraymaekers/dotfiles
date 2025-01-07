@@ -75,7 +75,7 @@ then
     ## Mic
 	# audio="-f pulse -ac 2 -i default"
     ## Desktop
-	audio="-f pulse -i default"
+	audio="-f pulse -i alsa_output.pci-0000_00_1f.3.analog-stereo.monitor -ac 1"
 	shift
 fi
 output="$(date +%F_%H-%M-%S)"
