@@ -18,7 +18,7 @@ disabled = false
 format = '\$ '
 
 [cmd_duration]
-format = '( [$duration]($style))'
+format = ' [$duration]($style) '
 min_time = 500
 style = 'yellow'
 
@@ -31,6 +31,11 @@ ahead = '↑'
 behind = '↓'
 diverged = '↕'
 
+[jobs]
+symbol = '*'
+
+[battery]
+disabled = true
 [c]
 disabled = true
 [python]

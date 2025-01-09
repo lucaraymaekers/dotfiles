@@ -36,6 +36,11 @@ parse() {
         OPTARG=$2
         _=$OPTARG
         shift ;;
+      -a | --app-name)
+        [ $# -le 1 ] && set -- "$1" required && break
+        OPTARG=$2
+        _=$OPTARG
+        shift ;;
       -i | --icon)
         [ $# -le 1 ] && set -- "$1" required && break
         OPTARG=$2

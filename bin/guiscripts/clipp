@@ -1,6 +1,6 @@
 #!/bin/sh
-[ "$1" = "-p" ] && i='primary' j='-p'
+[ "$1" = "-p" ] && i='primary'
 if [ "$WAYLAND_DISPLAY" ]
 then wl-copy -n $i
-else xsel ${j:--b}
+else xclip -selection ${i:-clipboard}
 fi

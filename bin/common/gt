@@ -8,7 +8,12 @@
 # - parallel: optional, if installed will run the commands on all repos with parallel
 # - gt-cmd, gt-st
 
-export REPOS=$HOME/sync/share/git-track.txt
+if [ "$GIT_TRACK_REPOS" ]; then
+	export REPOS="$GIT_TRACK_REPOS"
+else
+	export REPOS="$HOME/sync/share/git-track.txt"
+fi
+
 # prevent file not found errors
 touch "$REPOS" || exit 1
 
@@ -56,7 +61,7 @@ while getopts ":a:c:f:lsheu" opt; do
 
 		repo="$(git rev-parse --show-toplevel)"
 		remote_url="$(git remote show -n origin | awk '/^  Fetch/ {print $NF}')"
-        # TODO: check if remote_url is not empty
+	        # TODO: check if remote_url is not empty
 
 		if grep "^$repo " "$REPOS" >/dev/null 2>&1; then
 			printf >&2 'added already.\n'
