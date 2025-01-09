@@ -296,7 +296,7 @@ alias ytdl='yt-dlp --restrict-filenames --embed-chapters -S "res:1080" -o "%(cha
 # emacs aliases
 alias emacsd='emacs --daemon'
 alias emacsdbg='emacs --debug-init'
-alias e='emacsclient -c -a "emacs"'
+alias emacs='emacsclient -c -a "emacs"'
 
 # docker aliases
 alias dcb='docker build'
@@ -321,6 +321,7 @@ alias cfg='edit_git_file ~/proj/dotfiles/'
 alias ncfg='edit_git_file ~/.config/nvim'
 alias gmod='git status --short | sed '\''/^\s*M/!d;s/^\s*M\s*//'\'' | fzf | xargs vi'
 alias gclc='git clone "$(clipo)"'
+alias gcan!='git commit --all --amend --no-edit'
 
 # docker
 alias dorm='docker container rm $(docker container ls -a | tail -n +2 | fzf -m | awk '\''{print $1}'\'')'

@@ -1,12 +1,15 @@
 #!/bin/sh
 
-# Open the latest core file for program with gdb
+# Open the latest core file for program $1 with gdb
+# If no program supplied then use the most recent one
 # RETURN VALUES
 # 0 - success
 # 1 - if the program was not found or not executable
 # 2 - if the user did aborted
 # 3 - zstd failed
 # 4 - wrong usage
+
+cache="$HOME/.cache/gdbcore_prog"
 
 if [ "$#" -lt 1 ]; then
     >&2 printf 'usage: gdbcore [-r] <program>\n'
@@ -17,7 +20,13 @@ if [ "$1" = "-r" ]; then
     shift
 fi
 
-prog="$1"
+if [ "$1" ]; then
+    prog="$1"
+    printf '%s\n' "$prog" > "$cache"
+else
+    prog="$(cat "$cache")"
+fi
+
 if [ ! -x "$prog" ]; then
     prog="$(which "$prog" 2>/dev/null)"
     [ -x "$prog" ] || exit 1

@@ -4,7 +4,7 @@ steam_games()
 {
     # List every manifest file and get the id of the games from the file names and the name of the
     # game from the file.
-    find $HOME/.local/share/Steam/steamapps \
+    find ~/.local/share/Steam/steamapps \
         -maxdepth 1 -type f -iname 'appmanifest_*.acf' |
         while read -r File; do
             Name="$(grep '"name"' "$File" | cut -f 4 -d '"')"
@@ -15,6 +15,7 @@ steam_games()
 }
 
 Choice="$(steam_games | cut -f 2- -d' ' | dmenu -c -i -x)"
+[ "$Choice" ] || exit 1
 ID="$(steam_games | grep "[0-9]\+ $Choice" | cut -f 1 -d ' ')"
 
 setsid steam steam://rungameid/"$ID"

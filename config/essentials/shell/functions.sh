@@ -381,3 +381,9 @@ ssh() {
     done
     /usr/bin/ssh $@
 }
+
+ssl_req() {
+    [ "$1" ] || return 1
+    [ "$2" ] || return 2
+    openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out "$1" -keyout "$2"
+}

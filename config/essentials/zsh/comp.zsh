@@ -42,6 +42,8 @@ zstyle ':completion:*' menu select
 
 fpath=($ZDOTDIR/completions $fpath)
 autoload -Uz compinit; compinit
+autoload -U +X bashcompinit && bashcompinit
+complete -C /usr/bin/syncthing syncthing
 
 _dotnet_zsh_complete()
 {
