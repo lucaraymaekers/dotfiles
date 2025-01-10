@@ -5,13 +5,13 @@ Port 993
 User luca@spacehb.net
 PassCmd "pass hosts/spacehb/luca"
 AuthMechs LOGIN
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore luca@spacehb.net-local
 Subfolders Verbatim
-Path /home/aluc/.local/share/mail/luca@spacehb.net/
-Inbox /home/aluc/.local/share/mail/luca@spacehb.net/INBOX
+Path ~/.local/share/mail/luca@spacehb.net/
+Inbox ~/.local/share/mail/luca@spacehb.net/INBOX
 
 Channel luca@spacehb.net
 Expunge Both
@@ -31,13 +31,13 @@ Port 993
 User billy@spacehb.net
 PassCmd "pass hosts/spacehb/billy"
 AuthMechs LOGIN
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore billy@spacehb.net-local
 Subfolders Verbatim
-Path /home/aluc/.local/share/mail/billy@spacehb.net/
-Inbox /home/aluc/.local/share/mail/billy@spacehb.net/INBOX
+Path ~/.local/share/mail/billy@spacehb.net/
+Inbox ~/.local/share/mail/billy@spacehb.net/INBOX
 
 Channel billy@spacehb.net
 Expunge Both
@@ -57,13 +57,13 @@ Port 993
 User tlast@spacehb.net
 PassCmd "pass hosts/spacehb/tlast"
 AuthMechs LOGIN
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore tlast@spacehb.net-local
 Subfolders Verbatim
-Path /home/aluc/.local/share/mail/tlast@spacehb.net/
-Inbox /home/aluc/.local/share/mail/tlast@spacehb.net/INBOX
+Path ~/.local/share/mail/tlast@spacehb.net/
+Inbox ~/.local/share/mail/tlast@spacehb.net/INBOX
 
 Channel tlast@spacehb.net
 Expunge Both

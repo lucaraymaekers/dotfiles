@@ -4,9 +4,9 @@ set realname = "billy"
 set from = "billy@spacehb.net"
 set sendmail = "msmtp -a billy@spacehb.net"
 alias me billy <billy@spacehb.net>
-set folder = "/home/aluc/.local/share/mail/billy@spacehb.net"
-set header_cache = "/home/aluc/.cache/mutt-wizard/billy_spacehb.net/headers"
-set message_cachedir = "/home/aluc/.cache/mutt-wizard/billy_spacehb.net/bodies"
+set folder = "$HOME/.local/share/mail/billy@spacehb.net"
+set header_cache = "$HOME/.cache/mutt-wizard/billy_spacehb.net/headers"
+set message_cachedir = "$HOME/.cache/mutt-wizard/billy_spacehb.net/bodies"
 set mbox_type = Maildir
 set hostname = "spacehb.net"
 set spoolfile = "+INBOX"

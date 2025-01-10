@@ -34,6 +34,13 @@ EOF
 }
 
 list_repos() { cut -f 1 -d ' ' "$REPOS"; }
+quit_when_no_repos() { 
+	if [ "$(wc -l <"$REPOS")" -eq 0 ];
+	then 
+		>&2 printf 'No repositories added.\n'
+		exit 1
+	fi
+}
 
 # fetch repository prettily, outputs nothing if failed
 fetch() {
@@ -49,7 +56,6 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-[ "$(wc -l <"$REPOS")" -gt 0 ] || exit 0
 
 while getopts ":a:c:f:lsheu" opt; do
 	case "$opt" in
@@ -73,6 +79,7 @@ while getopts ":a:c:f:lsheu" opt; do
 		printf >&2 'added.\n'
 		;;
 	c)
+		quit_when_no_repos
 		list_repos |
 			if [ "$parallel" ]; then
 				parallel gt-cmd "{}" "$OPTARG"
@@ -80,11 +87,16 @@ while getopts ":a:c:f:lsheu" opt; do
 				xargs -I{} gt-cmd "{}" "$OPTARG"
 			fi
 		;;
-	s) list_repos | xargs -I{} gt-st {} ;;
-	l) list_repos ;;
+	s) 
+		quit_when_no_repos
+		list_repos | xargs -I{} gt-st {} ;;
+	l) 
+		quit_when_no_repos
+		list_repos ;;
 	e) $EDITOR "$REPOS" ;;
 	f) REPOS="$OPTARG" ;;
 	u)
+		quit_when_no_repos
 		>&2 printf 'pull:\n'
 		if [ "$parallel" ]; then
 			list_repos | parallel gt-cmd {} pull  

@@ -4,18 +4,35 @@ list_layouts()
 {
 cat <<EOF
 us
-colemak -option ctrl:swapcaps,altwin:menu_win
+us -variant colemak -option ctrl:swapcaps,altwin:menu_win
 EOF
 }
 
-current_keymap()
-{
-    setxkbmap -print | awk -F '+' '/xkb_symbols/ {print $2}'
-}
+ProgramPath="$(readlink -f "$0")"
+CurrentKeymap="$(tail -n 1 "$ProgramPath")"
+>&2 printf 'Current: %s\n' "$CurrentKeymap"
 
 NumLayouts="$(list_layouts | wc -l)"
-IndexLayout="$(list_layouts | awk "/^$(current_keymap)/ {print NR}")"
-[ "$IndexLayout" -eq "$NumLayouts" ] && IndexLayout=1 || IndexLayout=$((IndexLayout + 1))
+[ "$NumLayouts" ] || exit 1
+IndexLayout="$(list_layouts | awk "/^${CurrentKeymap}$/ {print NR}")"
+[ "$IndexLayout" ] || exit 2
+
+# Cycle
+if [ "$IndexLayout" -eq "$NumLayouts" ]; then
+	IndexLayout=1
+else
+	IndexLayout=$((IndexLayout + 1))
+fi
+
 Layout="$(list_layouts | sed -n "${IndexLayout}p" )"
+[ "$Layout" ] || exit 3
+
+>&2 printf 'Layout:  %s\n' "$Layout"
 setxkbmap $Layout &
-herbe "_cycleKB" "*${Layout%% *}"
+sed -i "\$s/.*/$Layout/" "$ProgramPath"
+notify-send "_cycleKB" "*${Layout%% -option*}" &
+
+exit 
+
+# THIS LINE IS ADDED AUTOMATICALLY
+us -variant colemak -option ctrl:swapcaps,altwin:menu_win
