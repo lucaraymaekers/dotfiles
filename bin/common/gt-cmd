@@ -21,13 +21,24 @@ fi
 # path to key: ~/.ssh/<hostname>.pub
 # where <hostname> is the same in ssh config
 r="$(grep "$repo" "$REPOS" | cut -f 2 -d ' ' | cut -f 2 -d '@' | cut -f 1 -d ':')"
-if { [ "$command" = "push" ] || [ "$command" = "pull" ] || [ "$command" = "fetch" ]; } &&
-    # key not registered in agent
-    ! { ssh-add -L | grep "$(cat "$HOME/.ssh/$r.pub")" > /dev/null; }
+if { [ "$command" = "push" ] ||
+     [ "$command" = "pull" ] ||
+     [ "$command" = "fetch" ]; }
 then
-    printf '%s: '\''%s'\'' not in ssh-agent\n' "$repo_pretty" "$r" 
-    exit 1
+	Keyfile="$HOME/.ssh/$r.pub"
+	if [ ! -f "$Keyfile" ]
+	then
+		printf '%s: no identity file '\''%s'\''\n' "$repo_pretty" "$Keyfile"
+		exit 1
+	fi
+
+	if ! ssh-add -L | grep "$(cat "$Keyfile")" > /dev/null
+	then
+		printf '%s: '\''%s'\'' not in ssh-agent\n' "$repo_pretty" "$r" 
+		exit 1
+	fi
 fi
+
 
 git -C "$repo" "$command" $args >/dev/null 2>&1
 [ $? -gt 0 ] && s="x" || s="o"

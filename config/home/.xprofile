@@ -2,7 +2,7 @@
 
 feh --no-fehbg --bg-scale "$HOME"/pics/wallpaper &
 
-setxkbmap us -variant colemak -option ctrl:swapcaps,menu:altwin &
+setxkbmap us -variant colemak -option ctrl:swapcaps,altwin:menu_win &
 
 # TODO: check if this is home
 if [ "$(hostname)" = "winter" ]; then
