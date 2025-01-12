@@ -5,7 +5,7 @@
 
 ### FUNCTIONS
 notif() {
-	herbe "pomo" "$1" &
+	herbe "_pomo" "$1" &
 	sleep 1
 	pkill -SIGUSR1 herbe
 }
@@ -59,14 +59,14 @@ for msg in "three" "two" "one"; do
 done
 
 while true; do
-	notif "START"
+	notif "*START"
 	printf >&2 '%s S %s\n' "$(date '+%R')" "$round"
 	sleep ${SLEEP_TIME}m
 	if [ "$round" -eq 3 ]; then
-		ring_ring 20 "GIGA BREAK TIME"
+		ring_ring 20 "*GIGA BREAK TIME"
 		round=0
 	else
-		ring_ring 5 "BREAK TIME"
+		ring_ring 5 "*BREAK TIME"
 		round=$((round + 1))
 	fi
 done

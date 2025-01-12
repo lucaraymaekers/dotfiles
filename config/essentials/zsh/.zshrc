@@ -110,7 +110,11 @@ bindkey -M menuselect '^xu' undo                           # Undo
 
 ## window title hooks
 add-zsh-hook -Uz preexec () { print -n "\e]0;$1\a\033[0m"; }
-add-zsh-hook -Uz precmd set_wt (){ print -Pn "\e]0;%n@%m on %~\a"; }
+set_wt() { print -Pn "\e]0;%n@%m on %~\a"; }
+add_newline() { printf '\n'; }
+precmd_functions+=(add_newline)
+precmd_functions+=(set_wt)
+# add-zsh-hook -Uz precmd add_newline() { printf '\n'; }
 
 ## automatic ls after cd
 # add-zsh-hook -Uz chpwd (){ [ "$PWD" = "$HOME" ] || ls -A; }
