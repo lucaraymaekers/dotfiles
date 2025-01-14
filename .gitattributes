@@ -1,1 +1,2 @@
 * text=auto
+config/essentials/zsh/.zshrc filter=gpgid
