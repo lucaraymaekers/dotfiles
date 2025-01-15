@@ -3,7 +3,12 @@
 export EDITOR="vis"
 export VISUAL="vis"
 
-export BROWSER="firefox"
+if [ "$(hostname)" = "winter" ]; then
+    export BROWSER="zen-browser"
+else
+    export BROWSER="firefox"
+fi
+
 export VIEWER="zathura"
 export PLAYER="mpv"
 export MENUCMD="dmenu"
