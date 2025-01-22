@@ -2,13 +2,14 @@
 
 services() {
     cat <<-EOF
-    5030 slsksd
-    9091 transmission
+    5000 dufs
     8096 jellyfin
-    80 ntfy
     24961 miniflux
+    80 ntfy
     24880 pihole
+    5030 slsksd
     8384 syncthing
+    9091 transmission
 EOF
 }
 

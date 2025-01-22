@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Compresses a video to a target size, for configuration see VARIABLES
+# From: https://trac.ffmpeg.org/wiki/Encode/H.264#Two-PassExample
+#
+# $1: input file
+
+# VARIABLES
+video_codec="libx264"
+audio_codec="aac"
+audio_bitrate="96"
+target_size="8"
+
+MEGABIT="8388"
+
+# Main
+
+input="$1"
+if [ -z "$input" ]
+then
+	>&2 printf 'Usage: discord_compress <input>\n'
+	exit 1
+fi
+
+duration="$(date -u -d @"$(ffprobe -show_entries format=duration -v quiet -of csv="p=0" -i "$input")" +'%s')"
+
+video_bitrate="$(((target_size * MEGABIT / duration) - audio_bitrate))"
+[ "$video_bitrate" ] || exit 1
+
+common_args="-hide_banner -v quiet -stats -y -hwaccel auto -i $input -c:v $video_codec -b:v ${video_bitrate}K"
+
+set -ex
+
+ffmpeg $common_args -pass 1 -an -f null /dev/null
+ffmpeg $common_args -pass 2 -c:a "$audio_codec" -b:a "${audio_bitrate}K" compressed_"${input%.*}".mp4
+
+rm -f ffmpeg2pass*.log*
