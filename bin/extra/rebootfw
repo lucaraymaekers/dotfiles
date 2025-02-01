@@ -1,0 +1,11 @@
+#!/bin/sh
+
+printf "\x7\x0\x0\x0\x1\x0\x0\x0\x0\x0\x0\x0" |
+	doas tee "/sys/firmware/efi/efivars/OsIndications-8be4df61-93ca-11d2-aa0d-00e098032b8c"
+
+if [ "$(hostname)" = "spring" ]
+then
+	doas /usr/sbin/reboot
+else
+	reboot
+fi
