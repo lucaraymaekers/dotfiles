@@ -19,7 +19,7 @@ set guioptions          	""
 set database            	"sqlite"
 set continuous-hist-save	true
 
-set recolor true
+set recolor false
 set recolor-reverse-video true
 set recolor-keephue true
 set recolor-lightcolor "#2e3340"

@@ -12,6 +12,8 @@ if [ "$(hostname)" = "winter" ]; then
     ) &
 fi
 
+~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
+
 picom -b &
 
 # xautolock -locker slock &

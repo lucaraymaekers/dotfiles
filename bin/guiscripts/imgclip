@@ -1,5 +1,5 @@
 #!/bin/sh
 text="$(clipo | tesseract - stdout | sed '/^$/d')"
 [ $? -gt 0 ] && exit 1
-choice="$(printf -- "-\n%s" "$text" | commander -cl)"
+choice="$(printf -- "-\n%s" "$text" | dmenu -c)"
 [ "$choice" ] && printf "%s" "$text" | clipp

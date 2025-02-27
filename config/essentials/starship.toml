@@ -26,6 +26,7 @@ style = 'yellow'
 format = '[$branch]($style)'
 style = 'bold purple'
 [git_status]
+disabled = true
 format = '( [$all_status$ahead_behind]($style))'
 ahead = '↑'
 behind = '↓'

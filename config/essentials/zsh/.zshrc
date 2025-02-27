@@ -21,11 +21,11 @@ try_source $XDG_CONFIG_HOME/zsh/comp.zsh
 try_source $XDG_CONFIG_HOME/shell/functions.sh
 try_source $XDG_CONFIG_HOME/shell/aliases.sh
 try_source $XDG_CONFIG_HOME/zsh/widgets.zsh
-# try_source $XDG_CONFIG_HOME/zsh/prompt.zsh
+try_source $XDG_CONFIG_HOME/zsh/prompt.zsh
 # try_source $XDG_CONFIG_HOME/zsh/plugins.zsh
 
 ### Programs
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 ### Plugins

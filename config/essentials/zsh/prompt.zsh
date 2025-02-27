@@ -1,6 +1,4 @@
-# prompt
-# PS1=' %K{16}%B%(#.%F{1}.%F{13})%n%b%f@%B%F{6}%m%b%f %3~%k '
-# RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
+#!/bin/zsh
 
 setopt prompt_subst
 parse_git_remote() {
@@ -14,3 +12,6 @@ parse_git_branch() {
 parse_git_status() {
 	git status --short 2> /dev/null | head -n1 | awk '{print $1 " "}'
 }
+
+PS1=' %3~ '
+RPROMPT='%F{blue}$(parse_git_remote)%f%F{red}$(parse_git_status)%f%F{green}$(parse_git_branch)%f%(?.. %?)'
