@@ -61,7 +61,7 @@ main()
 				commander -c -w 8 -y 5)" ;;
 
 		all_search) 
-			song="$(mpc listall | commander -cxh)"
+			song="$(mpc listall | dmenu -l 20 -g 1 -c -x)"
 			[ "$song" ] || return
 			play_song "$song";;
 		quit) return 1 ;;
