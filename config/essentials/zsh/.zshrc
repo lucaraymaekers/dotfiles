@@ -141,4 +141,3 @@ setopt notify
 
 PATH="$PATH:$HOME/proj/metac/build"
 PATH="$PATH:$HOME/proj/metac/misc"
-
