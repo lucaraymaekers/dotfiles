@@ -1,7 +1,15 @@
 #!/bin/sh
 
 # Translate words using http://context.reverso.net and scraping the answers
-# with 'pup' and 'curl'.
+
+for dependency in pup curl fzf
+do
+	if ! command -v "$dependency" > /dev/null
+	then
+		>&2 printf '"%s" (dependency) could not be found.\n' "$dependency"
+		exit 1
+	fi
+done
 
 # returns available languages
 languages () {

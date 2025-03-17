@@ -2,7 +2,7 @@
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents ssh,gpg)"
-    keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D #FILTERED
+    keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet --agents gpg IDENTITY #FILTERED
     exec startx > /dev/null 2>&1
     exit
 fi
@@ -139,6 +139,5 @@ setopt notify
 
 # zprof
 
-# PATH="$PATH:$HOME/proj/chatty/"
-PATH="$PATH:$HOME/proj/metac/misc/"
-PATH="$PATH:$HOME/proj/metac/build/"
+PATH="$PATH:$HOME/proj/metac/build"
+PATH="$PATH:$HOME/proj/metac/misc"
