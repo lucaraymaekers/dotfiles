@@ -38,4 +38,4 @@ fi
 st -e "sh" "-c" "pgrep tmux && tmux a || tmux" &
 
 xset s off -dpms &
-printf '%s\t%s' "$(date +%y_%m_%d-%T )" "$DISPLAY" >> ~/.x_displays.log &
+saveself &

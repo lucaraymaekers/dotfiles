@@ -34,8 +34,11 @@ then
 
 	if ! ssh-add -L | grep "$(cat "$Keyfile")" > /dev/null
 	then
-		printf '%s: '\''%s'\'' not in ssh-agent\n' "$repo_pretty" "$r" 
-		exit 1
+		if ! keyadd "$r" > /dev/null 2>&1
+		then
+			printf '%s: '\''%s'\'' not in ssh-agent\n' "$repo_pretty" "$r" 
+			exit 1
+		fi
 	fi
 fi
 

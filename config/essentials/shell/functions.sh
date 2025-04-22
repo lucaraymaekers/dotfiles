@@ -399,6 +399,6 @@ trclipo()
     category="$(printf "music\nanime\nmovies\nshows\nother\nsoftware\ngames\nisos\nbooks\n" | fzf)"
     [ "$category" ] || return 2
 
-    transmission-remote debuc.com -a -w "/downloads/$choice" "$magnet"
+    transmission-remote autumn -a -w "/downloads/$choice" "$magnet"
 
 }

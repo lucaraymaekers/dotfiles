@@ -1,12 +1,6 @@
 #!/bin/sh
-
-read_char ()
-{
-	old_stty_cfg=$(stty -g 2> /dev/null)
-	stty raw -echo  2> /dev/null
-	dd ibs=1 count=1 2> /dev/null
-	stty "$old_stty_cfg" 2> /dev/null
-}
-
->&2 printf "%s " "$1" 
-read_char | grep -q "[yY]"
+trap 'exit' INT
+old_stty_cfg=$(stty -g 2> /dev/null)
+stty raw -echo  2> /dev/null
+dd ibs=1 count=1 2> /dev/null
+stty "$old_stty_cfg" 2> /dev/null
