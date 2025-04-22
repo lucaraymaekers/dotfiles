@@ -7,7 +7,7 @@
 # otherwise it opens link in browser.
 
 [ "${url:=$1}" ] || url="$(clipo)"
-herbe "_linkhandler" "$url"
+herbe "_linkhandler" "$url" & 
 
 case "$url" in
     file://*) 

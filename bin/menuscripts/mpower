@@ -6,7 +6,6 @@ suspend
 reboot
 firmware
 hibernate
-eepy
 EOF
 )"
 

@@ -13,7 +13,7 @@ case "$1" in
 		input=$(tee | cut -f 1 -d ' ')
 		if [ "$input" ]
 		then
-			herbe "_dmemoji" "*$input copied!"
+			herbe "_dmemoji" "*$input copied!" &
 			printf "%s" "$input" | clipp
 		fi
 		;;

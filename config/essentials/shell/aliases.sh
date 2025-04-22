@@ -344,6 +344,7 @@ alias quickvms='/media/cricket/vms/quickemu/"$(find '\''/media/cricket/vms/quick
 alias sqlplus='sqlplus -x'
 alias rsqp='rlwrap sqlplus -x'
 alias gcamc='gca -m "checkpoint"'
+alias luca='ga . && gcamc && gp'
 alias gdb='gdb -q'
 alias gdbr='gdb -ex "target remote :4200"'
 alias gonotes='cd "$(find $HOME/notes/ -mindepth 1 -type d -not -name '\''.*'\'' | sed "s@$HOME/notes/@@" | fzf)"'

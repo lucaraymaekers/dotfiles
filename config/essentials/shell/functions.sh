@@ -400,5 +400,4 @@ trclipo()
     [ "$category" ] || return 2
 
     transmission-remote autumn -a -w "/downloads/$choice" "$magnet"
-
 }
