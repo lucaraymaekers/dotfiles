@@ -4,7 +4,7 @@ list_layouts()
 {
 cat <<EOF
 us
-us -variant colemak -option ctrl:swapcaps,altwin:menu_win
+colemak -option ctrl:swapcaps,altwin:menu_win
 EOF
 }
 
@@ -30,9 +30,9 @@ Layout="$(list_layouts | sed -n "${IndexLayout}p" )"
 >&2 printf 'Layout:  %s\n' "$Layout"
 setxkbmap $Layout &
 sed -i "\$s/.*/$Layout/" "$ProgramPath"
-notify-send "_cycleKB" "*${Layout%% -option*}" &
+notify-send "_cycleKB" "*${Layout%% -*}" &
 
 exit 
 
 # THIS LINE IS ADDED AUTOMATICALLY
-us -variant colemak -option ctrl:swapcaps,altwin:menu_win
+colemak -option ctrl:swapcaps,altwin:menu_win
