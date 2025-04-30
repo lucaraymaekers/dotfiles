@@ -144,6 +144,4 @@ setopt interactivecomments
 setopt notify
 # setopt cdablevars
 
-# NOTE: depends on `tmux' alias
-[ "$TMUX" ] || tmux
 # zprof
