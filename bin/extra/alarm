@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ "$1" ]
+then
+	AlarmTime="$1"
+else
+	>&2 printf 'time: '
+	AlarmTime="$(head -n 1)"
+fi
+[ "$AlarmTime" ] || exit 1
+
+AlarmTimeSeconds="$(date -d "$AlarmTime" '+%s')"
+[ "$AlarmTimeSeconds" ] || exit 1
+
+TimeNowSeconds="$(date '+%s')"
+SecondsToSleep="$((AlarmTimeSeconds - TimeNowSeconds))"
+>&2 printf 'now:  %s\n' "$(date '+%T')"
+
+
+if [ "$SecondsToSleep" -gt 0 ]
+then
+	>&2 printf 'Sleeping %s seconds...\n' "$SecondsToSleep"
+	sleep "$SecondsToSleep" >/dev/null 2>&1
+else
+	>&2 printf 'Not sleeping\n'
+fi
+
+>&2 printf 'press [q] to quit '
+mpv --loop --volume=100 --msg-level=all=no --resume-playback=no ~/sync/share/sounds/pomo.aac 2>/dev/null
+>&2 printf '\n'
