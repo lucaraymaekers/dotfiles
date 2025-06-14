@@ -70,8 +70,8 @@ rln() { ln -s "$(readlink -f "$1")" "$2"; }
 getgit() { git clone git@db:"$1"; }
 esc() { eval "$EDITOR '$(which $1)'"; }
 ssh_keyadd() { ssh-keygen -f "$HOME"/.ssh/"$1" -P "$(pass generate -f keys/"$HOST"/ssh/"$1" | tail -n 1)" -t ed25519; }
-delfile() { curl -s "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
-upfile() { curl -s -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
+delfile() { curl -s -L "${2:-https://upfast.cronyakatsuki.xyz/delete/$1}"; }
+upfile() { curl -s -L -F "file=@\"$1\"" "${2:-https://0x0.st}"; }
 upfile-dufs() { curl -T "$1" http://192.168.178.79:5000/"$1"; }
 delfile-dufs() { curl -X DELETE http://192.168.178.79:5000/"$1"; }
 getfile-dufs() { curl http://192.168.178.79:5000/"$1"; }
