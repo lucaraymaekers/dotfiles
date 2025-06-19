@@ -1,8 +1,9 @@
 #!/bin/zsh
 
+# Current projects
 export PATH="$PATH:$HOME/proj/metac/build"
 export PATH="$PATH:$HOME/proj/metac/misc"
-export PATH="$PATH:$HOME/src/4coder"
+export PATH="$PATH:$HOME/proj/hmlinux/build"
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents ssh,gpg)"
