@@ -1,23 +1,24 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-input () { commander -c -i -p "$1"; }
-
-choice="$(printf "multiline\nsingle\n" | commander -c -w 2 -y 1)"
-[ "$choice" ] || exit 1
-
-password="$(input "name:")"
-[ "$password" ] || exit 1
-
-if [ "$choice" = "multiline" ]
+if [ "$MENUCMD" = "dmenu" ]
 then
-	login="$(find "${PASSWORD_STORE_DIR:=$HOME/.password-store}"/e-mails \
-        -type f \
-        -maxdepth 1 \
-        -iname "*.gpg" \
-        -printf "%f\n" | sed 's/\.gpg$//' | commander -c -p 'login:')"
-    [ "$login" ] || exit 1
-    printf "%s\nlogin: %s\n" "${password}" "${login}" | pass insert -mf "${password}"
-    pass generate -ci "${password}"
+    input()
+    {
+        dmenu -p "${1% }" -c < /dev/null
+    }
 else
-    pass generate -cf "${password}"
+    input()
+    {
+        >&2 printf '%s: ' "${1%: }"
+        head -n 1
+    }
 fi
+
+URL="$(input 'url: ')"
+[ "$URL" ] || exit 1
+Login="$(input 'login: ')"
+[ "$Login" ] || exit 1
+
+Password="websites/$URL/$Login"
+pass generate -c "$Password"
+notify-send '*mpwgen' "$Password"

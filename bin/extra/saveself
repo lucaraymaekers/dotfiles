@@ -17,20 +17,15 @@ PrevCapacity="$(GetBatteryCapacity)"
 
 while true
 do
-	sleep 5
 	Capacity="$(GetBatteryCapacity)"
 	if [ "$Capacity" -lt "$PrevCapacity" ] 
 	then
 		if [ "$Capacity" -le "$Threshold" ]
 		then
-			setsid slock
 			HostName="$(hostname)"
 			if [ "$HostName" = "spring" ]
 			then
-				doas /usr/sbin/zzz -Z
-			elif [ "$HostName" = "winter" ] 
-			then
-				systemctl hibernate
+				setsid doas /usr/sbin/zzz -Z
 			fi
 		fi
 		PrevCapacity="$Capacity"
