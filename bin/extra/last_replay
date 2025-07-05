@@ -1,7 +1,7 @@
 #!/bin/sh
 
 File="$(find ~/vids/replays -type f -printf '%Ts %p\n' |
-         grep -E '\.(mp4|mkv|webm)' |
+         grep -E '\.(mp4|mkv|webm)$' |
 	 sort -n -r |
  	 head -n 1 |
  	 cut -f 2- -d' ' | tr -d '\n')"

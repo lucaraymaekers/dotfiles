@@ -41,7 +41,7 @@ gpu-screen-recorder \
 	-w screen \
 	-f 60 \
 	-c mkv \
-	-a "default_output|default_input" \
+	-a "default_output" \
 	-r 60 \
 	-replay-storage ram \
 	-restart-replay-on-save yes \
