@@ -1,0 +1,13 @@
+#!/bin/sh
+
+QR="$(zbarcam -q -1)"
+Wifi="${QR#*:*:*:}"
+AP="${Wifi%%;*}"
+Passphrase="${Wifi##*;P:}"
+Passphrase="${Passphrase%%;*}"
+
+wpa_passphrase "$AP" "$Passphrase"
+>&2 printf 'Continue ?'
+head -n 1
+
+wpa_passphrase "$AP" "$Passphrase" >> /etc/wpa_supplicant/wpa_supplicant.conf

@@ -4,12 +4,13 @@
 export PATH="$PATH:$HOME/proj/metac/build"
 export PATH="$PATH:$HOME/proj/metac/misc"
 export PATH="$PATH:$HOME/proj/hmlinux/build"
+export PATH="$PATH:/usr/local/musl/bin"
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet --agents ssh,gpg)"
     if [ "$(hostname)" = "spring" ]
     then
-        keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet --agents gpg 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
+        keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
     fi
     exec startx > /dev/null 2>&1
     exit
