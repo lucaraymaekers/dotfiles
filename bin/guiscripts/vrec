@@ -5,7 +5,7 @@
 # dependencies: 
 #   - ffmpeg
 # 	- hacksaw: part
-# 	- xdotool: active
+# 	- xdotool: active,window
 # 	- xdg-user-dir
 #   - dmenu
 #   - clipp
@@ -21,6 +21,7 @@
 # - full: record your full screen
 # - last: copy the latest recording's path to the clipboard
 # - audio: one of the prior recording commands but with sound
+# - window: select a window with xdotool and capture that geometry
 # Recording:
 # there is a lock file
 
@@ -87,7 +88,7 @@ fi
 output="$(date +%F_%H-%M-%S)"
 
 if [ -z "${option:="$1"}" ]; then
-    option="$(printf 'active\npart\nstop\nfull\naudio\nlast\n' | dmenu -c)"
+    option="$(printf 'active\npart\nstop\nfull\naudio\nlast\nwindow\n' | dmenu -c)"
 fi
 [ "$option" ] || exit 1
 
@@ -95,6 +96,11 @@ case "$option" in
     active)
         record_cmd $(xwininfo -id "$(xdotool getactivewindow)" |
             sed '/Absolute\|Width:\|Height:/!d;s/.*:\s*//' | tr '\n' ' ') "$dir" "$output"
+        ;;
+    window)
+        eval "$(xdotool getwindowgeometry --shell "$(xdotool selectwindow)")"
+
+        record_cmd $X $Y $WIDTH $HEIGHT "$dir" "$output"
         ;;
     part) 
         hacksaw | {

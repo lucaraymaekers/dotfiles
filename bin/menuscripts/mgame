@@ -14,7 +14,7 @@ steam_games()
         done
 }
 
-Choice="$(steam_games | cut -f 2- -d' ' | grep -v -i 'brawlhalla' | dmenu -c -i -x)"
+Choice="$(steam_games | cut -f 2- -d' ' | dmenu -c -i -x)"
 [ "$Choice" ] || exit 1
 ID="$(steam_games | grep "[0-9]\+ $Choice" | cut -f 1 -d ' ')"
 
