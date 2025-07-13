@@ -97,7 +97,7 @@ while getopts ":a:c:f:dlsheu" opt; do
             git add .
             git commit --all -m "checkpoint" > /dev/null
             git push > /dev/null
-            printf '\''{}: done.\\n'\''
+            printf '\''{}: done.\n'\''
             '
         else
             list_repos | while read -r proj
