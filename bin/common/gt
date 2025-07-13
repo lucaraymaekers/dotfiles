@@ -89,30 +89,18 @@ while getopts ":a:c:f:dlsheu" opt; do
 			fi
 		;;
     d)
-        if [ "$parallel" ]; then
-            list_repos |
-                parallel 'cd {};
-            cd "$(git rev-parse --show-toplevel || printf '\''.\\n'\'')"
-            git pull --ff > /dev/null
-            git add .
-            git commit --all -m "checkpoint" > /dev/null
-            git push 2> /dev/null
-            printf '\''{}: done.\n'\''
-            '
-        else
-            list_repos | while read -r proj
-            do
-                (
-                    cd "$proj"
-                    cd "$(git rev-parse --show-toplevel || printf '.\n')"
-                    git pull --ff > /dev/null
-                    git add .
-                    git commit --all -m "checkpoint" > /dev/null
-                    git push 2> /dev/null
-                    printf '%s: done.\n' "$proj"
-                )
-            done
-        fi
+        list_repos | while read -r proj
+        do
+            (
+                cd "$proj"
+                cd "$(git rev-parse --show-toplevel || printf '.\n')"
+                git pull --ff > /dev/null
+                git add .
+                git commit --all -m "checkpoint" > /dev/null
+                git push 2> /dev/null
+                printf '%s: done.\n' "$proj"
+            )
+        done
         ;;
     s) 
 		quit_when_no_repos
