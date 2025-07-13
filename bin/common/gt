@@ -96,7 +96,7 @@ while getopts ":a:c:f:dlsheu" opt; do
             git pull --ff > /dev/null
             git add .
             git commit --all -m "checkpoint" > /dev/null
-            git push > /dev/null
+            git push 2> /dev/null
             printf '\''{}: done.\n'\''
             '
         else
@@ -108,7 +108,7 @@ while getopts ":a:c:f:dlsheu" opt; do
                     git pull --ff > /dev/null
                     git add .
                     git commit --all -m "checkpoint" > /dev/null
-                    git push > /dev/null
+                    git push 2> /dev/null
                     printf '%s: done.\n' "$proj"
                 )
             done
