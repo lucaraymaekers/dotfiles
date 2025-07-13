@@ -98,10 +98,11 @@ while getopts ":a:c:f:dlsheu" opt; do
                 (
                     cd "$proj"
                     cd "$(git rev-parse --show-toplevel || printf '.\n')"
-                    git pull --ff
+                    git pull --ff > /dev/null
                     git add .
-                    git commit --all -m "checkpoint"
+                    git commit --all -m "checkpoint" > /dev/null
                     git push
+                    printf '%s: done.\n' "$proj"
                 )
             done
         fi
