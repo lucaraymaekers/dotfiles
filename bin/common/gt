@@ -20,7 +20,7 @@ touch "$REPOS" || exit 1
 which parallel >/dev/null 2>&1 && parallel=1
 
 help() {
-	cat >&2 <<EOF
+	>&2 cat <<EOF
 usage: gt [OPTION]
 -a PATH         add repo 
 -c COMMAND      run 'git COMMAND' in each repo
@@ -66,18 +66,22 @@ while getopts ":a:c:f:dlsheu" opt; do
 			exit 1
 		fi
 
-		repo="$(git rev-parse --show-toplevel)"
-		remote_url="$(git remote show -n origin | awk '/^  Fetch/ {print $NF}')"
-	        # TODO: check if remote_url is not empty
+		repo="$(git rev-parse --show-toplevel 2>/dev/null)"
+		remote_url="$(git remote show -n origin 2>/dev/null | awk '/^  Fetch/ {print $NF}')"
+  if [ -z "$repo" ] || [ -z "$remote_url" ]
+  then
+   >&2 printf 'Couldn'\''t add '\''%s'\'', not a git repository.\n' "$OPTARG"
+   exit 1
+  fi
 
 		if grep "^$repo " "$REPOS" >/dev/null 2>&1; then
-			printf >&2 'added already.\n'
-			exit 3
+			>&2 printf 'added already.\n'
+			exit 1
 		fi
 
 		printf '%s %s\n' "$repo" "$remote_url" >>"$REPOS"
 
-		printf >&2 'added.\n'
+		>&2 printf 'added.\n'
 		;;
 	c)
 		quit_when_no_repos
@@ -144,11 +148,11 @@ while getopts ":a:c:f:dlsheu" opt; do
 		;;
 	h) help ;;
 	:)
-		printf >&2 -- '-%s requires argument\n' "$OPTARG"
+		>&2 printf -- '-%s requires argument\n' "$OPTARG"
 		exit 1
 		;;
 	?)
-		printf >&2 -- 'Invalid option: -%s\n' "$OPTARG"
+		>&2 printf -- 'Invalid option: -%s\n' "$OPTARG"
 		exit 1
 		;;
 	esac

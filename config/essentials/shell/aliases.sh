@@ -333,5 +333,4 @@ else
  alias pkg_search_online='pacman -Ss'
  alias pkg_install='doas pacman -S'
  alias pkg_search_owned='pkgfile'
- alias 
 fi
