@@ -327,6 +327,7 @@ then
  alias pkg_search='xbps-query -s'
  alias pkg_install='doas xbps-install'
  alias pkg_search_owned='xbps-query -o --regex'
+ alias pkg_remove_orphaned='doas xbps-remove -o'
 else
  alias pkg_list_files='pacman -Ql'
  alias pkg_search_local='pacman -Qs'
