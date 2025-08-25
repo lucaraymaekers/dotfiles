@@ -408,3 +408,19 @@ trclipo()
 
     transmission-remote autumn -a -w "/downloads/$choice" "$magnet"
 }
+
+debinstall()
+{
+ if [ "$1" ]
+ then
+  ar p "$1" data.tar.xz |
+   tar -xv -J; find usr -type f |
+   while read -r file
+   do
+    >&2 printf 'cp %s /usr/local/%s\n' "$file" "${file#usr/}"
+    doas cp "$file" "/usr/local${file#usr}"
+   done
+  else
+   >&2 printf 'usage: %s <source.deb>\n' "$0"
+ fi
+}
