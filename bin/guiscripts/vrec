@@ -117,7 +117,11 @@ case "$option" in
         ;;
     last) 
         file="$(find "$dir" -type f -iname '*.mp4' -printf '%Ts %p\n' | sort -n -r | head -n 1 | cut -f 2- -d' ')"
-        printf '%s' "$file"
+        if [ -z "$1" ]; then
+            printf '%s' "$file" | clipp
+        else
+            printf '%s' "$file"
+        fi
         ;;
     full) record_cmd 0 0 1920 1080 "$dir" "$output" ;;
     audio) 
