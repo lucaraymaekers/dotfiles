@@ -315,7 +315,7 @@ alias quickvms='/media/cricket/vms/quickemu/"$(find '\''/media/cricket/vms/quick
 alias sqlplus='sqlplus -x'
 alias rsqp='rlwrap sqlplus -x'
 alias gcamc='gca -m "checkpoint"'
-alias gclcd'gclc --depth 1'
+alias gcld='gcl --depth 1 --filter=blob:none'
 alias done.='(grt ; ga . ; gcamc ; gp)'
 alias gdb='gdb -q'
 alias gdbr='gdb -ex "target remote :4200"'
