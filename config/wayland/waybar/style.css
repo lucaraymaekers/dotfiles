@@ -6,12 +6,12 @@
 	min-height: 16px;
 }
 
-window#waybar, #workspaces button.active  {
-	background-color: #4c566a;
+window#waybar {
+	background-color: #2e3440;
 }
 
-#workspaces button, #custom-layout, #custom-status {
-	background-color: #2e3440;
+#workspaces button.visible, #custom-status {
+	background-color: #4c566a;
 }
 
 #workspaces button {
