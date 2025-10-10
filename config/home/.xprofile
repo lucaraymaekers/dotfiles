@@ -37,11 +37,13 @@ then
 	keyadd spacehb.net &
 fi
 
+noisetorch -i &
+
 gpu-screen-recorder \
 	-w screen \
 	-f 60 \
 	-c mkv \
-	-a "default_output" \
+	-a "default_output|default_input" \
 	-r 60 \
 	-replay-storage ram \
 	-restart-replay-on-save yes \

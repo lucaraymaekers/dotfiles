@@ -140,7 +140,7 @@ alias ss4='ss -tln4p'
 alias mdb='mariadb -u admin -ppass admindb'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
 alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
-alias tmux='{ tmux list-sessions > /dev/null 2>&1 && tmux attach || tmux new-session; }'
+alias tm='{ tmux list-sessions > /dev/null 2>&1 && tmux attach || tmux new-session; }'
 
 # ssh
 alias sha='ssh-add'
@@ -331,7 +331,8 @@ then
 else
  alias pkg_list_files='pacman -Ql'
  alias pkg_search_local='pacman -Qs'
- alias pkg_search_online='pacman -Ss'
+ alias pkg_search='pacman -Ss'
  alias pkg_install='doas pacman -S'
  alias pkg_search_owned='pkgfile'
+ alias pkg_info='pacman -Si'
 fi

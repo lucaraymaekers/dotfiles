@@ -1,29 +1,41 @@
 #!/bin/sh
 choice="$(
-cat <<EOF | commander -c -w 1 -y 7
+cat <<EOF | commander -c -w 1 -y 8
 poweroff
 suspend
 reboot
 firmware
 hibernate
+windows
 EOF
 )"
 
+# Same on both
+case "$choice" in
+ "windows")
+  doas efibootmgr --bootnext "$(efibootmgr -u | grep 'Windows' | grep '^Boot[0-9]\{4\}' | cut -c 5-8)"
+  doas reboot
+  exit
+  ;;
+ "firmware") rebootfw; exit ;;
+esac
+
+# Winter
 if [ "$(hostname)" = "winter" ]; then 
-	if [ "$choice" = "firmware" ]; then
-		systemctl reboot --firmware-setup
-	elif [ "$choice" = "suspend" ]; then
-		systemctl hybrid-sleep
-	else
-		systemctl "$choice"
-	fi
+ case "$choice" in
+  "suspend") systemctl hybrid-sleep ;;
+  "") exit 1 ;;
+  *) systemctl "$choice" ;;
+ esac
+# Spring
 elif [ "$(hostname)" = "spring" ]; then
 	case "$choice" in
 		"suspend") doas /usr/sbin/zzz -H ;;
 		"hibernate") doas /usr/sbin/zzz -Z ;;
 		"poweroff") doas /usr/sbin/poweroff ;;
 		"reboot") doas /usr/sbin/reboot ;;
-		"firmware") rebootfw ;;
+  "windows")
+   ;;
 		"") exit 1 ;;
 		*) ;;
 	esac 
