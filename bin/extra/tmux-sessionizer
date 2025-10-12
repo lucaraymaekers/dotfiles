@@ -4,7 +4,10 @@ if [ $# -eq 1 ]; then
     selected="$1"
 else
 	pfx="$HOME/proj" 
-	selected="$(find $pfx -mindepth 1 -maxdepth 1 -type d | sed "s@$pfx/@@" | fzf)" 
+ 
+ selected="$(find "$pfx" $pfx/handmade \
+  -mindepth 1 -maxdepth 1 \( -path "$pfx/handmade/*" -o -path "$pfx/*" \) -a -type d -a \( -not -path "$pfx/handmade" \) |
+  sed "s@$pfx/@@" | fzf)" 
     { [ "$selected" ] && [ -d "$pfx/$selected" ]; } || exit 1
 fi
 
