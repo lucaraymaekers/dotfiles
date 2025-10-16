@@ -3,7 +3,14 @@
 # Path to your projects directory
 Prefix="$HOME/proj" 
 # Paths in which to search for projects
-Paths="$Prefix $Prefix/handmade"
+Paths="
+$Prefix
+$Prefix/handmade
+$Prefix/suckless
+$Prefix/personal
+$Prefix/thirdparty
+$Prefix/school
+"
 
 if [ $# -eq 1 ]; then
     Selected="$1"
