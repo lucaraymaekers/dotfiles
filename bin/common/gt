@@ -67,7 +67,14 @@ while getopts ":a:c:f:dlsheu" opt; do
 		fi
 
 		repo="$(git rev-parse --show-toplevel 2>/dev/null)"
-		remote_url="$(git remote show -n origin 2>/dev/null | awk '/^  Fetch/ {print $NF}')"
+  remote_name=
+  if git remote show -n | grep 'origin' 2>/dev/null
+  then
+   remote_name="origin"
+  else
+   remote_name="$(git remote show -n | head -n 1)"
+  fi
+		remote_url="$(git remote show -n "$remote_name" 2>/dev/null | awk '/^  Fetch/ {print $NF}')"
   if [ -z "$repo" ] || [ -z "$remote_url" ]
   then
    >&2 printf 'Couldn'\''t add '\''%s'\'', not a git repository.\n' "$OPTARG"
