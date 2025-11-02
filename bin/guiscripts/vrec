@@ -43,6 +43,7 @@ record_cmd()
 	printf '%s\n' "$5/$6.mp4"
 
 	herbe "vrec" "started recording." # use notification to know when recording started
+
 	w=$(($3 + $3 % 2))
 	h=$(($4 + $4 % 2))
 	ffmpeg $audio        \
@@ -113,7 +114,6 @@ case "$option" in
         pid="$(pgrep ffmpeg | xargs ps | grep 'x11grab' | awk '{print $1}')"
         [ "$pid" ] && kill -TERM $pid
         rm -f "$lock" 
-        herbe "vrec" "stopped recording." &
         ;;
     last) 
         file="$(find "$dir" -type f -iname '*.mp4' -printf '%Ts %p\n' | sort -n -r | head -n 1 | cut -f 2- -d' ')"

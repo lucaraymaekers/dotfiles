@@ -5,31 +5,43 @@ then
  choice="$1"
 else
  choice="$(
- cat <<EOF | commander -c -w 1 -y 8
+ cat <<EOF | commander -c -w 1 -y 9
 poweroff
 suspend
 reboot
 firmware
 hibernate
 windows
+bwindows
 EOF
  )"
 fi
 
 >&2 printf 'choice: %s\n' "$choice"
 
-# Same on both
-case "$choice" in
- "windows")
-  NextBoot="$(efibootmgr -u | grep 'Windows' | grep '^Boot[0-9]\{4\}' | cut -c 5-8)"
-   expect -f - <<EOF
+windows()
+{
+ NextBoot="$(efibootmgr -u | grep 'Windows' | grep '^Boot[0-9]\{4\}' | cut -c 5-8)"
+ expect -f - <<EOF
 set pw [exec pass show aluc]
 spawn doas efibootmgr --bootnext "$NextBoot" -u
 expect "password:"
 send "\$pw\r"
 expect eof
 EOF
-  choice="reboot" ;;
+
+}
+
+# Same on both
+case "$choice" in
+ "bwindows")
+  windows
+  choice="hibernate"
+  ;;
+ "windows")
+  windows
+  choice="reboot"
+  ;;
  "firmware") rebootfw; exit ;;
 esac
 
