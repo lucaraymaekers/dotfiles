@@ -36,7 +36,14 @@ EOF
 case "$choice" in
  "bwindows")
   windows
-  choice="hibernate"
+  if [ "$(hostname)" = "spring" ]
+  then
+   doas /usr/sbin/zzz -R
+   exit
+  elif [ "$(hostname)" = "winter" ]
+  then
+   choice="hibernate"
+  fi
   ;;
  "windows")
   windows
