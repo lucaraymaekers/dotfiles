@@ -29,13 +29,4 @@ primary="$(languages | fzf --prompt="from:")"
 secondary="$(languages | fzf --prompt="to:")"
 [ "$secondary" ] || exit 1
 
-# url="https://www.reverso.net/text-translation#sl=$primary&tl=$secondary&text=$word"
-url="https://context.reverso.net/translation/$primary-$secondary/$word"
-curl -s "$url"  \
-    --compressed \
-    -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0' \
-    -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' \
-    -H 'Accept-Encoding: gzip, deflate, br' |
-    pup 'a.link_highlighted em text{}' |
-    sed 's/.*/\L&/' |
-    sort | uniq | sed 's/.*/  &/'
+tgpt "Please, can you translate the following from $primary to $secondary, your answer should contain the translation and only the translation do not explain the answer, keep it to the translated words, if multiple are possible give them all.: $word"

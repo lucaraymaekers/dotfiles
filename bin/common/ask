@@ -1,5 +1,4 @@
 #!/bin/sh
 which tgpt >/dev/null || exit 1
 [ "${inp:=$@}" ] || inp="$(cat /dev/stdin)"
->&2 printf 'inp: %s\n' "$inp"
 tgpt "$inp"
