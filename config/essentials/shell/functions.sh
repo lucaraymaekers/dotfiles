@@ -166,14 +166,14 @@ gpg_backup()
     gpg --armor --export-secret-keys "$key" > private.asc
     gpg --armor --export "$key" > public.asc
     gpg --armor --export-ownertrust > trust.asc
-    tar -czvf gpg_backup.tar.gz public.asc private.asc trust.asc
+    zip gpg_backup.zip public.asc private.asc trust.asc
     shred -uz public.asc private.asc trust.asc
 }
 
-# $1: backup tar
+# $1: backup zip
 gpg_import()
 {
-	tar xf $1
+	unzip $1
 	shred -uz $1
 	gpg --import public.asc
 	gpg --import-ownertrust trust.asc

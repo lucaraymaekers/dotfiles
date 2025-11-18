@@ -12,7 +12,7 @@ if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne
     then
         keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
     fi
-    exec startx > /dev/null 2>&1
+    exec dbus-run-session startx > /dev/null 2>&1
     exit
 fi
 

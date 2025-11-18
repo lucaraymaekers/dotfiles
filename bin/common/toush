@@ -1,10 +1,11 @@
 #!/bin/sh
 # idea from https://codeberg.org/futxlii/bin/toush :)
 
-shebang='#!/bin/sh'
-
 [ -f "$1" ] && exit 1
 
-printf '%s\n\n' "$shebang" > "$1" &&
-	chmod +x "$1" && $EDITOR "$1"
-grep -qv "$shebang\|^$" "$1" || rm "$1"
+cat <<EOF > "$1"
+#!/bin/sh
+
+set -eu
+EOF
+chmod +x "$1" && $EDITOR "$1"

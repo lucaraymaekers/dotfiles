@@ -84,33 +84,9 @@ which eza >/dev/null 2>&1 &&
 	alias ls='ls --color --group-directories-first --sort=extension'
 
 # pacman aliases
-alias pac='pacman'
-alias pacsi='pac -Si'
-alias pacs='pac -Ss'
-alias pacq='pac -Q'
-alias pacql='pac -Ql'
-alias pacqs='pac -Qs'
-alias paci='pac -Qi'
-
-alias pacup='dopac -Syu'
-alias dopac='doas pacman'
-alias orpac='pacman -Qtdq | dopac -Rns - 2> /dev/null || echo "No orphans."'
-alias dopacs='dopac -S'
-alias dopacc='dopac -Sc'
-alias doprm='dopac -Rns'
-
-alias mpkg='makepkg -si'
-
+alias pacman_dependencies='pactree -r -d 1'
+alias pacman_update_mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
 which pikaur >/dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
-alias yup='yay -Syua'
-alias ysi='yay -Si'
-alias yss='yay -Ss'
-alias yqs='yay -Qs'
-alias yql='yay -Ql'
-alias yays='yay -S'
-alias yrm='yay -Rns'
-
-alias pkb='pkgfile -b'
 
 # transmission
 alias trr='transmission-remote debuc.com'
@@ -301,9 +277,6 @@ alias dorm='docker container rm $(docker container ls -a | tail -n +2 | fzf -m |
 alias dostop='docker container stop $(docker container ls -a | tail -n +2 | fzf -m | awk '\''{print $1}'\'')'
 alias doirm='docker image rm $(docker image ls | tail -n +2 | fzf -m | awk '\''{print $3}'\'')'
 
-alias ddeps='pactree -r -d 1'
-alias update-mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
-
 alias tmpd='cd $(mktemp -d)'
 alias tmpf='$EDITOR $(mktemp)'
 alias brs='$BROWSER'
@@ -326,16 +299,31 @@ alias gonotes='cd "$(find $HOME/notes/ -mindepth 1 -type d -not -name '\''.*'\''
 
 if [ "$(hostname)" = "spring" ]
 then
- alias pkg_list_files='xbps-query -f'
- alias pkg_search='xbps-query -s'
+	alias pkg_info='xbps-query -S'
+	alias pkg_remove='doas xbps-remove'
+	alias pkg_upgrade='doas xbps-install -Su'
+	alias pkg_update='doas xbps-install -S; xlocate -S'
  alias pkg_install='doas xbps-install'
- alias pkg_search_owned='xbps-query -o --regex'
+ alias pkg_list_files='xbps-query -f'
  alias pkg_remove_orphaned='doas xbps-remove -o'
+ alias pkg_search='xbps-query -Rs'
+ alias pkg_search_by_file='xlocate'
+ alias pkg_search_by_installed_file='xbps-query -o --regex'
+ alias pkg_search_installed='xbps-query -s'
 else
- alias pkg_list_files='pacman -Ql'
- alias pkg_search_local='pacman -Qs'
- alias pkg_search='pacman -Ss'
- alias pkg_install='doas pacman -S'
- alias pkg_search_owned='pkgfile'
+	alias pkg_clear_cache='doas pacman -Sc'
+	alias pkg_info_installed='pacman -Qi'
+	alias pkg_list_files='pacman -Ql'
+	alias pkg_list_installed='pacman -Q'
+	alias pkg_remove='doas pacman -Rns'
+	alias pkg_remove_orphaned='pacman -Qtdq | dopac -Rns - 2> /dev/null || echo "No orphans."'
+	alias pkg_search='pacman -Ss'
+	alias pkg_search_by_binary='pkgfile -b'
+	alias pkg_search_installed='pacman -Qs'
+	alias pkg_upgrade='doas pacman -Syu'
  alias pkg_info='pacman -Si'
+ alias pkg_install='doas pacman -S'
+ alias pkg_list_files='pacman -Ql'
+ alias pkg_search='pacman -Ss'
+ alias pkg_search_by_file='pkgfile'
 fi
