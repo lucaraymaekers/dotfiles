@@ -23,8 +23,8 @@ autoload -z edit-command-line
 zle -N edit-command-line
 
 ### Source files
-try_source() { [ -f "$1" ] && . "$1"; } # source if exists
-try_source /etc/grc.zsh
+try_source() { . "$1"; } # source if exists
+# try_source /etc/grc.zsh
 # try_source /etc/profile.d/plan9.sh
 try_source $XDG_CONFIG_HOME/zsh/comp.zsh
 try_source $XDG_CONFIG_HOME/shell/functions.sh

@@ -15,7 +15,7 @@ git_current_branch () {
 
 remote="$1"
 
-for arg in "$@"; do eval "$arg=1"; done
+for arg in "$@"; do eval "$arg=1"; done 2>/dev/null
 
 name="$(basename "$(git rev-parse --show-toplevel)")"
 [ "$name" ] || exit 1

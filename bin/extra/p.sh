@@ -661,7 +661,7 @@ html="/tmp/pk_tmp.html"
 [ "$pokemon" ] || pokemon="$(ask_pokemon)"
 [ "$pokemon" ] || exit 1
 
-choice="$(printf 'evolution\nmoves\nstats\n' | commander -c -w 3)"
+choice="$(printf 'evolution\nmoves\nstats\n' | commander -c -y 1 -w 3)"
 [ "$choice" ] || exit 1
 
 case "$choice" in

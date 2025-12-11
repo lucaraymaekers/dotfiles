@@ -112,8 +112,12 @@ alias diff='diff -u --color'
 alias shred='shred -uz'
 alias lsblk='lsblk -o name,type,fsused,fssize,size,fstype,label,mountpoint'
 alias sxt='sxiv -t'
-alias wgsh='wget --quiet --show-progress'
-alias wgc='wgsh "$(clipo)"'
+if which wget >/dev/null 2>&1; then
+	alias wgc='wget "$(clipo)"'
+else
+	alias wgc='curl -LO "$(clipo)"'
+fi
+
 alias ss4='ss -tln4p'
 alias mdb='mariadb -u admin -ppass admindb'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
@@ -301,6 +305,7 @@ if [ "$(hostname)" = "spring" ]
 then
 	alias pkg_info='xbps-query -S'
 	alias pkg_remove='doas xbps-remove'
+	alias pkg_clear_cache='doas xbps-remove -O'
 	alias pkg_upgrade='doas xbps-install -Su'
 	alias pkg_update='doas xbps-install -S; xlocate -S'
  alias pkg_install='doas xbps-install'
