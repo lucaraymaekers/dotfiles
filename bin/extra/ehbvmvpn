@@ -40,14 +40,6 @@ if [ "$1" = "-s" ]
 then
     shift
     keyadd ehb/ai
-    ssh -f -N \
-        -L 2222:10.2.160.41:22 \
-        vm
-
-    keyadd ehb/vm_int
+    ssh -f -N -L 2222:10.2.160.3:22 vm
     >&2 printf 'ssh forwardings for vms\n'
-    ssh -f -N -L 2223:10.2.160.9:22 vm
-    ssh -f -N -L 2224:10.2.160.10:22 vm
-    ssh -f -N -L 2225:10.2.160.11:22 vm
-    ssh -f -N -L 2226:10.2.160.51:22 vm
 fi

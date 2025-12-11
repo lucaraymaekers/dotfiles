@@ -5,6 +5,7 @@ export PATH="$PATH:$HOME/proj/metac/build"
 export PATH="$PATH:$HOME/proj/metac/misc"
 export PATH="$PATH:$HOME/proj/hmlinux/build"
 export PATH="$PATH:/usr/local/musl/bin"
+# . /etc/profile.d/cuda.sh
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet)"
