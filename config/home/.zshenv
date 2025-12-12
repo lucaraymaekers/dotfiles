@@ -20,6 +20,7 @@ export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
 export CARGO_HOME="$XDG_CONFIG_HOME"/cargo
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+export DOTNET_HOME=$HOME/.dotnet
 export DOTNET_CLI_HOME="$XDG_DATA_HOME"/dotnet
 export GNUPGHOME="$XDG_CONFIG_HOME"/gnupg
 export GOMODCACHE="$XDG_CACHE_HOME"/go/mod
@@ -95,6 +96,7 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$XDG_CONFIG_HOME/cargo/bin:$PATH"
 export PATH="$PATH:./node_modules/.bin"
 export PATH="$PATH:$DOTNET_CLI_HOME/.dotnet/tools"
+export PATH="$PATH:$DOTNET_HOME"
 
 export PATH="$PATH:$GOPATH/bin"
 

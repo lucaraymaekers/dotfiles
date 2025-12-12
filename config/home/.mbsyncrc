@@ -1,22 +1,22 @@
 # Start profile
-IMAPStore luca@spacehb.net-remote
-Host mail.spacehb.net
+IMAPStore luca@kefyried.com-remote
+Host mail.kefyried.com
 Port 993
-User luca@spacehb.net
+User luca@kefyried.com
 PassCmd "pass hosts/spacehb/luca"
 AuthMechs LOGIN
 TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-MaildirStore luca@spacehb.net-local
+MaildirStore luca@kefyried.com-local
 Subfolders Verbatim
-Path ~/.local/share/mail/luca@spacehb.net/
-Inbox ~/.local/share/mail/luca@spacehb.net/INBOX
+Path ~/.local/share/mail/luca@kefyried.com/
+Inbox ~/.local/share/mail/luca@kefyried.com/INBOX
 
-Channel luca@spacehb.net
+Channel luca@kefyried.com
 Expunge Both
-Far :luca@spacehb.net-remote:
-Near :luca@spacehb.net-local:
+Far :luca@kefyried.com-remote:
+Near :luca@kefyried.com-local:
 Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
 Create Both
 SyncState *
@@ -25,24 +25,24 @@ ExpireUnread no
 # End profile
 
 # Start profile
-IMAPStore billy@spacehb.net-remote
-Host mail.spacehb.net
+IMAPStore billy@kefyried.com-remote
+Host mail.kefyried.com
 Port 993
-User billy@spacehb.net
+User billy@kefyried.com
 PassCmd "pass hosts/spacehb/billy"
 AuthMechs LOGIN
 TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-MaildirStore billy@spacehb.net-local
+MaildirStore billy@kefyried.com-local
 Subfolders Verbatim
-Path ~/.local/share/mail/billy@spacehb.net/
-Inbox ~/.local/share/mail/billy@spacehb.net/INBOX
+Path ~/.local/share/mail/billy@kefyried.com/
+Inbox ~/.local/share/mail/billy@kefyried.com/INBOX
 
-Channel billy@spacehb.net
+Channel billy@kefyried.com
 Expunge Both
-Far :billy@spacehb.net-remote:
-Near :billy@spacehb.net-local:
+Far :billy@kefyried.com-remote:
+Near :billy@kefyried.com-local:
 Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
 Create Both
 SyncState *
@@ -51,24 +51,24 @@ ExpireUnread no
 # End profile
 
 # Start profile
-IMAPStore tlast@spacehb.net-remote
-Host mail.spacehb.net
+IMAPStore tlast@kefyried.com-remote
+Host mail.kefyried.com
 Port 993
-User tlast@spacehb.net
+User tlast@kefyried.com
 PassCmd "pass hosts/spacehb/tlast"
 AuthMechs LOGIN
 TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-MaildirStore tlast@spacehb.net-local
+MaildirStore tlast@kefyried.com-local
 Subfolders Verbatim
-Path ~/.local/share/mail/tlast@spacehb.net/
-Inbox ~/.local/share/mail/tlast@spacehb.net/INBOX
+Path ~/.local/share/mail/tlast@kefyried.com/
+Inbox ~/.local/share/mail/tlast@kefyried.com/INBOX
 
-Channel tlast@spacehb.net
+Channel tlast@kefyried.com
 Expunge Both
-Far :tlast@spacehb.net-remote:
-Near :tlast@spacehb.net-local:
+Far :tlast@kefyried.com-remote:
+Near :tlast@kefyried.com-local:
 Patterns * !"[Gmail]/All Mail"
 Create Both
 SyncState *
