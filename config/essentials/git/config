@@ -1,7 +1,7 @@
 [init]
 	defaultBranch = main
 [user]
-	email = luca@spacehb.net
+	email = luca@keyfried.com
 	name = Raymaekers Luca
 	signingkey = 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
 [push]

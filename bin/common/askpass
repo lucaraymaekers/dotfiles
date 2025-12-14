@@ -6,10 +6,12 @@
 # The point is to retrieve the path where the filename is the name of
 # the key.
 # Then we can construct the path for pass and get the password.
+SSHFOLDER="$HOME/.ssh"
 key="$(printf '%s\n' "$1" |
 	cut -f 2 -d \' |
-	awk -F '/' '{print $NF}')"
+	sed "s@$SSHFOLDER/@@")"
 pass="keys/$(hostname)/ssh/$key"
+>&2 printf 'pass: %s\n' "$pass"
 
 # optional: add key to running ssh-agent
 keyadd "$key" &

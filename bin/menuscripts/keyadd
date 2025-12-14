@@ -22,13 +22,13 @@ fi
 delete=0
 if [ "$1" = "-d" ] 
 then
-    delete=1
-    shift
+ delete=1
+ shift
 fi
 
 if [ "$1" ]
 then
-    key_pretty="$1"
+ key_pretty="$1"
 else
 	key_pretty="$(find "$SSHFOLDER" -iname "*.pub" |
         sed "s@$SSHFOLDER/\(.*\)\.pub\$@\1@" |
