@@ -1,0 +1,18 @@
+# vim: filetype=neomuttrc
+# muttrc file for account luca@keyfried.com
+set realname = "Luca"
+set from = "luca@keyfried.com"
+set sendmail = "msmtp -a luca@keyfried.com"
+alias me luca <luca@keyfried.com>
+set folder = "$HOME/.local/share/mail/luca@keyfried.com"
+set header_cache = "$HOME/.cache/mutt-wizard/luca_keyfried.com/headers"
+set message_cachedir = "$HOME/.cache/mutt-wizard/luca_keyfried.com/bodies"
+set mbox_type = Maildir
+set hostname = "keyfried.com"
+set spoolfile = "+INBOX"
+set postponed = "+Drafts"
+set trash = "+Trash"
+set record = "+Sent"
+
+macro index o "<shell-escape>mailsync luca@keyfried.com<enter>" "sync luca@keyfried.com"
+mailboxes "=Drafts" "=Sent" "=Junk" "=INBOX"

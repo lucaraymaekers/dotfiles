@@ -8,7 +8,7 @@ if [ "$(hostname)" = "winter" ]; then
     (
         CurrentOutput="$(xrandr | grep '\bconnected\b' | awk '{print $1}')" 
         # xrandr --output "$CurrentOutput" --mode "1920x1080" --rate "144"
-        xrandr --output "$CurrentOutput" --mode "1920x1080" --rate "60"
+        xrandr --output "$CurrentOutput" --mode "1920x1080" --rate "144"
     ) &
     signal-desktop &
     ~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
