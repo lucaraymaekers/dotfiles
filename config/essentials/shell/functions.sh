@@ -333,11 +333,18 @@ nvim_bindings() {
 }
 
 prj() {
-    pfx="$HOME/proj"
-	d="$(find "$pfx" -mindepth 1 -maxdepth 1 -type d | sed "s@$pfx/@@" |fzf)"
-    { [ "$d" ] && [ -d "$pfx/$d" ]; } || return 1
-    cd "$pfx/$d"
+	Prefix="$HOME/proj"
+ Paths="$Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school"
+	Args="$(
+		for Path in $Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school
+		do printf -- "-a \\( -not -path "%s" \\) " "$Path"; done
+	)"
+
+	Selected="$(eval "find $Paths -mindepth 1 -maxdepth 1 -type d $Args" 2>/dev/null | sed "s@$Prefix/@@" | fzf)"
+	{ [ "$Selected" ] && [ -d "$Prefix/$Selected" ]; } || return 1
+	cd "$Prefix/$Selected"
 }
+
 prje() {
     prj || return 1
     f="$(git ls-files | fzf)"
