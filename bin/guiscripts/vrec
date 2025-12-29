@@ -46,15 +46,15 @@ record_cmd()
 
 	w=$(($3 + $3 % 2))
 	h=$(($4 + $4 % 2))
-	ffmpeg $audio        \
-            -hide_banner     \
-	    -r 30            \
-	    -f x11grab       \
-	    -s "${w}x${h}"   \
-	    -i ":0.0+$1,$2"  \
-	    -preset ultrafast\
-	    -c:v libx264     \
-	    -pix_fmt yuv420p \
+	ffmpeg $audio           \
+     -hide_banner        \
+	    -r 30               \
+	    -f x11grab          \
+	    -s "${w}x${h}"      \
+	    -i "$DISPLAY+$1,$2" \
+	    -preset ultrafast   \
+	    -c:v libx264        \
+	    -pix_fmt yuv420p    \
 	    "$5/$6.mp4"
 	rm -f "$lock"
 	herbe "vrec" "stopped recording." & 
