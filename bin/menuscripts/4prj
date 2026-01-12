@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -eu
+
+cd "$(prj_select)"
+start 4ed .

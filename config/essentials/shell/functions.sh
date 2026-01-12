@@ -332,18 +332,7 @@ nvim_bindings() {
     rm "$tmp"
 }
 
-prj() {
-	Prefix="$HOME/proj"
- Paths="$Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school"
-	Args="$(
-		for Path in $Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school
-		do printf -- "-a \\( -not -path "%s" \\) " "$Path"; done
-	)"
-
-	Selected="$(eval "find $Paths -mindepth 1 -maxdepth 1 -type d $Args" 2>/dev/null | sed "s@$Prefix/@@" | fzf)"
-	{ [ "$Selected" ] && [ -d "$Prefix/$Selected" ]; } || return 1
-	cd "$Prefix/$Selected"
-}
+prj() { cd "$(prj_select)"; }
 
 prje() {
     prj || return 1
