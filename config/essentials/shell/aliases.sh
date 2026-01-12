@@ -122,7 +122,7 @@ alias ss4='ss -tln4p'
 alias mdb='mariadb -u admin -ppass admindb'
 alias mdbw='mariadb -h 0.0.0.0 -u padmin -pbulbizarre padmindb'
 alias mdbwa='mariadb -h 10.3.50.5 -u padmin -pbulbizarre padmindb'
-alias tm='{ tmux list-sessions > /dev/null 2>&1 && tmux attach || tmux new-session; }'
+alias tm='{ tmux list-sessions > /dev/null 2>&1 && exec tmux attach || exec tmux new-session; }'
 
 # ssh
 alias sha='ssh-add'

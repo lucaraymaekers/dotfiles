@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eu
+
+trap cleanup INT
+
+tmux split-window -b -l 83% -h "nnd --session="$1" --tty=$(tty) $2"
+clear
+sleep 1000000

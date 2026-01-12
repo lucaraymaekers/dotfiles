@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+export ANDROID_HOME=~/docs/software/android
+# NDK=~/docs/software/android/ndk/24.0.8215888
+# make push run
+
 # Current projects
 export PATH="$PATH:$HOME/proj/handmade/hero/build"
 . /etc/profile.d/cuda.sh
