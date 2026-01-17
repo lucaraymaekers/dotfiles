@@ -1,6 +1,6 @@
 #!/bin/sh
 Prefix="$HOME/proj"
-Paths="$Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school"
+Paths="$Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school $Prefix/toy"
 Args="$(
 	for Path in $Prefix $Prefix/handmade $Prefix/suckless $Prefix/personal $Prefix/thirdparty $Prefix/school
 	do printf -- "-a \\( -not -path "%s" \\) " "$Path"; done
