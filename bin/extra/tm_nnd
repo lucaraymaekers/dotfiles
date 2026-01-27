@@ -4,6 +4,9 @@ set -eu
 
 trap cleanup INT
 
-tmux split-window -b -l 83% -h "nnd --session="$1" --tty=$(tty) $2"
+Session="$1"
+shift
+
+tmux split-window -b -l 83% -h "nnd -s --session="$Session" --tty=$(tty) $*"
 clear
 sleep 1000000
