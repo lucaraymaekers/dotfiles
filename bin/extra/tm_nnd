@@ -2,8 +2,15 @@
 
 set -eu
 
-trap cleanup INT
+if [ -f ".tm_nnd" ]
+then
+	. ./.tm_nnd
+else
+	Name="$1"
+	shift
+	Command="$*"
+fi
 
-tmux split-window -b -l 83% -h "nnd --session="$1" --tty=$(tty) $2"
+tmux split-window -b -l 83% -h "nnd -s --session="$Name" --tty=$(tty) $Command"
 clear
 sleep 1000000

@@ -6,7 +6,7 @@ export ANDROID_HOME=~/docs/software/android
 
 # Current projects
 export PATH="$PATH:$HOME/proj/handmade/hero/build"
-. /etc/profile.d/cuda.sh
+# . /etc/profile.d/cuda.sh
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet)"

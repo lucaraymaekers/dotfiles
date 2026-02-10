@@ -1,31 +1,10 @@
 #!/bin/sh
 
-# Path to your projects directory
-Prefix="$HOME/proj" 
-# Paths in which to search for projects
-Paths="
-$Prefix
-$Prefix/handmade
-$Prefix/suckless
-$Prefix/personal
-$Prefix/thirdparty
-$Prefix/school
-"
-
+Selected=
 if [ $# -eq 1 ]; then
     Selected="$1"
 else
- # Exclude the search paths themselves
- Args="$(
-  for Path in $Paths
-  do
-   printf -- "%s\n" "-a ( -not -path "$Path" ) "
-  done
- )"
-
- Selected="$(find $Paths -mindepth 1 -maxdepth 1 -type d $Args | sed "s@$Prefix/@@" | fzf)" 
-
- { [ "$Selected" ] && [ -d "$Prefix/$Selected" ]; } || exit 1
+	   Selected="$(MENUCMD=fzf prj_select)"
 fi
 
 if [ -z "$Selected" ]; then
@@ -36,12 +15,12 @@ TmuxRunning="$(pgrep "tmux" | head -n1)"
 Session="${Selected##*/}"
 
 if [ -z $TMUX ] && [ -z "$TmuxRunning" ]; then
- tmux new-session -s "$Session" -c "$Prefix"/"$Selected"
+ tmux new-session -s "$Session" -c "$Selected"
  herbe 1
 else
 
  if ! tmux has-session -t="$Session" 2> /dev/null; then
-     tmux new-session -ds "$Session" -c "$Prefix"/"$Selected"
+     tmux new-session -ds "$Session" -c "$Selected"
  fi
 
  if [ -z $TMUX ]; then

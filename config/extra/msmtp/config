@@ -1,0 +1,36 @@
+account billy@keyfried.com
+host mail.keyfried.com
+port 465
+from billy@keyfried.com
+user billy@keyfried.com
+passwordeval "pass hosts/spacehb/billy"
+auth on
+tls on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/aluc/.local/state/msmtp/msmtp.log
+tls_starttls off
+
+account luca@keyfried.com
+host mail.keyfried.com
+port 465
+from luca@keyfried.com
+user luca@keyfried.com
+passwordeval "pass hosts/spacehb/luca"
+auth on
+tls on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/aluc/.config/msmtp/msmtp.log
+tls_starttls off
+
+account tlast@keyfried.com
+host mail.keyfried.com
+port 465
+from tlast@keyfried.com
+user tlast@keyfried.com
+passwordeval "pass hosts/spacehb/tlast"
+auth on
+tls on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/aluc/.config/msmtp/msmtp.log
+tls_starttls off
+

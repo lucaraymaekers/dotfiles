@@ -248,11 +248,9 @@ main()
 	if command -v pre_cmd > /dev/null
 	then
 		pre_cmd > "$tmp"
-		logn "menuopts: $menuopts"
 		# shellcheck disable=SC2086
 		pre_filter < "$tmp" | menucmd $menuopts | post_filter
 	else
-		logn "menuopts: $menuopts"
 		# shellcheck disable=SC2086
 		pre_filter | menucmd $menuopts | post_filter
 	fi
