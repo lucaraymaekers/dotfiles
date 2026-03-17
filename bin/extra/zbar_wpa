@@ -1,12 +1,10 @@
 #!/bin/sh
 
 QR="$(zbarcam -q -1)"
-Wifi="${QR#*:*:*:}"
-AP="${Wifi%%;*}"
-Passphrase="${Wifi##*;P:}"
-Passphrase="${Passphrase%%;*}"
+Passphrase="${QR##*;P:}"; Passphrase="${Passphrase%%;*}"
+SSID="${QR##*;S:}"; SSID="${SSID%%;*}"
 
-wpa_passphrase "$AP" "$Passphrase"
+wpa_passphrase "$SSID" "$Passphrase"
 >&2 printf 'Continue ?'
 head -n 1
 

@@ -287,7 +287,7 @@ alias brs='$BROWSER'
 which bat >/dev/null 2>&1 &&
 	alias cat="bat -p"
 
-alias glf='git pull --ff'
+alias glf='git pull --ff-only'
 alias glnf='git pull --no-ff'
 alias quickvms='/media/cricket/vms/quickemu/"$(find '\''/media/cricket/vms/quickemu/'\'' -type f -iname '\''*.conf'\'' -printf '\''%f
 '\'' | sed '\''s/\.conf$//'\'' | fzf)".conf 2> /dev/null'

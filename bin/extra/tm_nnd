@@ -12,5 +12,6 @@ else
 fi
 
 tmux split-window -b -l 83% -h "nnd -s --session="$Name" --tty=$(tty) $Command"
+
 clear
 sleep 1000000
