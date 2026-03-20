@@ -4,17 +4,19 @@ feh --no-fehbg --bg-scale "$HOME"/pics/wallpaper &
 setxkbmap us -variant colemak -option ctrl:swapcaps,altwin:menu_win &
 xset s off -dpms &
 
-if [ "$(hostname)" = "winter" ]; then
+if [ "$(hostnamectl hostname)" = "winter" ]; then
     (
-        CurrentOutput="$(xrandr | grep '\bconnected\b' | awk '{print $1}')" 
-        # xrandr --output "$CurrentOutput" --mode "1920x1080" --rate "144"
-        xrandr --output "$CurrentOutput" --mode "1920x1080" --rate "144"
+								xrandr --auto
+        xrandr --output DP-5 --mode "1920x1080" --rate "165"
+								xrandr --output HDMI-1-1 --mode "1900x1600" --rate "60"
+								xrandr --output HDMI-1-1 --mode "1920x1080" --rate "60"
+								xrandr --output HDMI-1-1 --right-of DP-5
     ) &
     signal-desktop &
     ~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
 fi
 
-if [ "$(hostname)" = "spring" ]
+if [ "$(hostnamectl hostname)" = "spring" ]
 then
     tail -f ~/src/xob/scripts/volume.pipe | xob &
     xautolock -locker slock &
@@ -32,7 +34,7 @@ slstatus &
 unclutter --timeout 3 --jitter 50 -b &
 202020 &
 
-if [ "$(hostname)" = "spring" ]
+if [ "$(hostnamectl hostname)" = "spring" ]
 then
 	keyadd autumn &
 	keyadd keyfried.com &

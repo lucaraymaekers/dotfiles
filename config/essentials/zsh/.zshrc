@@ -10,7 +10,7 @@ export PATH="$PATH:$HOME/proj/handmade/hero/build"
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet)"
-    if [ "$(hostname)" = "spring" ]
+    if [ "$(hostnamectl hostname)" = "spring" ]
     then
         keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
     fi

@@ -111,7 +111,7 @@ export MAKEFLAGS="-j$(nproc)"
 
 export VAKKEN="$HOME/docs/school/2024-2025"
 
-if [ "$(hostname)" = "spring" ]; then
+if [ "$(hostnamectl hostname)" = "spring" ]; then
     export GIT_TRACK_REPOS="$HOME/git-track.txt" 
 fi
 

@@ -10,7 +10,7 @@ SSHFOLDER="$HOME/.ssh"
 key="$(printf '%s\n' "$1" |
 	cut -f 2 -d \' |
 	sed "s@$SSHFOLDER/@@")"
-pass="keys/$(hostname)/ssh/$key"
+pass="keys/$(hostnamectl hostname)/ssh/$key"
 >&2 printf 'pass: %s\n' "$pass"
 
 # optional: add key to running ssh-agent

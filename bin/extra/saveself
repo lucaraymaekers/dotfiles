@@ -22,7 +22,7 @@ do
 	then
 		if [ "$Capacity" -le "$Threshold" ]
 		then
-			HostName="$(hostname)"
+			HostName="$(hostnamectl hostname)"
 			if [ "$HostName" = "spring" ]
 			then
 				setsid doas /usr/sbin/zzz -Z

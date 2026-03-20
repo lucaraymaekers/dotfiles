@@ -7,5 +7,5 @@ Args="$(
 )"
 
 Selected="$(eval "find $Paths -mindepth 1 -maxdepth 1 -type d $Args" 2>/dev/null | sed "s@$Prefix/@@" | commander -c)"
-{ [ "$Selected" ] && [ -d "$Prefix/$Selected" ]; } || return 1
+{ [ "$Selected" ] && [ -d "$Prefix/$Selected" ]; } || exit 1
 printf '%s/%s\n' "$Prefix" "$Selected"

@@ -11,7 +11,7 @@ else
 	Command="$*"
 fi
 
-tmux split-window -b -l 83% -h "nnd -s --session="$Name" --tty=$(tty) $Command"
+tmux split-window -b -l 83% -h "nnd -s --session="$Name" --stdout=$(tty) --stderr=$(tty) $Command"
 
 clear
 sleep 1000000

@@ -87,6 +87,7 @@ which eza >/dev/null 2>&1 &&
 alias pacman_dependencies='pactree -r -d 1'
 alias pacman_update_mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
 which pikaur >/dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
+which paru >/dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" paru'
 
 # transmission
 alias trr='transmission-remote debuc.com'
@@ -301,7 +302,7 @@ alias gdb='gdb -q'
 alias gdbr='gdb -ex "target remote :4200"'
 alias gonotes='cd "$(find $HOME/notes/ -mindepth 1 -type d -not -name '\''.*'\'' | sed "s@$HOME/notes/@@" | fzf)"'
 
-if [ "$(hostname)" = "spring" ]
+if [ "$(hostnamectl hostname)" = "spring" ]
 then
 	alias pkg_info='xbps-query -S'
 	alias pkg_remove='doas xbps-remove'

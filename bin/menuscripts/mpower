@@ -36,11 +36,11 @@ EOF
 case "$choice" in
  "bwindows")
   windows
-  if [ "$(hostname)" = "spring" ]
+  if [ "$(hostnamectl hostname)" = "spring" ]
   then
    doas /usr/sbin/zzz -R
    exit
-  elif [ "$(hostname)" = "winter" ]
+  elif [ "$(hostnamectl hostname)" = "winter" ]
   then
    choice="hibernate"
   fi
@@ -52,22 +52,22 @@ case "$choice" in
  "firmware") rebootfw; exit ;;
 esac
 
-# Winter
-if [ "$(hostname)" = "winter" ]; then 
- case "$choice" in
-  "suspend") systemctl hybrid-sleep ;;
-  "") exit 1 ;;
-  *) systemctl "$choice" ;;
- esac
-# Spring
-elif [ "$(hostname)" = "spring" ]; then
+if [ "$(hostnamectl hostname)" = "winter" ]
+then
+	doas /usr/bin/systemctl "$choice"
+	exit
+fi
+
+if [ "$(hostnamectl hostname)" = "spring" ]
+then
+	# Winter
 	case "$choice" in
 		"suspend") doas /usr/sbin/zzz -H ;;
 		"hibernate") doas /usr/sbin/zzz -Z ;;
 		"poweroff") doas /usr/sbin/poweroff ;;
 		"reboot") doas /usr/sbin/reboot ;;
-  "windows")
-   ;;
+		"windows")
+			;;
 		"") exit 1 ;;
 		*) ;;
 	esac 
