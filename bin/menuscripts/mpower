@@ -36,11 +36,11 @@ EOF
 case "$choice" in
  "bwindows")
   windows
-  if [ "$(hostnamectl hostname)" = "spring" ]
+  if [ "$(get_hostname)" = "spring" ]
   then
    doas /usr/sbin/zzz -R
    exit
-  elif [ "$(hostnamectl hostname)" = "winter" ]
+  elif [ "$(get_hostname)" = "winter" ]
   then
    choice="hibernate"
   fi
@@ -52,13 +52,13 @@ case "$choice" in
  "firmware") rebootfw; exit ;;
 esac
 
-if [ "$(hostnamectl hostname)" = "winter" ]
+if [ "$(get_hostname)" = "winter" ]
 then
 	doas /usr/bin/systemctl "$choice"
 	exit
 fi
 
-if [ "$(hostnamectl hostname)" = "spring" ]
+if [ "$(get_hostname)" = "spring" ]
 then
 	# Winter
 	case "$choice" in

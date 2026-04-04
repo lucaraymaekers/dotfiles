@@ -58,7 +58,7 @@ then
     exit 1
 fi
 
-HOST="$(hostnamectl hostname)"
+HOST="$(get_hostname)"
 export PASSWORD="keys/$HOST/ssh/$key_pretty"
 export SSH_ASKPASS="sshpass"
 ssh-add -q - < "$key" &&

@@ -1,2 +1,13 @@
 #!/bin/sh
-clipo | zbarimg - 2>/dev/null | cut -f 2- -d ':' | pass otp insert keys/otp/tlast@murena.io
+
+Pass="$1"
+if [ -z "$1" ]
+then
+	>&2 printf 'Usage: %s PASS\n' "$0"
+	exit 1
+fi
+
+clipo |
+	zbarimg - 2>/dev/null | 
+	cut -f 2- -d ':' |
+	pass otp insert keys/otp/"$Pass"

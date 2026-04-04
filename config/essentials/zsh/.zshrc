@@ -4,13 +4,9 @@ export ANDROID_HOME=~/docs/software/android
 # NDK=~/docs/software/android/ndk/24.0.8215888
 # make push run
 
-# Current projects
-export PATH="$PATH:$HOME/proj/handmade/hero/build"
-# . /etc/profile.d/cuda.sh
-
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet)"
-    if [ "$(hostnamectl hostname)" = "spring" ]
+    if [ "$(get_hostname)" = "spring" ]
     then
         keychain --dir "$XDG_CONFIG_HOME/keychain" --quiet 3A626DD20A32EB2E5DD9CE71CFD9ABC97158CD5D
     fi

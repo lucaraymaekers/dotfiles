@@ -2,8 +2,8 @@
 # s/alias \([^-]\)/alias -g \1
 
 alias vi='nvim' # The most important one
-which zoxide > /dev/null 2>&1 && alias cd='z'
-which trash > /dev/null 2>&1 && alias rm='trash'
+command_exists zoxide && alias cd='z'
+command_exists trash && alias rm='trash'
 
 # Zsh specific aliases
 if [ $SHELL = "/bin/zsh" ]; then
@@ -21,7 +21,7 @@ if [ $SHELL = "/bin/zsh" ]; then
 	alias calc='bc <<<'
 
 	if [ -z "$WAYLAND_DISPLAY" ]; then
-		if which devour >/dev/null 2>&1; then
+		if command_exists devour; then
 			alias mpv='devour mpv'
 			alias zathura='devour zathura'
 		fi
@@ -47,7 +47,7 @@ alias ccu='calcurse'
 alias pf='profanity'
 
 
-which gurk >/dev/null 2>&1 &&
+command_exists gurk &&
 	alias gurk='pgrep gurk > /dev/null && printf "Already Running.\n" || gurk'
 
 alias arduino-cli='arduino-cli --config-file $XDG_CONFIG_HOME/arduino15/arduino-cli.yaml'
@@ -79,15 +79,15 @@ alias lst1='ls --tree -L1'
 alias lst2='ls --tree -L2'
 alias lst3='ls --tree -L3'
 alias ls.='ls -dl .*'
-which eza >/dev/null 2>&1 &&
+command_exists eza &&
 	alias ls='eza --sort name --group-directories-first --git' ||
 	alias ls='ls --color --group-directories-first --sort=extension'
 
 # pacman aliases
 alias pacman_dependencies='pactree -r -d 1'
 alias pacman_update_mirrors='reflector -p https | rankmirrors -n 10 -p -w - | doas tee /etc/pacman.d/mirrorlist'
-which pikaur >/dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
-which paru >/dev/null 2>&1 && alias yay='MAKEFLAGS="-j $(nproc)" paru'
+command_exists pikaur && alias yay='MAKEFLAGS="-j $(nproc)" pikaur'
+command_exists paru && alias yay='MAKEFLAGS="-j $(nproc)" paru'
 
 # transmission
 alias trr='transmission-remote debuc.com'
@@ -113,7 +113,7 @@ alias diff='diff -u --color'
 alias shred='shred -uz'
 alias lsblk='lsblk -o name,type,fsused,fssize,size,fstype,label,mountpoint'
 alias sxt='sxiv -t'
-if which wget >/dev/null 2>&1; then
+if command_exists wget; then
 	alias wgc='wget "$(clipo)"'
 else
 	alias wgc='curl -LO "$(clipo)"'
@@ -145,7 +145,7 @@ alias npi="npm init --yes"
 
 # Python
 
-if which uv >/dev/null 2>&1; then
+if command_exists uv; then
 	alias penv='uv venv env'
 	alias pip='uv pip'
 else
@@ -285,7 +285,7 @@ alias doirm='docker image rm $(docker image ls | tail -n +2 | fzf -m | awk '\''{
 alias tmpd='cd $(mktemp -d)'
 alias tmpf='$EDITOR $(mktemp)'
 alias brs='$BROWSER'
-which bat >/dev/null 2>&1 &&
+command_exists bat &&
 	alias cat="bat -p"
 
 alias glf='git pull --ff-only'
@@ -302,7 +302,7 @@ alias gdb='gdb -q'
 alias gdbr='gdb -ex "target remote :4200"'
 alias gonotes='cd "$(find $HOME/notes/ -mindepth 1 -type d -not -name '\''.*'\'' | sed "s@$HOME/notes/@@" | fzf)"'
 
-if [ "$(hostnamectl hostname)" = "spring" ]
+if [ "$(get_hostname)" = "spring" ]
 then
 	alias pkg_info='xbps-query -S'
 	alias pkg_remove='doas xbps-remove'

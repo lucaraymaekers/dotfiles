@@ -1,5 +1,7 @@
 #!/bin/sh
 
+command_exists() { which $* >/dev/null 2>&1; }
+
 log() { >&2 printf '%s' "$@"; }
 logn() { >&2 printf '%s\n' "$@"; }
 
