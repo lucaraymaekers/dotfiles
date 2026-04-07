@@ -1,19 +1,23 @@
 #!/bin/sh
 
-feh --no-fehbg --bg-scale "$HOME"/pics/wallpaper &
 setxkbmap us -variant colemak -option ctrl:swapcaps,altwin:menu_win &
 xset s off -dpms &
 
-if [ "$(hostnamectl hostname)" = "winter" ]; then
-    (
-								xrandr --auto
-        xrandr --output DP-5 --mode "1920x1080" --rate "165"
-								xrandr --output HDMI-1-1 --mode "1900x1600" --rate "60"
-								xrandr --output HDMI-1-1 --mode "1920x1080" --rate "60"
-								xrandr --output HDMI-1-1 --right-of DP-5
-    ) &
-    signal-desktop &
-    ~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
+if [ "$(hostnamectl hostname)" = "winter" ]
+then
+ (
+		xrandr --output HDMI-1 --mode 1920x1080 --rate 120
+		if false
+		then
+			xrandr --auto
+   xrandr --output DP-5 --mode "1920x1080" --rate "165"
+			xrandr --output HDMI-1-1 --mode "1920x1080" --rate "60"
+			xrandr --output HDMI-1-1 --right-of DP-5
+		fi
+		feh --no-fehbg --bg-scale "$HOME"/pics/wallpaper
+ ) &
+ signal-desktop &
+ ~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
 fi
 
 if [ "$(hostnamectl hostname)" = "spring" ]
