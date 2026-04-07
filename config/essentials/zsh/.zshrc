@@ -3,6 +3,7 @@
 export ANDROID_HOME=~/docs/software/android
 # NDK=~/docs/software/android/ndk/24.0.8215888
 # make push run
+PATH=$PATH:~/proj/editor/build
 
 if { [ "$TTY" = "/dev/tty1" ] || [ "$TTY" = "/dev/tty8" ]; } && [ "$(id -u)" -ne 0 ]; then
     eval "$(keychain --dir "$XDG_CONFIG_HOME/keychain" --eval --quiet)"
