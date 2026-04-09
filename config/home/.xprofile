@@ -3,7 +3,7 @@
 setxkbmap us -variant colemak -option ctrl:swapcaps,altwin:menu_win &
 xset s off -dpms &
 
-if [ "$(hostnamectl hostname)" = "winter" ]
+if [ "$(get_hostname)" = "winter" ]
 then
  (
 		xrandr --output HDMI-1 --mode 1920x1080 --rate 120
@@ -14,18 +14,21 @@ then
 			xrandr --output HDMI-1-1 --mode "1920x1080" --rate "60"
 			xrandr --output HDMI-1-1 --right-of DP-5
 		fi
-		feh --no-fehbg --bg-scale "$HOME"/pics/wallpaper
  ) &
- signal-desktop &
- ~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
 fi
 
-if [ "$(hostnamectl hostname)" = "spring" ]
+if [ "$(get_hostname)" = "spring" ]
 then
-    tail -f ~/src/xob/scripts/volume.pipe | xob &
-    xautolock -locker slock &
-    saveself &
+	keyadd autumn &
+	keyadd keyfried.com &
+ tail -f ~/src/xob/scripts/volume.pipe | xob &
+ xautolock -locker slock &
+ saveself &
 fi
+
+feh --no-fehbg --bg-scale "$HOME"/pics/wallpaper &
+signal-desktop &
+~/src/xobs/env/bin/python ~/src/xobs/pulse.py | xob &
 
 st -e "sh" "-c" "pgrep tmux && tmux a || tmux" &
 
@@ -37,12 +40,6 @@ slstatus &
 # upds &
 unclutter --timeout 3 --jitter 50 -b &
 202020 &
-
-if [ "$(hostnamectl hostname)" = "spring" ]
-then
-	keyadd autumn &
-	keyadd keyfried.com &
-fi
 
 noisetorch -i &
 
