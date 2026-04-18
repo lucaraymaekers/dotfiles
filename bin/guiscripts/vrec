@@ -46,7 +46,7 @@ record_cmd()
 
 	w=$(($3 + $3 % 2))
 	h=$(($4 + $4 % 2))
-	ffmpeg $audio           \
+	echo ffmpeg $audio           \
      -hide_banner        \
 	    -r 30               \
 	    -f x11grab          \

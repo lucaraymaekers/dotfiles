@@ -1,4 +1,5 @@
 {
+	"position": "bottom",
 	"modules-left": ["hyprland/workspaces", "custom/layout", "hyprland/window"],
 	"modules-right": ["custom/status"],
 	"hyprland/window": {
